@@ -13,7 +13,10 @@ final class Appearance {
         
         let navigationBarAppearence = UINavigationBar.appearance()
         navigationBarAppearence.titleTextAttributes = [.foregroundColor: UIColor.black]
-        navigationBarAppearence.backgroundColor = .white
-        
+        navigationBarAppearence.backgroundColor = .clear
+        navigationBarAppearence.barTintColor = .white
+        navigationBarAppearence.tintColor = .black
+        navigationBarAppearence.shadowImage = UIImage()
+
     }
 }

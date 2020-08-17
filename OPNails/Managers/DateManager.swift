@@ -14,6 +14,8 @@ public struct Today {
 
 class DateManager {
     
+    private var currentMonth: Date = Today.todayDate
+    
     private var monthModel: [CalendarMonth] = []
     
     init() {
@@ -23,6 +25,21 @@ class DateManager {
     func showMonth() -> [CalendarMonth] {
         
         return monthModel
+        
+    }
+    
+    func showNextMonth() -> [CalendarMonth] {
+        
+        getNextMonth()
+        return monthModel
+        
+    }
+    
+    func showPreviosMonth() -> [CalendarMonth] {
+        
+        getPrevMonth()
+        return monthModel
+        
     }
     
     private func fillMonthModel(fromDate date: Date) {
@@ -50,9 +67,19 @@ class DateManager {
         return dayArray
     }
     
-    private func getNextMonth(fromMonth month:Date) {
-        guard let nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: month) else { return }
+    private func getNextMonth() {
+        
+        guard let nextMonth = Calendar.current.date(byAdding: .month, value: 1, to: currentMonth) else { return }
+        currentMonth = nextMonth
         fillMonthModel(fromDate: nextMonth)
+        
+    }
+    
+    private func getPrevMonth() {
+        guard let prevMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth) else { return }
+        currentMonth = prevMonth
+        fillMonthModel(fromDate: prevMonth)
+        
     }
 }
 

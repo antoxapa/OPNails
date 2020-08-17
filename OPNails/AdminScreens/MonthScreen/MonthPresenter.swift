@@ -9,37 +9,49 @@
 import Foundation
 
 struct DayRowItem {
+    let year: String
     let month: String
     let day: String
+    
+    let monthNumber: Int
     let client: String?
     let isWorkday: Bool?
 }
 
 protocol MonthPresenterCollectionViewPresenting {
-
+    
     func numberOfCells(in section: Int) -> Int
-    func didSelectCell(in section: Int, at row: Int) -> Void
+    func didSelectCell(at row: Int) -> Void
     func data(at row: Int) -> DayRowItem?
+    
+}
+
+protocol MonthPresenterHeaderViewUpdating {
+    
+    func showNextMonth()
+    func showPreviousMonth()
     
 }
 
 class MonthPresenter: PresenterLifecycle {
     
-    private var view: AdminMonthViewUpdatable?
+    private var view: AdminMonthViewable
+    private var header: HeaderMonthViewUpdatable?
     private var dateManager: DateManager
     private var monthModels: [CalendarMonth]
     
-    init(view: AdminMonthViewUpdatable) {
+    init(view: AdminMonthViewable) {
         self.view = view
         self.dateManager = DateManager()
         self.monthModels = []
     }
     
     func setup() {
+        monthModels = dateManager.showMonth()
     }
     
     func load() {
-        monthModels = dateManager.showMonth()
+        
     }
     
 }
@@ -52,18 +64,47 @@ extension MonthPresenter: MonthPresenterCollectionViewPresenting {
     }
     
     func data(at row: Int) -> DayRowItem? {
-        if let month = monthModels.first {
-            let day = month.days[row]
-            let month = month.monthName
-            let dayName = String(day.day)
-            let user = day.isClient
-            let isWorkday = day.isWorkDay
-            return DayRowItem(month: month, day: dayName, client: user, isWorkday: isWorkday)
+        if let monthDate = monthModels.first {
+            let year = String(monthDate.year)
+            let days = monthDate.days[row]
+            let monthName = monthDate.monthName
+            let monthNumber = monthDate.monthNumber
+            let dayName = String(days.day)
+            let user = days.isClient
+            let isWorkday = days.isWorkDay
+            return DayRowItem(year: year, month: monthName, day: dayName, monthNumber: monthNumber, client: user, isWorkday: isWorkday)
         }
         return nil
     }
     
-    func didSelectCell(in section: Int, at row: Int) {
+    func didSelectCell(at row: Int) {
+        
+        guard let day = data(at: row) else { return }
+        
+        openDayTimesList(withItem: day)
+    }
+}
+
+extension MonthPresenter {
+    
+    private func openDayTimesList(withItem item: DayRowItem) {
+        view.routeWithItem(item: item)
+    }
+}
+
+extension MonthPresenter: MonthPresenterHeaderViewUpdating {
+    
+    func showNextMonth() {
+        
+        monthModels = dateManager.showNextMonth()
+        view.reload()
+        
+    }
+    
+    func showPreviousMonth() {
+        
+        monthModels = dateManager.showPreviosMonth()
+        view.reload()
         
     }
 }

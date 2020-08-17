@@ -23,6 +23,10 @@
 		0696469424E998D2008109E9 /* ReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0696469324E998D2008109E9 /* ReusableView.swift */; };
 		0696469724E99B97008109E9 /* MonthNameHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0696469524E99B97008109E9 /* MonthNameHeaderView.swift */; };
 		0696469824E99B97008109E9 /* MonthNameHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0696469624E99B97008109E9 /* MonthNameHeaderView.xib */; };
+		069646A224EB0950008109E9 /* AdminHoursListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646A024EB0950008109E9 /* AdminHoursListVC.swift */; };
+		069646A724EB0B5C008109E9 /* HoursCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646A524EB0B5C008109E9 /* HoursCell.swift */; };
+		069646A824EB0B5C008109E9 /* HoursCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 069646A624EB0B5C008109E9 /* HoursCell.xib */; };
+		069646AA24EB315D008109E9 /* HoursPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646A924EB315D008109E9 /* HoursPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +60,10 @@
 		0696469324E998D2008109E9 /* ReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableView.swift; sourceTree = "<group>"; };
 		0696469524E99B97008109E9 /* MonthNameHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthNameHeaderView.swift; sourceTree = "<group>"; };
 		0696469624E99B97008109E9 /* MonthNameHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MonthNameHeaderView.xib; sourceTree = "<group>"; };
+		069646A024EB0950008109E9 /* AdminHoursListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminHoursListVC.swift; sourceTree = "<group>"; };
+		069646A524EB0B5C008109E9 /* HoursCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursCell.swift; sourceTree = "<group>"; };
+		069646A624EB0B5C008109E9 /* HoursCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HoursCell.xib; sourceTree = "<group>"; };
+		069646A924EB315D008109E9 /* HoursPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				0696468B24E95A85008109E9 /* MonthScreen */,
+				069646A424EB0959008109E9 /* HoursScreen */,
 			);
 			path = AdminScreens;
 			sourceTree = "<group>";
@@ -188,6 +197,17 @@
 				0696469324E998D2008109E9 /* ReusableView.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		069646A424EB0959008109E9 /* HoursScreen */ = {
+			isa = PBXGroup;
+			children = (
+				069646A924EB315D008109E9 /* HoursPresenter.swift */,
+				069646A024EB0950008109E9 /* AdminHoursListVC.swift */,
+				069646A524EB0B5C008109E9 /* HoursCell.swift */,
+				069646A624EB0B5C008109E9 /* HoursCell.xib */,
+			);
+			path = HoursScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -272,6 +292,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0638E4B624E927F0006A5956 /* MonthCell.xib in Resources */,
+				069646A824EB0B5C008109E9 /* HoursCell.xib in Resources */,
 				0675DBAD24E91C6700F3D65E /* LaunchScreen.storyboard in Resources */,
 				0675DBAA24E91C6700F3D65E /* Assets.xcassets in Resources */,
 				0696469824E99B97008109E9 /* MonthNameHeaderView.xib in Resources */,
@@ -294,13 +315,16 @@
 			files = (
 				0696469224E97E8F008109E9 /* Presenter.swift in Sources */,
 				0696469424E998D2008109E9 /* ReusableView.swift in Sources */,
+				069646AA24EB315D008109E9 /* HoursPresenter.swift in Sources */,
 				0696468E24E95BD7008109E9 /* DateModel.swift in Sources */,
 				0638E4B524E927F0006A5956 /* MonthCell.swift in Sources */,
+				069646A224EB0950008109E9 /* AdminHoursListVC.swift in Sources */,
 				0696468924E955BF008109E9 /* Appearance.swift in Sources */,
 				0675DBA124E91C6600F3D65E /* AppDelegate.swift in Sources */,
 				0638E4B124E925CF006A5956 /* AdminMonthsVC.swift in Sources */,
 				0696469024E95C04008109E9 /* DateManager.swift in Sources */,
 				0696469724E99B97008109E9 /* MonthNameHeaderView.swift in Sources */,
+				069646A724EB0B5C008109E9 /* HoursCell.swift in Sources */,
 				0638E4AE24E9211A006A5956 /* MonthPresenter.swift in Sources */,
 				0675DBA324E91C6600F3D65E /* SceneDelegate.swift in Sources */,
 			);
