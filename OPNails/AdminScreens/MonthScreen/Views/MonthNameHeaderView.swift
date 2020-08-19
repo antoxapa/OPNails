@@ -40,12 +40,14 @@ final class MonthNameHeaderView: UICollectionReusableView, ReusableView, HeaderM
     func hideLeftButton() {
         
         leftButton.isHidden = true
+        monthNameLabel.textColor = .red
         
     }
     
     func showLeftButton() {
         
         leftButton.isHidden = false
+        monthNameLabel.textColor = .black
         
     }
 }

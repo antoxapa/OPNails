@@ -12,6 +12,11 @@ public struct Today {
     public static let todayDate = Date()
 }
 
+public enum WeekStartDay {
+    case monday
+    case sunday
+}
+
 class DateManager {
     
     private var currentMonth: Date = Today.todayDate
@@ -102,8 +107,72 @@ class DateManager {
         let currentMonth = date.getMonth()
         let totalDaysInMonth = getNumberOfDaysInMonth(year: currentMonth.year, month: currentMonth.month)
         let days = createDaysArray(from: totalDaysInMonth, month: currentMonth.month, year: currentMonth.year)
-        monthModel = [CalendarMonth(year: currentMonth.year, monthNumber: currentMonth.month, monthName: currentMonth.name, days: days)]
+        let weekDay = getMonthWeekDay(year: currentMonth.year, month: currentMonth.month)
+        let skipCount = getSkipCount(weekDay, startDay: .monday)
+        monthModel = [CalendarMonth(year: currentMonth.year, monthNumber: currentMonth.month, monthName: currentMonth.name, days: days, skipCount: skipCount)]
         
+    }
+    
+    private func getMonthWeekDay(year: Int, month: Int) -> Int {
+        
+        let dateComponents = DateComponents(year: year, month: month)
+        let calendar = Calendar.current
+        if let date = calendar.date(from: dateComponents) {
+            let day = calendar.component(.weekday, from: date)
+            return day
+        }
+        return 0
+        
+    }
+    
+    private func getSkipCount(_ weekDayNo: Int, startDay: WeekStartDay) -> Int {
+        switch startDay {
+        case .monday:
+            return getCountForMonday(weekDayNo)
+        case .sunday:
+            return getCountForSunday(weekDayNo)
+        }
+    }
+    
+    func getCountForMonday(_ weekDayNo: Int) -> Int {
+        switch weekDayNo {
+        case 1:
+            return 6
+        case 2:
+            return 0
+        case 3:
+            return 1
+        case 4:
+            return 2
+        case 5:
+            return 3
+        case 6:
+            return 4
+        case 7:
+            return 5
+        default:
+            return 0
+        }
+    }
+    func getCountForSunday(_ weekDayNo: Int) -> Int {
+        switch weekDayNo {
+        case 1:
+            return 0
+        case 2:
+            return 1
+        case 3:
+            return 2
+        case 4:
+            return 3
+        case 5:
+            return 4
+        case 6:
+            return 5
+        case 7:
+            return 6
+        default:
+            return 0
+        }
     }
     
     private func getNumberOfDaysInMonth(year: Int, month: Int) -> Int {

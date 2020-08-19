@@ -32,6 +32,8 @@
 		069646B524EBE314008109E9 /* NewEntryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 069646B324EBE313008109E9 /* NewEntryVC.xib */; };
 		069646B924EBF18A008109E9 /* NewEntriesForDatesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646B724EBF18A008109E9 /* NewEntriesForDatesVC.swift */; };
 		069646BE24ED2876008109E9 /* EntryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646BD24ED2876008109E9 /* EntryPresenter.swift */; };
+		069646C324ED8999008109E9 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646C124ED8999008109E9 /* EmptyCell.swift */; };
+		069646C424ED8999008109E9 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 069646C224ED8999008109E9 /* EmptyCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,8 @@
 		069646B324EBE313008109E9 /* NewEntryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewEntryVC.xib; sourceTree = "<group>"; };
 		069646B724EBF18A008109E9 /* NewEntriesForDatesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEntriesForDatesVC.swift; sourceTree = "<group>"; };
 		069646BD24ED2876008109E9 /* EntryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryPresenter.swift; sourceTree = "<group>"; };
+		069646C124ED8999008109E9 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
+		069646C224ED8999008109E9 /* EmptyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +162,8 @@
 			children = (
 				0638E4B324E927F0006A5956 /* DayCell.swift */,
 				0638E4B424E927F0006A5956 /* DayCell.xib */,
+				069646C124ED8999008109E9 /* EmptyCell.swift */,
+				069646C224ED8999008109E9 /* EmptyCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -324,6 +330,7 @@
 			files = (
 				0638E4B624E927F0006A5956 /* DayCell.xib in Resources */,
 				069646A824EB0B5C008109E9 /* HoursCell.xib in Resources */,
+				069646C424ED8999008109E9 /* EmptyCell.xib in Resources */,
 				0675DBAD24E91C6700F3D65E /* LaunchScreen.storyboard in Resources */,
 				0675DBAA24E91C6700F3D65E /* Assets.xcassets in Resources */,
 				069646B524EBE314008109E9 /* NewEntryVC.xib in Resources */,
@@ -354,6 +361,7 @@
 				0696468E24E95BD7008109E9 /* DateModel.swift in Sources */,
 				0638E4B524E927F0006A5956 /* DayCell.swift in Sources */,
 				069646A224EB0950008109E9 /* AdminHoursListVC.swift in Sources */,
+				069646C324ED8999008109E9 /* EmptyCell.swift in Sources */,
 				0696468924E955BF008109E9 /* Appearance.swift in Sources */,
 				0675DBA124E91C6600F3D65E /* AppDelegate.swift in Sources */,
 				0638E4B124E925CF006A5956 /* AdminMonthsVC.swift in Sources */,

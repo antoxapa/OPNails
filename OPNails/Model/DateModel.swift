@@ -24,12 +24,14 @@ struct CalendarMonth: Equatable {
     var monthNumber: Int
     var year: Int
     var days: [CalendarDay] = [CalendarDay]()
+    var skipCount: Int
     
-    init(year: Int, monthNumber: Int, monthName: String, days: [CalendarDay]) {
+    init(year: Int, monthNumber: Int, monthName: String, days: [CalendarDay], skipCount: Int) {
         self.year = year
         self.monthNumber = monthNumber
         self.monthName = monthName
         self.days = days
+        self.skipCount = skipCount
     }
     
     static func == (lhs: CalendarMonth, rhs: CalendarMonth) -> Bool {

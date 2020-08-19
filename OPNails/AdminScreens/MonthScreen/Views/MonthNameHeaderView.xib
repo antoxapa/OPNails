@@ -43,7 +43,7 @@
                         <constraint firstAttribute="width" constant="100" id="sdo-CU-2Vt"/>
                         <constraint firstAttribute="height" constant="30" id="z02-zi-pBt"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="20"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>

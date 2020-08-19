@@ -16,34 +16,47 @@
                 <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WFr-kJ-HaV">
-                        <rect key="frame" x="35.5" y="40" width="29.5" height="20.5"/>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zfj-I1-sDE">
+                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FuL-3F-nnL">
-                                <rect key="frame" x="0.0" y="0.0" width="29.5" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WFr-kJ-HaV">
+                                <rect key="frame" x="36.5" y="40" width="27.5" height="20"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FuL-3F-nnL">
+                                        <rect key="frame" x="0.0" y="0.0" width="27.5" height="20"/>
+                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="FuL-3F-nnL" secondAttribute="trailing" id="L87-NH-01L"/>
+                                    <constraint firstItem="FuL-3F-nnL" firstAttribute="leading" secondItem="WFr-kJ-HaV" secondAttribute="leading" id="PjE-O8-jK8"/>
+                                    <constraint firstItem="FuL-3F-nnL" firstAttribute="top" secondItem="WFr-kJ-HaV" secondAttribute="top" id="dlU-xB-fJs"/>
+                                    <constraint firstAttribute="bottom" secondItem="FuL-3F-nnL" secondAttribute="bottom" id="eWM-Z0-FcT"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="FuL-3F-nnL" secondAttribute="trailing" id="L87-NH-01L"/>
-                            <constraint firstItem="FuL-3F-nnL" firstAttribute="leading" secondItem="WFr-kJ-HaV" secondAttribute="leading" id="PjE-O8-jK8"/>
-                            <constraint firstItem="FuL-3F-nnL" firstAttribute="top" secondItem="WFr-kJ-HaV" secondAttribute="top" id="dlU-xB-fJs"/>
-                            <constraint firstAttribute="bottom" secondItem="FuL-3F-nnL" secondAttribute="bottom" id="eWM-Z0-FcT"/>
+                            <constraint firstItem="WFr-kJ-HaV" firstAttribute="centerX" secondItem="Zfj-I1-sDE" secondAttribute="centerX" id="FdL-B4-2Ht"/>
+                            <constraint firstItem="WFr-kJ-HaV" firstAttribute="centerY" secondItem="Zfj-I1-sDE" secondAttribute="centerY" id="meX-6H-dLu"/>
                         </constraints>
                     </view>
                 </subviews>
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="WFr-kJ-HaV" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="hb9-n5-CGA"/>
-                <constraint firstItem="WFr-kJ-HaV" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="hqh-hr-tsC"/>
+                <constraint firstItem="Zfj-I1-sDE" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="1jE-ON-0y5"/>
+                <constraint firstItem="Zfj-I1-sDE" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Q6h-qU-XQb"/>
+                <constraint firstAttribute="trailing" secondItem="Zfj-I1-sDE" secondAttribute="trailing" id="V4O-om-LVR"/>
+                <constraint firstAttribute="bottom" secondItem="Zfj-I1-sDE" secondAttribute="bottom" id="x1S-OB-vvk"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="100" height="100"/>
             <connections>
+                <outlet property="borderView" destination="Zfj-I1-sDE" id="vBt-lQ-hGG"/>
                 <outlet property="dayLabel" destination="FuL-3F-nnL" id="rwB-0K-2vW"/>
                 <outlet property="todayView" destination="WFr-kJ-HaV" id="sQa-CH-wNi"/>
             </connections>

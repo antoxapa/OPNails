@@ -15,6 +15,7 @@ protocol MonthPresenterCollectionViewPresenting {
     func data(at row: Int) -> DayRowItem?
     func compare(item: DayRowItem) -> Bool
     func compareMonthYear(item: DayRowItem) -> Bool
+    func skipCount() -> Int
     
 }
 
@@ -23,6 +24,7 @@ protocol MonthPresenterHeaderViewUpdating {
     func showNextMonth()
     func showPreviousMonth()
     func showCurrentMonth()
+    func selectDays()
     
 }
 
@@ -51,24 +53,33 @@ extension MonthPresenter: MonthPresenterCollectionViewPresenting {
     
     func numberOfCells(in section: Int) -> Int {
         guard let count = monthModels.first?.days.count else { return 0 }
-        return count
+        guard let skipCount = monthModels.first?.skipCount else { return 0 }
+        return count + skipCount
     }
     
     func data(at row: Int) -> DayRowItem? {
+        if row < 0 {
+            return nil
+        }
         if let monthDate = monthModels.first {
-            
             let year = String(monthDate.year)
             let monthName = monthDate.monthName
             let monthNumber = monthDate.monthNumber
-            
             let days = monthDate.days[row]
             let dayName = String(days.day)
-            
             let user = days.isClient
             let isWorkday = days.isWorkDay
             return DayRowItem(year: year, month: monthName, day: dayName, monthNumber: monthNumber, client: user, isWorkday: isWorkday)
         }
         return nil
+    }
+    
+    func skipCount() -> Int {
+        if let monthDate = monthModels.first {
+            let skipCount = monthDate.skipCount
+            return skipCount
+        }
+        return 0
     }
     
     func compare(item: DayRowItem) -> Bool {
@@ -127,5 +138,9 @@ extension MonthPresenter: MonthPresenterHeaderViewUpdating {
         }
         view.reload()
         
+    }
+    
+    func selectDays() {
+        view.reload()
     }
 }
