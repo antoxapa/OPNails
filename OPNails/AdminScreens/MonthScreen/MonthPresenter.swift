@@ -8,21 +8,13 @@
 
 import Foundation
 
-struct DayRowItem {
-    let year: String
-    let month: String
-    let day: String
-    
-    let monthNumber: Int
-    let client: String?
-    let isWorkday: Bool?
-}
-
 protocol MonthPresenterCollectionViewPresenting {
     
     func numberOfCells(in section: Int) -> Int
     func didSelectCell(at row: Int) -> Void
     func data(at row: Int) -> DayRowItem?
+    func compare(item: DayRowItem) -> Bool
+    func compareMonthYear(item: DayRowItem) -> Bool
     
 }
 
@@ -30,8 +22,11 @@ protocol MonthPresenterHeaderViewUpdating {
     
     func showNextMonth()
     func showPreviousMonth()
+    func showCurrentMonth()
     
 }
+
+typealias MonthPresenting = MonthPresenterCollectionViewPresenting & MonthPresenterHeaderViewUpdating & PresenterLifecycle
 
 class MonthPresenter: PresenterLifecycle {
     
@@ -50,10 +45,6 @@ class MonthPresenter: PresenterLifecycle {
         monthModels = dateManager.showMonth()
     }
     
-    func load() {
-        
-    }
-    
 }
 
 extension MonthPresenter: MonthPresenterCollectionViewPresenting {
@@ -65,16 +56,33 @@ extension MonthPresenter: MonthPresenterCollectionViewPresenting {
     
     func data(at row: Int) -> DayRowItem? {
         if let monthDate = monthModels.first {
+            
             let year = String(monthDate.year)
-            let days = monthDate.days[row]
             let monthName = monthDate.monthName
             let monthNumber = monthDate.monthNumber
+            
+            let days = monthDate.days[row]
             let dayName = String(days.day)
+            
             let user = days.isClient
             let isWorkday = days.isWorkDay
             return DayRowItem(year: year, month: monthName, day: dayName, monthNumber: monthNumber, client: user, isWorkday: isWorkday)
         }
         return nil
+    }
+    
+    func compare(item: DayRowItem) -> Bool {
+        guard let date = dateManager.getDateFrom(year: Int(item.year)!, month: item.monthNumber, day: Int(item.day)!) else {
+            return false
+        }
+        return dateManager.compare(date: date)
+    }
+    
+    func compareMonthYear(item: DayRowItem) -> Bool {
+        guard let date = dateManager.getDateFrom(year: Int(item.year)!, month: item.monthNumber, day: Int(item.day)!) else {
+            return false
+        }
+        return dateManager.compareMonthYear(date: date)
     }
     
     func didSelectCell(at row: Int) {
@@ -104,6 +112,19 @@ extension MonthPresenter: MonthPresenterHeaderViewUpdating {
     func showPreviousMonth() {
         
         monthModels = dateManager.showPreviosMonth()
+        view.reload()
+        
+    }
+    
+    func showCurrentMonth() {
+        
+        if monthModels.first == dateManager.showCurrentMonth().first {
+            let item = dateManager.getValuesFromDate(date: Today.todayDate)
+            let rowItem = DayRowItem(year: String(item.year), month: item.name, day: String(item.day), monthNumber: item.month, client: nil, isWorkday: nil)
+            view.routeWithItem(item: rowItem)
+        } else {
+            monthModels = dateManager.showCurrentMonth()
+        }
         view.reload()
         
     }

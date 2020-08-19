@@ -10,23 +10,16 @@ import UIKit
 
 protocol HeaderMonthViewUpdatable {
     
-    func configure(withItem item: DayRowItem, presenter: MonthPresenter)
+    func configure(withItem item: DayRowItem, presenter: MonthPresenting)
     
 }
 
 final class MonthNameHeaderView: UICollectionReusableView, ReusableView, HeaderMonthViewUpdatable  {
     
-    @IBOutlet weak var monthNameLabel: UILabel! {
-        didSet {
-            monthNameLabel.textColor = .red
-        }
-    }
+    @IBOutlet weak var monthNameLabel: UILabel!
     @IBOutlet weak var leftButton: UIButton!
     
-    var presenter: MonthPresenter?
-    override func awakeFromNib() {
-        super.awakeFromNib()
-    }
+    var presenter: MonthPresenting?
     
     @IBAction func rightButtonPressed(_ sender: UIButton) {
         presenter?.showNextMonth()
@@ -37,9 +30,22 @@ final class MonthNameHeaderView: UICollectionReusableView, ReusableView, HeaderM
         presenter?.showPreviousMonth()
     }
     
-    func configure(withItem item: DayRowItem, presenter: MonthPresenter) {
+    func configure(withItem item: DayRowItem, presenter: MonthPresenting) {
+        
         monthNameLabel.text = "\(item.month), \(item.year)"
         self.presenter = presenter
+        
+    }
+    
+    func hideLeftButton() {
+        
+        leftButton.isHidden = true
+        
+    }
+    
+    func showLeftButton() {
+        
+        leftButton.isHidden = false
         
     }
 }

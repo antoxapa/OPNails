@@ -8,7 +8,19 @@
 
 import UIKit
 
+protocol AdminHoursViewUpdatable {
+    func reload()
+}
+
+protocol AdminHoursViewRoutable {
+    func showDetail()
+}
+
+typealias AdminHoursViewable = AdminHoursViewUpdatable & AdminHoursViewRoutable
+
 class AdminHoursListVC: UIViewController {
+    
+    lazy var presenter: HoursPresenting = HoursPresenter(view: self)
     
     private let hoursTableView = UITableView()
     var day: DayRowItem?
@@ -43,7 +55,7 @@ class AdminHoursListVC: UIViewController {
             hoursTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             hoursTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             
-            emptyLabel.centerYAnchor.constraint(equalTo: hoursTableView.centerYAnchor, constant: -60),
+            emptyLabel.centerYAnchor.constraint(equalTo: hoursTableView.centerYAnchor),
             emptyLabel.centerXAnchor.constraint(equalTo: hoursTableView.centerXAnchor),
         ])
         
@@ -59,13 +71,13 @@ class AdminHoursListVC: UIViewController {
     }
     
     @objc private func addNewEntry() {
-        
+        presenter.presentDetailVC()
     }
 }
 
 extension AdminHoursListVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
+        return presenter.numberOfCells(in: section)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -79,7 +91,17 @@ extension AdminHoursListVC: UITableViewDelegate, UITableViewDataSource {
     
 }
 
-extension AdminMonthsVC {
+extension AdminHoursListVC: AdminHoursViewRoutable {
+    func showDetail() {
+        let detailVC = NewEntryVC(nibName: "NewEntryVC", bundle: nil)
+        self.navigationController?.showDetailViewController(detailVC, sender: self)
+    }
+}
+
+extension AdminHoursListVC: AdminHoursViewUpdatable {
+    func reload() {
+        hoursTableView.reloadData()
+    }
     
     
 }

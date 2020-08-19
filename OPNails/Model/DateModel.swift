@@ -18,7 +18,8 @@ struct CalendarDay {
     }
 }
 
-struct CalendarMonth {
+struct CalendarMonth: Equatable {
+    
     var monthName: String
     var monthNumber: Int
     var year: Int
@@ -29,6 +30,10 @@ struct CalendarMonth {
         self.monthNumber = monthNumber
         self.monthName = monthName
         self.days = days
+    }
+    
+    static func == (lhs: CalendarMonth, rhs: CalendarMonth) -> Bool {
+        return lhs.monthName == rhs.monthName && lhs.year == rhs.year
     }
 }
 

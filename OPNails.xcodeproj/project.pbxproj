@@ -9,8 +9,8 @@
 /* Begin PBXBuildFile section */
 		0638E4AE24E9211A006A5956 /* MonthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0638E4AD24E9211A006A5956 /* MonthPresenter.swift */; };
 		0638E4B124E925CF006A5956 /* AdminMonthsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0638E4AF24E925CF006A5956 /* AdminMonthsVC.swift */; };
-		0638E4B524E927F0006A5956 /* MonthCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0638E4B324E927F0006A5956 /* MonthCell.swift */; };
-		0638E4B624E927F0006A5956 /* MonthCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0638E4B424E927F0006A5956 /* MonthCell.xib */; };
+		0638E4B524E927F0006A5956 /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0638E4B324E927F0006A5956 /* DayCell.swift */; };
+		0638E4B624E927F0006A5956 /* DayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0638E4B424E927F0006A5956 /* DayCell.xib */; };
 		0675DBA124E91C6600F3D65E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0675DBA024E91C6600F3D65E /* AppDelegate.swift */; };
 		0675DBA324E91C6600F3D65E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0675DBA224E91C6600F3D65E /* SceneDelegate.swift */; };
 		0675DBAA24E91C6700F3D65E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0675DBA924E91C6700F3D65E /* Assets.xcassets */; };
@@ -27,6 +27,11 @@
 		069646A724EB0B5C008109E9 /* HoursCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646A524EB0B5C008109E9 /* HoursCell.swift */; };
 		069646A824EB0B5C008109E9 /* HoursCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 069646A624EB0B5C008109E9 /* HoursCell.xib */; };
 		069646AA24EB315D008109E9 /* HoursPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646A924EB315D008109E9 /* HoursPresenter.swift */; };
+		069646AD24EBE07F008109E9 /* DayRowItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646AC24EBE07F008109E9 /* DayRowItemModel.swift */; };
+		069646B424EBE314008109E9 /* NewEntryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646B224EBE313008109E9 /* NewEntryVC.swift */; };
+		069646B524EBE314008109E9 /* NewEntryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 069646B324EBE313008109E9 /* NewEntryVC.xib */; };
+		069646B924EBF18A008109E9 /* NewEntriesForDatesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646B724EBF18A008109E9 /* NewEntriesForDatesVC.swift */; };
+		069646BE24ED2876008109E9 /* EntryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646BD24ED2876008109E9 /* EntryPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,8 +47,8 @@
 /* Begin PBXFileReference section */
 		0638E4AD24E9211A006A5956 /* MonthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthPresenter.swift; sourceTree = "<group>"; };
 		0638E4AF24E925CF006A5956 /* AdminMonthsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminMonthsVC.swift; sourceTree = "<group>"; };
-		0638E4B324E927F0006A5956 /* MonthCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthCell.swift; sourceTree = "<group>"; };
-		0638E4B424E927F0006A5956 /* MonthCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MonthCell.xib; sourceTree = "<group>"; };
+		0638E4B324E927F0006A5956 /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
+		0638E4B424E927F0006A5956 /* DayCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DayCell.xib; sourceTree = "<group>"; };
 		0675DB9D24E91C6600F3D65E /* OPNails.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OPNails.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0675DBA024E91C6600F3D65E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0675DBA224E91C6600F3D65E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -64,6 +69,11 @@
 		069646A524EB0B5C008109E9 /* HoursCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursCell.swift; sourceTree = "<group>"; };
 		069646A624EB0B5C008109E9 /* HoursCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HoursCell.xib; sourceTree = "<group>"; };
 		069646A924EB315D008109E9 /* HoursPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoursPresenter.swift; sourceTree = "<group>"; };
+		069646AC24EBE07F008109E9 /* DayRowItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayRowItemModel.swift; sourceTree = "<group>"; };
+		069646B224EBE313008109E9 /* NewEntryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEntryVC.swift; sourceTree = "<group>"; };
+		069646B324EBE313008109E9 /* NewEntryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewEntryVC.xib; sourceTree = "<group>"; };
+		069646B724EBF18A008109E9 /* NewEntriesForDatesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEntriesForDatesVC.swift; sourceTree = "<group>"; };
+		069646BD24ED2876008109E9 /* EntryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryPresenter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,8 +156,8 @@
 		0696468C24E95A92008109E9 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				0638E4B324E927F0006A5956 /* MonthCell.swift */,
-				0638E4B424E927F0006A5956 /* MonthCell.xib */,
+				0638E4B324E927F0006A5956 /* DayCell.swift */,
+				0638E4B424E927F0006A5956 /* DayCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -165,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				0696468D24E95BD7008109E9 /* DateModel.swift */,
+				069646AC24EBE07F008109E9 /* DayRowItemModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -204,10 +215,30 @@
 			children = (
 				069646A924EB315D008109E9 /* HoursPresenter.swift */,
 				069646A024EB0950008109E9 /* AdminHoursListVC.swift */,
+				069646B724EBF18A008109E9 /* NewEntriesForDatesVC.swift */,
+				069646B624EBF0E7008109E9 /* NewEntryScreen */,
+				069646AB24EBDF7E008109E9 /* Cells */,
+			);
+			path = HoursScreen;
+			sourceTree = "<group>";
+		};
+		069646AB24EBDF7E008109E9 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
 				069646A524EB0B5C008109E9 /* HoursCell.swift */,
 				069646A624EB0B5C008109E9 /* HoursCell.xib */,
 			);
-			path = HoursScreen;
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		069646B624EBF0E7008109E9 /* NewEntryScreen */ = {
+			isa = PBXGroup;
+			children = (
+				069646BD24ED2876008109E9 /* EntryPresenter.swift */,
+				069646B224EBE313008109E9 /* NewEntryVC.swift */,
+				069646B324EBE313008109E9 /* NewEntryVC.xib */,
+			);
+			path = NewEntryScreen;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -291,10 +322,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0638E4B624E927F0006A5956 /* MonthCell.xib in Resources */,
+				0638E4B624E927F0006A5956 /* DayCell.xib in Resources */,
 				069646A824EB0B5C008109E9 /* HoursCell.xib in Resources */,
 				0675DBAD24E91C6700F3D65E /* LaunchScreen.storyboard in Resources */,
 				0675DBAA24E91C6700F3D65E /* Assets.xcassets in Resources */,
+				069646B524EBE314008109E9 /* NewEntryVC.xib in Resources */,
 				0696469824E99B97008109E9 /* MonthNameHeaderView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -313,11 +345,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				069646B424EBE314008109E9 /* NewEntryVC.swift in Sources */,
+				069646AD24EBE07F008109E9 /* DayRowItemModel.swift in Sources */,
 				0696469224E97E8F008109E9 /* Presenter.swift in Sources */,
+				069646B924EBF18A008109E9 /* NewEntriesForDatesVC.swift in Sources */,
 				0696469424E998D2008109E9 /* ReusableView.swift in Sources */,
 				069646AA24EB315D008109E9 /* HoursPresenter.swift in Sources */,
 				0696468E24E95BD7008109E9 /* DateModel.swift in Sources */,
-				0638E4B524E927F0006A5956 /* MonthCell.swift in Sources */,
+				0638E4B524E927F0006A5956 /* DayCell.swift in Sources */,
 				069646A224EB0950008109E9 /* AdminHoursListVC.swift in Sources */,
 				0696468924E955BF008109E9 /* Appearance.swift in Sources */,
 				0675DBA124E91C6600F3D65E /* AppDelegate.swift in Sources */,
@@ -327,6 +362,7 @@
 				069646A724EB0B5C008109E9 /* HoursCell.swift in Sources */,
 				0638E4AE24E9211A006A5956 /* MonthPresenter.swift in Sources */,
 				0675DBA324E91C6600F3D65E /* SceneDelegate.swift in Sources */,
+				069646BE24ED2876008109E9 /* EntryPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

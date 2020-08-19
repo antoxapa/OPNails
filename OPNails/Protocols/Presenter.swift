@@ -10,5 +10,4 @@ import Foundation
 
 protocol PresenterLifecycle {
     func setup()
-    func load()
 }

@@ -27,7 +27,7 @@ class AdminMonthsVC: UIViewController {
         return monthsCollectionView
     }()
     
-    lazy var presenter = MonthPresenter(view: self)
+    lazy var presenter: MonthPresenting = MonthPresenter(view: self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,11 +35,14 @@ class AdminMonthsVC: UIViewController {
         
         setupNavBar()
         
+        setupToolBar()
+        
         presenter.setup()
+        
     }
     
     private func setupViews() {
-        monthsCollectionView.register(UINib(nibName: "MonthCell", bundle: nil), forCellWithReuseIdentifier: "MonthCell")
+        monthsCollectionView.register(UINib(nibName: "DayCell", bundle: nil), forCellWithReuseIdentifier: "DayCell")
         monthsCollectionView.register(UINib(nibName: "MonthNameHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "MonthHeader")
         
         monthsCollectionView.delegate = self
@@ -55,11 +58,25 @@ class AdminMonthsVC: UIViewController {
         ])
     }
     
+    
     private func setupNavBar() {
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(self.addEntries))
         
     }
+    
+    private func setupToolBar() {
+        let today = UIBarButtonItem(title: "Today", style: UIBarButtonItem.Style.plain, target: self, action: #selector(showToday))
+        //        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showToday))
+        //        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        self.setToolbarItems([today], animated: true)
+        self.navigationController?.setToolbarHidden(false, animated: false)
+    }
+    
+    @objc private func showToday() {
+        presenter.showCurrentMonth()
+    }
+    
     
     @objc private func addEntries() {
         
@@ -73,10 +90,17 @@ extension AdminMonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MonthCell", for: indexPath) as? MonthCell else { return UICollectionViewCell() }
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DayCell", for: indexPath) as? DayCell else { return UICollectionViewCell() }
         
         if let item = presenter.data(at: indexPath.row) {
             cell.configure(withItem: item)
+            
+            if presenter.compare(item: item) {
+                cell.setupToday()
+            } else {
+                cell.setupDefault()
+            }
+            
         }
         
         return cell
@@ -86,6 +110,12 @@ extension AdminMonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         if let item = presenter.data(at: indexPath.row) {
             headerView.configure(withItem: item, presenter: presenter)
+            
+            if presenter.compareMonthYear(item: item) {
+                headerView.hideLeftButton()
+            } else {
+                headerView.showLeftButton()
+            }
         }
         
         return headerView
