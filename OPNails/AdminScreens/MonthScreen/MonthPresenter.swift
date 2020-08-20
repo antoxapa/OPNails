@@ -143,4 +143,8 @@ extension MonthPresenter: MonthPresenterHeaderViewUpdating {
     func selectDays() {
         view.reload()
     }
+    
+    func addNewEntries(forDays days: [IndexPath]) {
+        
+    }
 }

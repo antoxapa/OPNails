@@ -53,6 +53,7 @@ class AdminMonthsVC: UIViewController {
         
         monthsCollectionView.delegate = self
         monthsCollectionView.dataSource = self
+        monthsCollectionView.allowsMultipleSelection = true
         
         self.view.addSubview(monthsCollectionView)
         monthsCollectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -67,12 +68,14 @@ class AdminMonthsVC: UIViewController {
     
     private func setupNavBar() {
         
+        self.navigationItem.hidesBackButton = true
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(self.addEntries))
         
     }
     
     private func setupToolBar() {
-        let today = UIBarButtonItem(title: "Today", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.addEntries))
+        let today = UIBarButtonItem(title: "Today", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.showToday))
         self.setToolbarItems([today], animated: true)
         
         
@@ -83,7 +86,7 @@ class AdminMonthsVC: UIViewController {
         presenter.showCurrentMonth()
     }
     @objc private func addNewEntry() {
-        //        presenter.showCurrentMonth()
+        
     }
     
     
@@ -92,12 +95,12 @@ class AdminMonthsVC: UIViewController {
         isSelectStateActive = !isSelectStateActive
         if isSelectStateActive {
             let add = UIBarButtonItem(title: "Add time", style: .plain, target: self, action: #selector(self.addNewEntry))
-            add.tintColor = .gray
+            add.isEnabled = false
             let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
             self.setToolbarItems([spacer ,spacer, add, spacer,spacer], animated: true)
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: self, action: #selector(self.addEntries))
         } else {
-            let today = UIBarButtonItem(title: "Today", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.addEntries))
+            let today = UIBarButtonItem(title: "Today", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.showToday))
             self.setToolbarItems([today], animated: true)
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(self.addEntries))
         }
@@ -159,8 +162,19 @@ extension AdminMonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
             presenter.didSelectCell(at: indexPath.row - presenter.skipCount())
         } else {
             if let cell = collectionView.cellForItem(at: indexPath) as? DayCell {
-                cell.isSelectedState ? cell.setUnselectedState() : cell.setSelectedState()
+                cell.isSelected ? cell.setSelectedState() : cell.setUnselectedState()
+                if collectionView.indexPathsForSelectedItems?.count != 0 {
+                    guard let items = self.toolbarItems else { return }
+                    items[2].isEnabled = true
+                }
             }
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+        if collectionView.indexPathsForSelectedItems?.count == 0 {
+            guard let items = self.toolbarItems else { return }
+            items[2].isEnabled = false
         }
     }
     

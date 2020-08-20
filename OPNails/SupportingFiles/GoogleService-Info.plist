@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>343403573580-d221lil6o6utqda3ugrphjq3dfpsuim9.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.343403573580-d221lil6o6utqda3ugrphjq3dfpsuim9</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBfUA5EWxzhV2tN75s9qLdd_L0TWGxX4Us</string>
+	<key>GCM_SENDER_ID</key>
+	<string>343403573580</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>TPP.OPNails</string>
+	<key>PROJECT_ID</key>
+	<string>opnails-e2ce4</string>
+	<key>STORAGE_BUCKET</key>
+	<string>opnails-e2ce4.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:343403573580:ios:901288f8eede664eb49fe9</string>
+	<key>DATABASE_URL</key>
+	<string>https://opnails-e2ce4.firebaseio.com</string>
+</dict>
+</plist>

@@ -3,10 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0613D30024EE71A7002785AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0613D2FF24EE71A7002785AB /* GoogleService-Info.plist */; };
 		0638E4AE24E9211A006A5956 /* MonthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0638E4AD24E9211A006A5956 /* MonthPresenter.swift */; };
 		0638E4B124E925CF006A5956 /* AdminMonthsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0638E4AF24E925CF006A5956 /* AdminMonthsVC.swift */; };
 		0638E4B524E927F0006A5956 /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0638E4B324E927F0006A5956 /* DayCell.swift */; };
@@ -34,6 +35,12 @@
 		069646BE24ED2876008109E9 /* EntryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646BD24ED2876008109E9 /* EntryPresenter.swift */; };
 		069646C324ED8999008109E9 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646C124ED8999008109E9 /* EmptyCell.swift */; };
 		069646C424ED8999008109E9 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 069646C224ED8999008109E9 /* EmptyCell.xib */; };
+		06DF79F924EE8F51001F7FF1 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DF79F724EE8F51001F7FF1 /* LoginVC.swift */; };
+		06DF79FA24EE8F51001F7FF1 /* LoginVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06DF79F824EE8F51001F7FF1 /* LoginVC.xib */; };
+		06DF79FC24EE9AF8001F7FF1 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DF79FB24EE9AF8001F7FF1 /* LoginPresenter.swift */; };
+		06DF79FE24EEAEE6001F7FF1 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DF79FD24EEAEE6001F7FF1 /* LoginManager.swift */; };
+		3587DB117182B06719BDBC94 /* Pods_OPNails.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3540BF450704A635BCE84B /* Pods_OPNails.framework */; };
+		C11E2488A0B929F821892FAA /* Pods_OPNailsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6099ABD8F0F6BBEC5679757A /* Pods_OPNailsTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,10 +54,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0613D2FF24EE71A7002785AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0638E4AD24E9211A006A5956 /* MonthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthPresenter.swift; sourceTree = "<group>"; };
 		0638E4AF24E925CF006A5956 /* AdminMonthsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminMonthsVC.swift; sourceTree = "<group>"; };
 		0638E4B324E927F0006A5956 /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
 		0638E4B424E927F0006A5956 /* DayCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DayCell.xib; sourceTree = "<group>"; };
+		0660B52D0DB9045A2E3DA871 /* Pods-OPNails.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OPNails.release.xcconfig"; path = "Target Support Files/Pods-OPNails/Pods-OPNails.release.xcconfig"; sourceTree = "<group>"; };
 		0675DB9D24E91C6600F3D65E /* OPNails.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OPNails.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0675DBA024E91C6600F3D65E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0675DBA224E91C6600F3D65E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -78,6 +87,15 @@
 		069646BD24ED2876008109E9 /* EntryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryPresenter.swift; sourceTree = "<group>"; };
 		069646C124ED8999008109E9 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
 		069646C224ED8999008109E9 /* EmptyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
+		06DF79F724EE8F51001F7FF1 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		06DF79F824EE8F51001F7FF1 /* LoginVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginVC.xib; sourceTree = "<group>"; };
+		06DF79FB24EE9AF8001F7FF1 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
+		06DF79FD24EEAEE6001F7FF1 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
+		1E3540BF450704A635BCE84B /* Pods_OPNails.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OPNails.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		28F9B780D134CBA7F86902B1 /* Pods-OPNailsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OPNailsTests.debug.xcconfig"; path = "Target Support Files/Pods-OPNailsTests/Pods-OPNailsTests.debug.xcconfig"; sourceTree = "<group>"; };
+		6099ABD8F0F6BBEC5679757A /* Pods_OPNailsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OPNailsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A75FCB363F44AACC9DF6B621 /* Pods-OPNails.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OPNails.debug.xcconfig"; path = "Target Support Files/Pods-OPNails/Pods-OPNails.debug.xcconfig"; sourceTree = "<group>"; };
+		FB67019C92EBA41B8D59547B /* Pods-OPNailsTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OPNailsTests.release.xcconfig"; path = "Target Support Files/Pods-OPNailsTests/Pods-OPNailsTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3587DB117182B06719BDBC94 /* Pods_OPNails.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -92,6 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C11E2488A0B929F821892FAA /* Pods_OPNailsTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +124,8 @@
 				0675DB9F24E91C6600F3D65E /* OPNails */,
 				0675DBB624E91C6700F3D65E /* OPNailsTests */,
 				0675DB9E24E91C6600F3D65E /* Products */,
+				F90CE7415D36C4D64BD0A8AD /* Pods */,
+				26C5B6BFC4F458550E7FBE2E /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -142,6 +164,9 @@
 			children = (
 				0696468B24E95A85008109E9 /* MonthScreen */,
 				069646A424EB0959008109E9 /* HoursScreen */,
+				06DF79FB24EE9AF8001F7FF1 /* LoginPresenter.swift */,
+				06DF79F724EE8F51001F7FF1 /* LoginVC.swift */,
+				06DF79F824EE8F51001F7FF1 /* LoginVC.xib */,
 			);
 			path = AdminScreens;
 			sourceTree = "<group>";
@@ -195,6 +220,7 @@
 				0675DBA924E91C6700F3D65E /* Assets.xcassets */,
 				0675DBAB24E91C6700F3D65E /* LaunchScreen.storyboard */,
 				0675DBAE24E91C6700F3D65E /* Info.plist */,
+				0613D2FF24EE71A7002785AB /* GoogleService-Info.plist */,
 			);
 			path = SupportingFiles;
 			sourceTree = "<group>";
@@ -203,6 +229,7 @@
 			isa = PBXGroup;
 			children = (
 				0696468F24E95C04008109E9 /* DateManager.swift */,
+				06DF79FD24EEAEE6001F7FF1 /* LoginManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -247,6 +274,26 @@
 			path = NewEntryScreen;
 			sourceTree = "<group>";
 		};
+		26C5B6BFC4F458550E7FBE2E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				1E3540BF450704A635BCE84B /* Pods_OPNails.framework */,
+				6099ABD8F0F6BBEC5679757A /* Pods_OPNailsTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F90CE7415D36C4D64BD0A8AD /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A75FCB363F44AACC9DF6B621 /* Pods-OPNails.debug.xcconfig */,
+				0660B52D0DB9045A2E3DA871 /* Pods-OPNails.release.xcconfig */,
+				28F9B780D134CBA7F86902B1 /* Pods-OPNailsTests.debug.xcconfig */,
+				FB67019C92EBA41B8D59547B /* Pods-OPNailsTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -254,9 +301,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0675DBBC24E91C6700F3D65E /* Build configuration list for PBXNativeTarget "OPNails" */;
 			buildPhases = (
+				E46B420C04A8FAE2C7CC68B6 /* [CP] Check Pods Manifest.lock */,
 				0675DB9924E91C6600F3D65E /* Sources */,
 				0675DB9A24E91C6600F3D65E /* Frameworks */,
 				0675DB9B24E91C6600F3D65E /* Resources */,
+				1071197F580CEE81CB32890D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -271,6 +320,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0675DBBF24E91C6700F3D65E /* Build configuration list for PBXNativeTarget "OPNailsTests" */;
 			buildPhases = (
+				060710448045C5A5D58AFBF0 /* [CP] Check Pods Manifest.lock */,
 				0675DBAF24E91C6700F3D65E /* Sources */,
 				0675DBB024E91C6700F3D65E /* Frameworks */,
 				0675DBB124E91C6700F3D65E /* Resources */,
@@ -329,10 +379,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				0638E4B624E927F0006A5956 /* DayCell.xib in Resources */,
+				0613D30024EE71A7002785AB /* GoogleService-Info.plist in Resources */,
 				069646A824EB0B5C008109E9 /* HoursCell.xib in Resources */,
 				069646C424ED8999008109E9 /* EmptyCell.xib in Resources */,
 				0675DBAD24E91C6700F3D65E /* LaunchScreen.storyboard in Resources */,
 				0675DBAA24E91C6700F3D65E /* Assets.xcassets in Resources */,
+				06DF79FA24EE8F51001F7FF1 /* LoginVC.xib in Resources */,
 				069646B524EBE314008109E9 /* NewEntryVC.xib in Resources */,
 				0696469824E99B97008109E9 /* MonthNameHeaderView.xib in Resources */,
 			);
@@ -347,6 +399,70 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		060710448045C5A5D58AFBF0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OPNailsTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1071197F580CEE81CB32890D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OPNails/Pods-OPNails-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-OPNails/Pods-OPNails-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-OPNails/Pods-OPNails-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E46B420C04A8FAE2C7CC68B6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-OPNails-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		0675DB9924E91C6600F3D65E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -359,13 +475,16 @@
 				0696469424E998D2008109E9 /* ReusableView.swift in Sources */,
 				069646AA24EB315D008109E9 /* HoursPresenter.swift in Sources */,
 				0696468E24E95BD7008109E9 /* DateModel.swift in Sources */,
+				06DF79FE24EEAEE6001F7FF1 /* LoginManager.swift in Sources */,
 				0638E4B524E927F0006A5956 /* DayCell.swift in Sources */,
 				069646A224EB0950008109E9 /* AdminHoursListVC.swift in Sources */,
+				06DF79FC24EE9AF8001F7FF1 /* LoginPresenter.swift in Sources */,
 				069646C324ED8999008109E9 /* EmptyCell.swift in Sources */,
 				0696468924E955BF008109E9 /* Appearance.swift in Sources */,
 				0675DBA124E91C6600F3D65E /* AppDelegate.swift in Sources */,
 				0638E4B124E925CF006A5956 /* AdminMonthsVC.swift in Sources */,
 				0696469024E95C04008109E9 /* DateManager.swift in Sources */,
+				06DF79F924EE8F51001F7FF1 /* LoginVC.swift in Sources */,
 				0696469724E99B97008109E9 /* MonthNameHeaderView.swift in Sources */,
 				069646A724EB0B5C008109E9 /* HoursCell.swift in Sources */,
 				0638E4AE24E9211A006A5956 /* MonthPresenter.swift in Sources */,
@@ -520,6 +639,7 @@
 		};
 		0675DBBD24E91C6700F3D65E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A75FCB363F44AACC9DF6B621 /* Pods-OPNails.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -538,6 +658,7 @@
 		};
 		0675DBBE24E91C6700F3D65E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0660B52D0DB9045A2E3DA871 /* Pods-OPNails.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -556,6 +677,7 @@
 		};
 		0675DBC024E91C6700F3D65E /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 28F9B780D134CBA7F86902B1 /* Pods-OPNailsTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -578,6 +700,7 @@
 		};
 		0675DBC124E91C6700F3D65E /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = FB67019C92EBA41B8D59547B /* Pods-OPNailsTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";

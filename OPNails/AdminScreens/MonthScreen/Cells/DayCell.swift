@@ -14,7 +14,6 @@ class DayCell: UICollectionViewCell, ReusableView {
     @IBOutlet private weak var todayView: UIView!
     @IBOutlet private weak var borderView: UIView!
     
-    var isSelectedState: Bool = false
     
     func configure(withItem item: DayRowItem) {
         dayLabel.text = item.day
@@ -32,12 +31,13 @@ class DayCell: UICollectionViewCell, ReusableView {
         todayView.clipsToBounds = true
         todayView.backgroundColor = .red
         dayLabel.textColor = .white
+        
     }
     
     func setupDefault() {
         
         todayView.backgroundColor = .white
-        //        dayLabel.textColor = .black
+        
     }
     
     func selectModeActivate() {
@@ -59,14 +59,14 @@ class DayCell: UICollectionViewCell, ReusableView {
     }
     
     func setSelectedState() {
-        isSelectedState = !isSelectedState
+
         borderView.transform = .init(scaleX: 0.8, y: 0.8)
         self.contentView.backgroundColor = .orange
         
     }
     
     func setUnselectedState() {
-        isSelectedState = !isSelectedState
+        
         borderView.transform = .identity
         self.contentView.backgroundColor = .clear
         

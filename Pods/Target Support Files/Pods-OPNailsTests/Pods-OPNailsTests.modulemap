@@ -1,0 +1,6 @@
+framework module Pods_OPNailsTests {
+  umbrella header "Pods-OPNailsTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
