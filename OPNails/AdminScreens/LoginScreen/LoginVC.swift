@@ -8,13 +8,20 @@
 
 import UIKit
 
+
 protocol LoginViewRoutable {
+    
     func showRegistration()
-    func showMainScreen()
+    func showMainScreen(animated: Bool)
     func showAdminScreen()
+    
 }
 
-typealias LoginViewable = LoginViewRoutable
+protocol LoginViewPresentable {
+    func showAlertController(withTitle text: String, message: String)
+}
+
+typealias LoginViewable = LoginViewRoutable & LoginViewPresentable
 
 class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
@@ -58,12 +65,11 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        emailTF.delegate = self
-        passwordTF.delegate = self
+        setupViews()
         
-        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
-    
         setupNavBar()
+        
+//        presenter.checkUserLogged()
         
     }
     
@@ -85,14 +91,31 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
         
     }
     
+    private func setupViews() {
+        
+        emailTF.delegate = self
+        passwordTF.delegate = self
+        
+        self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
+        
+    }
+    
     @IBAction func loginButtonPressed(_ sender: UIButton) {
         
-        presenter.routeTo(admin: false)
+        guard let email = emailTF.text, let password = passwordTF.text, emailTF.text != "", passwordTF.text != "" else {
+            let title = "Ooops!"
+            let message = "Please enter correct login or password"
+            presenter.showErrorAC(withTitle: title, message: message)
+            return
+        }
+        
+        presenter.signIn(email: email, password: password)
         
     }
     
     @IBAction func registerButtonPressed(_ sender: UIButton) {
         
+        presenter.routeToRegisterScreen()
         
     }
     
@@ -110,10 +133,10 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
 
 extension LoginVC: LoginViewRoutable {
     
-    func showMainScreen() {
+    func showMainScreen(animated: Bool) {
         
         let vc = AdminMonthsVC()
-        self.navigationController?.pushViewController(vc, animated: true)
+        self.navigationController?.pushViewController(vc, animated: animated)
         
     }
     
@@ -124,7 +147,24 @@ extension LoginVC: LoginViewRoutable {
     
     func showRegistration() {
         
+        
+        let registrationVC = RegistrationVC(nibName: "RegistrationVC", bundle: nil)
+        presenter.registrationDelegate(view: registrationVC)
+        
+        self.navigationController?.pushViewController(registrationVC, animated: true)
+        registrationVC.presenter = presenter
+        
     }
     
+}
+
+extension LoginVC: LoginViewPresentable {
+    
+    func showAlertController(withTitle text: String, message: String) {
+        let ac = UIAlertController(title: text, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        ac.addAction(okAction)
+        self.present(ac, animated: true)
+    }
 }
 

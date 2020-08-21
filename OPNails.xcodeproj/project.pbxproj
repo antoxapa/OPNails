@@ -39,6 +39,8 @@
 		06DF79FA24EE8F51001F7FF1 /* LoginVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06DF79F824EE8F51001F7FF1 /* LoginVC.xib */; };
 		06DF79FC24EE9AF8001F7FF1 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DF79FB24EE9AF8001F7FF1 /* LoginPresenter.swift */; };
 		06DF79FE24EEAEE6001F7FF1 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DF79FD24EEAEE6001F7FF1 /* LoginManager.swift */; };
+		06DF7A0224EFF90C001F7FF1 /* RegistrationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DF7A0024EFF90C001F7FF1 /* RegistrationVC.swift */; };
+		06DF7A0324EFF90C001F7FF1 /* RegistrationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06DF7A0124EFF90C001F7FF1 /* RegistrationVC.xib */; };
 		3587DB117182B06719BDBC94 /* Pods_OPNails.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3540BF450704A635BCE84B /* Pods_OPNails.framework */; };
 		C11E2488A0B929F821892FAA /* Pods_OPNailsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6099ABD8F0F6BBEC5679757A /* Pods_OPNailsTests.framework */; };
 /* End PBXBuildFile section */
@@ -91,6 +93,8 @@
 		06DF79F824EE8F51001F7FF1 /* LoginVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginVC.xib; sourceTree = "<group>"; };
 		06DF79FB24EE9AF8001F7FF1 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		06DF79FD24EEAEE6001F7FF1 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
+		06DF7A0024EFF90C001F7FF1 /* RegistrationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationVC.swift; sourceTree = "<group>"; };
+		06DF7A0124EFF90C001F7FF1 /* RegistrationVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegistrationVC.xib; sourceTree = "<group>"; };
 		1E3540BF450704A635BCE84B /* Pods_OPNails.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OPNails.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		28F9B780D134CBA7F86902B1 /* Pods-OPNailsTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OPNailsTests.debug.xcconfig"; path = "Target Support Files/Pods-OPNailsTests/Pods-OPNailsTests.debug.xcconfig"; sourceTree = "<group>"; };
 		6099ABD8F0F6BBEC5679757A /* Pods_OPNailsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OPNailsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,9 +168,7 @@
 			children = (
 				0696468B24E95A85008109E9 /* MonthScreen */,
 				069646A424EB0959008109E9 /* HoursScreen */,
-				06DF79FB24EE9AF8001F7FF1 /* LoginPresenter.swift */,
-				06DF79F724EE8F51001F7FF1 /* LoginVC.swift */,
-				06DF79F824EE8F51001F7FF1 /* LoginVC.xib */,
+				06DF79FF24EFF89C001F7FF1 /* LoginScreen */,
 			);
 			path = AdminScreens;
 			sourceTree = "<group>";
@@ -272,6 +274,26 @@
 				069646B324EBE313008109E9 /* NewEntryVC.xib */,
 			);
 			path = NewEntryScreen;
+			sourceTree = "<group>";
+		};
+		06DF79FF24EFF89C001F7FF1 /* LoginScreen */ = {
+			isa = PBXGroup;
+			children = (
+				06DF79FB24EE9AF8001F7FF1 /* LoginPresenter.swift */,
+				06DF79F724EE8F51001F7FF1 /* LoginVC.swift */,
+				06DF79F824EE8F51001F7FF1 /* LoginVC.xib */,
+				06DF7A0424EFF90F001F7FF1 /* RegistrationScreen */,
+			);
+			path = LoginScreen;
+			sourceTree = "<group>";
+		};
+		06DF7A0424EFF90F001F7FF1 /* RegistrationScreen */ = {
+			isa = PBXGroup;
+			children = (
+				06DF7A0024EFF90C001F7FF1 /* RegistrationVC.swift */,
+				06DF7A0124EFF90C001F7FF1 /* RegistrationVC.xib */,
+			);
+			path = RegistrationScreen;
 			sourceTree = "<group>";
 		};
 		26C5B6BFC4F458550E7FBE2E /* Frameworks */ = {
@@ -381,6 +403,7 @@
 				0638E4B624E927F0006A5956 /* DayCell.xib in Resources */,
 				0613D30024EE71A7002785AB /* GoogleService-Info.plist in Resources */,
 				069646A824EB0B5C008109E9 /* HoursCell.xib in Resources */,
+				06DF7A0324EFF90C001F7FF1 /* RegistrationVC.xib in Resources */,
 				069646C424ED8999008109E9 /* EmptyCell.xib in Resources */,
 				0675DBAD24E91C6700F3D65E /* LaunchScreen.storyboard in Resources */,
 				0675DBAA24E91C6700F3D65E /* Assets.xcassets in Resources */,
@@ -478,6 +501,7 @@
 				06DF79FE24EEAEE6001F7FF1 /* LoginManager.swift in Sources */,
 				0638E4B524E927F0006A5956 /* DayCell.swift in Sources */,
 				069646A224EB0950008109E9 /* AdminHoursListVC.swift in Sources */,
+				06DF7A0224EFF90C001F7FF1 /* RegistrationVC.swift in Sources */,
 				06DF79FC24EE9AF8001F7FF1 /* LoginPresenter.swift in Sources */,
 				069646C324ED8999008109E9 /* EmptyCell.swift in Sources */,
 				0696468924E955BF008109E9 /* Appearance.swift in Sources */,
