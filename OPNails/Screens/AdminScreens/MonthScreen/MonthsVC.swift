@@ -8,17 +8,7 @@
 
 import UIKit
 
-protocol AdminMonthViewUpdatable {
-    func reload()
-}
-
-protocol AdminMonthViewRoutable {
-    func routeWithItem(item: DayRowItem)
-}
-
-typealias AdminMonthViewable = AdminMonthViewUpdatable & AdminMonthViewRoutable
-
-class AdminMonthsVC: UIViewController {
+class MonthsVC: UIViewController {
     
     private let monthsCollectionView: UICollectionView = {
         let viewLayout = UICollectionViewFlowLayout()
@@ -29,9 +19,11 @@ class AdminMonthsVC: UIViewController {
     
     lazy var presenter: MonthPresenting = MonthPresenter(view: self)
     var isSelectStateActive: Bool = false
+    var adminUser: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupViews()
         
         setupNavBar()
@@ -44,10 +36,13 @@ class AdminMonthsVC: UIViewController {
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         monthsCollectionView.collectionViewLayout.invalidateLayout()
+        monthsCollectionView.reloadData()
     }
     
     private func setupViews() {
         monthsCollectionView.register(UINib(nibName: "DayCell", bundle: nil), forCellWithReuseIdentifier: "DayCell")
+//        monthsCollectionView.register(DayCell.self, forCellWithReuseIdentifier: "DayCell")
+//        monthsCollectionView.register(EmptyCell.self, forCellWithReuseIdentifier: "EmptyCell")
         monthsCollectionView.register(UINib(nibName: "EmptyCell", bundle: nil), forCellWithReuseIdentifier: "EmptyCell")
         monthsCollectionView.register(UINib(nibName: "MonthNameHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "MonthHeader")
         
@@ -69,21 +64,27 @@ class AdminMonthsVC: UIViewController {
     private func setupNavBar() {
         
         self.navigationItem.hidesBackButton = true
+        
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(self.addEntries))
+        
+        if adminUser {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(self.addEntries))
+        }
         
     }
     
     private func setupToolBar() {
+        
         let today = UIBarButtonItem(title: "Today", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.showToday))
         self.setToolbarItems([today], animated: true)
-        
-        
         self.navigationController?.setToolbarHidden(false, animated: false)
+        
     }
     
     @objc private func showToday() {
+        
         presenter.showCurrentMonth()
+        
     }
     @objc private func addNewEntry() {
         
@@ -104,11 +105,11 @@ class AdminMonthsVC: UIViewController {
             self.setToolbarItems([today], animated: true)
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(self.addEntries))
         }
-        presenter.selectDays()
+        presenter.selectDays(indexPath: monthsCollectionView.indexPathsForSelectedItems)
     }
 }
 
-extension AdminMonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
+extension MonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return presenter.numberOfCells(in: section)
     }
@@ -141,6 +142,7 @@ extension AdminMonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MonthHeader", for: indexPath) as? MonthNameHeaderView else { return UICollectionReusableView() }
         
@@ -193,10 +195,9 @@ extension AdminMonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
             }
         }
     }
-    
 }
 
-extension AdminMonthsVC: UICollectionViewDelegateFlowLayout {
+extension MonthsVC: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
@@ -220,18 +221,25 @@ extension AdminMonthsVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension AdminMonthsVC: AdminMonthViewUpdatable {
+extension MonthsVC: MonthViewUpdatable {
+    
     func reload() {
         monthsCollectionView.reloadData()
+    }
+    func reloadItemAt(indexPath: [IndexPath]?) {
+        guard let index = indexPath else { return }
+        monthsCollectionView.reloadItems(at: index)
     }
     
 }
 
 // Not shure this is right for MVP
-extension AdminMonthsVC: AdminMonthViewRoutable {
+extension MonthsVC: MonthViewRoutable {
+    
     func routeWithItem(item day: DayRowItem) {
         let dayVC = AdminHoursListVC()
         dayVC.day = day
+        dayVC.admin = adminUser
         
         self.navigationController?.pushViewController(dayVC, animated: true)
     }

@@ -128,7 +128,7 @@ extension RegistrationVC: RegistrationViewRouting {
     
     func showMainScreen() {
         
-        let vc = AdminMonthsVC()
+        let vc = MonthsVC()
         self.navigationController?.pushViewController(vc, animated: true)
         
     }

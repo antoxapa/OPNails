@@ -53,7 +53,7 @@ extension LoginPresenter: LoginRoutable {
     
     func routeToMainScreen(admin: Bool, animated: Bool) {
         
-        view.showMainScreen(animated: animated)
+        view.showMainScreen(admin: admin, animated: animated)
         
     }
     

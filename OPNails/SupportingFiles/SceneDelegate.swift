@@ -24,8 +24,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
        
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        let loginVC = LoginVC()
-        window?.rootViewController = UINavigationController(rootViewController: loginVC)
+//        let loginVC = LoginVC()
+        let mainVC = MonthsVC()
+        mainVC.adminUser = true
+        window?.rootViewController = UINavigationController(rootViewController: mainVC)
         
         Appearance.setup()
         window?.makeKeyAndVisible()

@@ -24,7 +24,7 @@ protocol MonthPresenterHeaderViewUpdating {
     func showNextMonth()
     func showPreviousMonth()
     func showCurrentMonth()
-    func selectDays()
+    func selectDays(indexPath: [IndexPath]?)
     
 }
 
@@ -32,12 +32,12 @@ typealias MonthPresenting = MonthPresenterCollectionViewPresenting & MonthPresen
 
 class MonthPresenter: PresenterLifecycle {
     
-    private var view: AdminMonthViewable
+    private var view: MonthViewable
     private var header: HeaderMonthViewUpdatable?
     private var dateManager: DateManager
     private var monthModels: [CalendarMonth]
     
-    init(view: AdminMonthViewable) {
+    init(view: MonthViewable) {
         self.view = view
         self.dateManager = DateManager()
         self.monthModels = []
@@ -140,7 +140,7 @@ extension MonthPresenter: MonthPresenterHeaderViewUpdating {
         
     }
     
-    func selectDays() {
+    func selectDays(indexPath: [IndexPath]?) {
         view.reload()
     }
     

@@ -34,7 +34,11 @@ class LoginManager {
                 self?.presenter.showErrorAC(withTitle: title, message: error!.localizedDescription)
             }
             if user != nil {
-                self?.presenter.routeToMainScreen(admin: true, animated: true)
+                var admin: Bool = false
+                if email == "antoxapa@gmail.com" {
+                    admin = true
+                }
+                self?.presenter.routeToMainScreen(admin: admin, animated: true)
             } else {
                 let title = "Error"
                 let message = "No such user"

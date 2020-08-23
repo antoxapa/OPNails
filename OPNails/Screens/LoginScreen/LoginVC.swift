@@ -12,7 +12,7 @@ import UIKit
 protocol LoginViewRoutable {
     
     func showRegistration()
-    func showMainScreen(animated: Bool)
+    func showMainScreen(admin: Bool, animated: Bool)
     func showAdminScreen()
     
 }
@@ -133,9 +133,12 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
 
 extension LoginVC: LoginViewRoutable {
     
-    func showMainScreen(animated: Bool) {
+    func showMainScreen(admin: Bool, animated: Bool) {
         
-        let vc = AdminMonthsVC()
+        let vc = MonthsVC()
+        if admin {
+            vc.adminUser = admin
+        }
         self.navigationController?.pushViewController(vc, animated: animated)
         
     }
@@ -146,7 +149,6 @@ extension LoginVC: LoginViewRoutable {
     }
     
     func showRegistration() {
-        
         
         let registrationVC = RegistrationVC(nibName: "RegistrationVC", bundle: nil)
         presenter.registrationDelegate(view: registrationVC)

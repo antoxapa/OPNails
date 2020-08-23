@@ -24,9 +24,11 @@ class AdminHoursListVC: UIViewController {
     
     private let hoursTableView = UITableView()
     var day: DayRowItem?
+    var admin: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupViews()
         
         setupNavBar()
@@ -66,7 +68,9 @@ class AdminHoursListVC: UIViewController {
             self.navigationItem.title = "\(day!.month) \(day!.day), \(day!.year)"
         }
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(self.addNewEntry))
+        if admin {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(self.addNewEntry))
+        }
         
     }
     
