@@ -15,6 +15,12 @@ class DayCell: UICollectionViewCell, ReusableView {
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet private weak var todayView: UIView!
     @IBOutlet private weak var borderView: UIView!
+    @IBOutlet weak var eventView: UIView! {
+        didSet {
+            eventView.layer.cornerRadius = self.frame.height / 6
+            eventView.layer.masksToBounds = true
+        }
+    }
     
     
     func configure(withItem item: DayRowItem) {
@@ -24,29 +30,19 @@ class DayCell: UICollectionViewCell, ReusableView {
     func setupToday() {
         
         todayView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            todayView.heightAnchor.constraint(equalToConstant: self.bounds.height / 2),
-//            todayView.widthAnchor.constraint(equalToConstant: self.bounds.height / 2),
-//        ])
-        print(self.frame.height)
-        print(self.frame.width)
-        print(todayView.frame.width)
-        print(todayView.frame.height)
-        
-        todayView.layer.cornerRadius = todayView.frame.height / 4
-        print(todayView.layer.cornerRadius)
-//        todayView.layer.masksToBounds = true
+        todayView.layer.cornerRadius = self.frame.height / 4
+        todayView.layer.masksToBounds = true
         todayView.backgroundColor = .red
         dayLabel.textColor = .white
-        self.borderView.backgroundColor = .yellow
+        borderView.backgroundColor = .white
         
     }
     
     func setupDefault() {
         
-        todayView.backgroundColor = .blue
         todayView.layer.cornerRadius = 0
-        self.borderView.backgroundColor = .yellow
+        todayView.backgroundColor = .white
+        self.borderView.backgroundColor = .white
         
     }
     

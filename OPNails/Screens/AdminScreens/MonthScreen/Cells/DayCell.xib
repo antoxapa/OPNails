@@ -10,38 +10,67 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="DayCell" id="gTV-IL-0wX" customClass="DayCell" customModule="OPNails" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zfj-I1-sDE">
-                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WFr-kJ-HaV">
-                                <rect key="frame" x="25" y="25" width="50" height="50"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="center" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="gzV-NY-Lvc">
+                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FuL-3F-nnL">
-                                        <rect key="frame" x="11.5" y="15" width="27.5" height="20.5"/>
-                                        <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WFr-kJ-HaV">
+                                        <rect key="frame" x="12.5" y="0.0" width="25" height="23"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FuL-3F-nnL">
+                                                <rect key="frame" x="-1" y="1.5" width="27.5" height="20.5"/>
+                                                <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                                <variation key="heightClass=regular-widthClass=regular">
+                                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="28"/>
+                                                </variation>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="FuL-3F-nnL" firstAttribute="centerY" secondItem="WFr-kJ-HaV" secondAttribute="centerY" id="bYH-ip-mhv"/>
+                                            <constraint firstItem="FuL-3F-nnL" firstAttribute="centerX" secondItem="WFr-kJ-HaV" secondAttribute="centerX" id="iAF-U6-HvM"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="loJ-SM-MCs">
+                                        <rect key="frame" x="0.0" y="27" width="50" height="23"/>
+                                        <subviews>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3aY-hf-A1r">
+                                                <rect key="frame" x="21" y="7.5" width="8" height="8"/>
+                                                <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="3aY-hf-A1r" secondAttribute="height" multiplier="1:1" id="QSi-V9-znq"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="3aY-hf-A1r" firstAttribute="width" secondItem="loJ-SM-MCs" secondAttribute="height" multiplier="1:3" id="ILC-5n-YUe"/>
+                                            <constraint firstItem="3aY-hf-A1r" firstAttribute="centerY" secondItem="loJ-SM-MCs" secondAttribute="centerY" id="IrR-ai-GFe"/>
+                                            <constraint firstItem="3aY-hf-A1r" firstAttribute="centerX" secondItem="loJ-SM-MCs" secondAttribute="centerX" id="eDj-jz-yPk"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="FuL-3F-nnL" firstAttribute="centerY" secondItem="WFr-kJ-HaV" secondAttribute="centerY" id="ZGf-Md-MnE"/>
-                                    <constraint firstItem="FuL-3F-nnL" firstAttribute="centerX" secondItem="WFr-kJ-HaV" secondAttribute="centerX" id="s0v-9y-JNB"/>
+                                    <constraint firstItem="WFr-kJ-HaV" firstAttribute="width" secondItem="gzV-NY-Lvc" secondAttribute="height" multiplier="1:2" id="nhq-RY-xON"/>
                                 </constraints>
-                            </view>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="WFr-kJ-HaV" firstAttribute="centerX" secondItem="Zfj-I1-sDE" secondAttribute="centerX" id="FdL-B4-2Ht"/>
-                            <constraint firstItem="WFr-kJ-HaV" firstAttribute="width" secondItem="Zfj-I1-sDE" secondAttribute="width" multiplier="0.5" id="N5o-Jo-dX4"/>
-                            <constraint firstItem="WFr-kJ-HaV" firstAttribute="height" secondItem="Zfj-I1-sDE" secondAttribute="height" multiplier="0.5" id="Ohu-jP-eP0"/>
-                            <constraint firstItem="WFr-kJ-HaV" firstAttribute="centerY" secondItem="Zfj-I1-sDE" secondAttribute="centerY" id="meX-6H-dLu"/>
+                            <constraint firstItem="gzV-NY-Lvc" firstAttribute="top" secondItem="Zfj-I1-sDE" secondAttribute="top" id="24T-hZ-1G5"/>
+                            <constraint firstAttribute="bottom" secondItem="gzV-NY-Lvc" secondAttribute="bottom" id="l0X-Y6-HAM"/>
+                            <constraint firstAttribute="trailing" secondItem="gzV-NY-Lvc" secondAttribute="trailing" id="sC5-Y1-IjX"/>
+                            <constraint firstItem="gzV-NY-Lvc" firstAttribute="leading" secondItem="Zfj-I1-sDE" secondAttribute="leading" id="uOd-SC-nxD"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -54,13 +83,14 @@
                 <constraint firstAttribute="bottom" secondItem="Zfj-I1-sDE" secondAttribute="bottom" id="yMO-PE-njo"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
-            <size key="customSize" width="100" height="100"/>
+            <size key="customSize" width="90" height="90"/>
             <connections>
                 <outlet property="borderView" destination="Zfj-I1-sDE" id="Ba7-38-tow"/>
                 <outlet property="dayLabel" destination="FuL-3F-nnL" id="aIY-fp-ue5"/>
+                <outlet property="eventView" destination="3aY-hf-A1r" id="dIw-7i-hby"/>
                 <outlet property="todayView" destination="WFr-kJ-HaV" id="XZ7-35-daJ"/>
             </connections>
-            <point key="canvasLocation" x="173.91304347826087" y="149.33035714285714"/>
+            <point key="canvasLocation" x="165.21739130434784" y="151.33928571428569"/>
         </collectionViewCell>
     </objects>
 </document>
