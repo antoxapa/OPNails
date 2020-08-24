@@ -9,5 +9,7 @@
 import Foundation
 
 protocol PresenterLifecycle {
+    
     func setup()
+    
 }

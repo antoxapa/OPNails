@@ -17,6 +17,7 @@ class LoginManager {
         self.presenter = presenter
     }
     
+    
     func checkUserLogged() {
         
         Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
@@ -50,7 +51,11 @@ class LoginManager {
     
     func signOut() {
         
-        
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print(error.localizedDescription)
+        }
         
     }
     

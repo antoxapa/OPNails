@@ -32,6 +32,8 @@ class AdminHoursListVC: UIViewController {
         setupViews()
         
         setupNavBar()
+        
+        //        presenter.setup()
     }
     
     private func setupViews() {
@@ -96,16 +98,26 @@ extension AdminHoursListVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 extension AdminHoursListVC: AdminHoursViewRoutable {
+    
     func showDetail() {
+        
         let detailVC = NewEntryVC(nibName: "NewEntryVC", bundle: nil)
+        if day != nil {
+            let month = "\(day!.monthNumber)"
+            detailVC.date = "\(day!.day)-\(month)-\(day!.year)"
+        }
         self.navigationController?.showDetailViewController(detailVC, sender: self)
+        
     }
+    
 }
 
 extension AdminHoursListVC: AdminHoursViewUpdatable {
-    func reload() {
-        hoursTableView.reloadData()
-    }
     
+    func reload() {
+        
+        hoursTableView.reloadData()
+        
+    }
     
 }

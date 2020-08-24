@@ -46,7 +46,6 @@ class LoginPresenter: PresenterLifecycle {
         loginManager = LoginManager(presenter: self)
         
     }
-    
 }
 
 extension LoginPresenter: LoginRoutable {

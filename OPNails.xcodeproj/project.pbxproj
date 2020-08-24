@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0613D30024EE71A7002785AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0613D2FF24EE71A7002785AB /* GoogleService-Info.plist */; };
+		063501BF24F3E8030044923A /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063501BE24F3E8030044923A /* Entry.swift */; };
+		063501C124F3EC730044923A /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063501C024F3EC730044923A /* DataManager.swift */; };
 		0638E4AE24E9211A006A5956 /* MonthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0638E4AD24E9211A006A5956 /* MonthPresenter.swift */; };
 		0638E4B124E925CF006A5956 /* MonthsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0638E4AF24E925CF006A5956 /* MonthsVC.swift */; };
 		0638E4B524E927F0006A5956 /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0638E4B324E927F0006A5956 /* DayCell.swift */; };
@@ -36,6 +38,7 @@
 		06C23C1524F19829000FF475 /* MonthViewProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C23C1424F19829000FF475 /* MonthViewProtocols.swift */; };
 		06C23C1A24F29921000FF475 /* DayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06C23C1824F29921000FF475 /* DayCell.xib */; };
 		06C23C1B24F29921000FF475 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06C23C1924F29921000FF475 /* EmptyCell.xib */; };
+		06C23C1D24F3E33E000FF475 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C23C1C24F3E33E000FF475 /* User.swift */; };
 		06DF79F924EE8F51001F7FF1 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DF79F724EE8F51001F7FF1 /* LoginVC.swift */; };
 		06DF79FA24EE8F51001F7FF1 /* LoginVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06DF79F824EE8F51001F7FF1 /* LoginVC.xib */; };
 		06DF79FC24EE9AF8001F7FF1 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DF79FB24EE9AF8001F7FF1 /* LoginPresenter.swift */; };
@@ -58,6 +61,8 @@
 
 /* Begin PBXFileReference section */
 		0613D2FF24EE71A7002785AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		063501BE24F3E8030044923A /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
+		063501C024F3EC730044923A /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		0638E4AD24E9211A006A5956 /* MonthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthPresenter.swift; sourceTree = "<group>"; };
 		0638E4AF24E925CF006A5956 /* MonthsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthsVC.swift; sourceTree = "<group>"; };
 		0638E4B324E927F0006A5956 /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
@@ -91,6 +96,7 @@
 		06C23C1424F19829000FF475 /* MonthViewProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthViewProtocols.swift; sourceTree = "<group>"; };
 		06C23C1824F29921000FF475 /* DayCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DayCell.xib; sourceTree = "<group>"; };
 		06C23C1924F29921000FF475 /* EmptyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
+		06C23C1C24F3E33E000FF475 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		06DF79F724EE8F51001F7FF1 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		06DF79F824EE8F51001F7FF1 /* LoginVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginVC.xib; sourceTree = "<group>"; };
 		06DF79FB24EE9AF8001F7FF1 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
@@ -210,6 +216,8 @@
 			children = (
 				0696468D24E95BD7008109E9 /* DateModel.swift */,
 				069646AC24EBE07F008109E9 /* DayRowItemModel.swift */,
+				06C23C1C24F3E33E000FF475 /* User.swift */,
+				063501BE24F3E8030044923A /* Entry.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -233,6 +241,7 @@
 			children = (
 				0696468F24E95C04008109E9 /* DateManager.swift */,
 				06DF79FD24EEAEE6001F7FF1 /* LoginManager.swift */,
+				063501C024F3EC730044923A /* DataManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -504,7 +513,9 @@
 			files = (
 				069646B424EBE314008109E9 /* NewEntryVC.swift in Sources */,
 				069646AD24EBE07F008109E9 /* DayRowItemModel.swift in Sources */,
+				063501BF24F3E8030044923A /* Entry.swift in Sources */,
 				06C23C1524F19829000FF475 /* MonthViewProtocols.swift in Sources */,
+				06C23C1D24F3E33E000FF475 /* User.swift in Sources */,
 				0696469224E97E8F008109E9 /* Presenter.swift in Sources */,
 				069646B924EBF18A008109E9 /* NewEntriesForDatesVC.swift in Sources */,
 				0696469424E998D2008109E9 /* ReusableView.swift in Sources */,
@@ -525,6 +536,7 @@
 				069646A724EB0B5C008109E9 /* HoursCell.swift in Sources */,
 				0638E4AE24E9211A006A5956 /* MonthPresenter.swift in Sources */,
 				0675DBA324E91C6600F3D65E /* SceneDelegate.swift in Sources */,
+				063501C124F3EC730044923A /* DataManager.swift in Sources */,
 				069646BE24ED2876008109E9 /* EntryPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

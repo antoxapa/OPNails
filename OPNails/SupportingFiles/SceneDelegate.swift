@@ -24,9 +24,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
        
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-//        let loginVC = LoginVC()
-        let mainVC = MonthsVC()
-        mainVC.adminUser = true
+        let mainVC = LoginVC()
+//        let mainVC = MonthsVC()
+//        mainVC.adminUser = true
         window?.rootViewController = UINavigationController(rootViewController: mainVC)
         
         Appearance.setup()

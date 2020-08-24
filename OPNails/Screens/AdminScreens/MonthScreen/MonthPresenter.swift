@@ -39,12 +39,13 @@ class MonthPresenter: PresenterLifecycle {
     
     init(view: MonthViewable) {
         self.view = view
-        self.dateManager = DateManager()
-        self.monthModels = []
+        dateManager = DateManager()
+        monthModels = []
     }
     
     func setup() {
         monthModels = dateManager.showMonth()
+        view.reload()
     }
     
 }

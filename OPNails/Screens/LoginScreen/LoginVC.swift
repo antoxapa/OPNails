@@ -69,7 +69,7 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
         
         setupNavBar()
         
-//        presenter.checkUserLogged()
+        presenter.checkUserLogged()
         
     }
     

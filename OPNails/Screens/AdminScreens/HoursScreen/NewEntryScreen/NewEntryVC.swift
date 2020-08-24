@@ -12,12 +12,23 @@ protocol EntryViewRoutable {
     func popToPrevVC()
 }
 
-typealias NewEntryViewable = EntryViewRoutable
+protocol EntryViewPresenting {
+    func currentDate() -> String?
+}
+
+typealias NewEntryViewable = EntryViewRoutable & EntryViewPresenting
 
 class NewEntryVC: UIViewController {
     
+    var pickerDate = Date()
+    var date: String?
+    
     @IBOutlet weak var clientTF: UITextField!
-    @IBOutlet weak var timePicker: UIDatePicker!
+    @IBOutlet weak var timePicker: UIDatePicker! {
+        didSet {
+            timePicker.datePickerMode = .time
+        }
+    }
     @IBOutlet weak var okButton: UIButton! {
         didSet {
             okButton.layer.cornerRadius = 25
@@ -29,13 +40,21 @@ class NewEntryVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         
+    }
+    @IBAction func timePickerChanged(_ sender: UIDatePicker) {
         
+        pickerDate = timePicker.date
         
     }
     
     @IBAction func okButtonPresssed(_ sender: UIButton) {
+        
+        let entryTime = pickerDate.timeString()
+        presenter.addNewEntry(time: entryTime)
         presenter.pop()
+        
     }
 }
 
@@ -45,4 +64,12 @@ extension NewEntryVC: EntryViewRoutable {
             
         }
     }
+}
+
+extension NewEntryVC: EntryViewPresenting {
+    func currentDate() -> String? {
+        return date
+    }
+    
+    
 }

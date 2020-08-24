@@ -25,15 +25,15 @@
                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" useCurrentDate="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I57-HX-mri">
+                <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="I57-HX-mri">
                     <rect key="frame" x="0.0" y="203" width="414" height="162"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="162" id="c1R-gT-IfV"/>
                     </constraints>
-                    <date key="date" timeIntervalSinceReferenceDate="619434000.30162597">
-                        <!--2020-08-18 09:00:00 +0000-->
-                    </date>
-                    <locale key="locale" localeIdentifier="be_BY"/>
+                    <locale key="locale" localeIdentifier="be"/>
+                    <connections>
+                        <action selector="timePickerChanged:" destination="-1" eventType="valueChanged" id="YhX-3U-mX0"/>
+                    </connections>
                 </datePicker>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hjI-iF-sup">
                     <rect key="frame" x="157" y="423" width="100" height="50"/>

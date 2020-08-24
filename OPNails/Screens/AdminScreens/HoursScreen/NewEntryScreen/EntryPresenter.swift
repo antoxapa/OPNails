@@ -14,20 +14,31 @@ protocol EntryRouting {
 
 protocol EntryUpdating {
     //updates firebase
+    func addNewEntry(time: String)
+
 }
 
 typealias EntryPresenting = EntryRouting & EntryUpdating
 
-class EntryPresenter: PresenterLifecycle {
+class EntryPresenter: PresenterLifecycle, PresenterViewUpdating {
+    
+    func update(with entries: [Entry]) {
+        
+    }
+    
     
     private var view: NewEntryViewable
+    lazy private var dataManager: DataManager = DataManager(presenter: self)
     
     init(view: NewEntryViewable) {
         self.view = view
+        setup()
     }
     
     func setup() {
-        // init firebase
+        
+        dataManager.checkCurrentUser()
+        
     }
     
 }
@@ -39,5 +50,18 @@ extension EntryPresenter: EntryRouting {
 }
 
 extension EntryPresenter: EntryUpdating {
+    
+    func addNewEntry(time: String) {
+        
+        guard let date = view.currentDate() else { return }
+        dataManager.addNewEntry(date: date , time: time)
+        
+    }
+    
+    func checkEntryAlreadyExist(time: String) {
+        
+        
+        
+    }
     
 }

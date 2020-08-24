@@ -17,6 +17,7 @@ class DayCell: UICollectionViewCell, ReusableView {
     @IBOutlet private weak var borderView: UIView!
     @IBOutlet weak var eventView: UIView! {
         didSet {
+            eventView.isHidden = true
             eventView.layer.cornerRadius = self.frame.height / 6
             eventView.layer.masksToBounds = true
         }

@@ -253,3 +253,16 @@ extension Date {
         
     }
 }
+
+extension Date {
+    
+    func timeString() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = Calendar.current.timeZone
+        dateFormatter.locale = Calendar.current.locale
+        dateFormatter.dateFormat = "HH:mm"
+        return dateFormatter.string(from: self)
+    }
+    
+}
+
