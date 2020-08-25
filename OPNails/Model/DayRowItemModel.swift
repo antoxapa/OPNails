@@ -18,3 +18,12 @@ struct DayRowItem {
     let isWorkday: Bool?
     
 }
+
+struct EntryRowItem {
+    
+    let date: String
+    let time: String
+    let user: String?
+    let isWorkday: Bool?
+    
+}

@@ -11,7 +11,7 @@ import UIKit
 protocol AdminHoursViewUpdatable {
     
     func reload()
-
+    
 }
 
 protocol AdminHoursViewRoutable {
@@ -20,7 +20,13 @@ protocol AdminHoursViewRoutable {
     
 }
 
-typealias AdminHoursViewable = AdminHoursViewUpdatable & AdminHoursViewRoutable
+protocol AdminHoursViewPresendable {
+    
+    func presentDay() -> DayRowItem
+    
+}
+
+typealias AdminHoursViewable = AdminHoursViewUpdatable & AdminHoursViewRoutable & AdminHoursViewPresendable
 
 class AdminHoursListVC: UIViewController {
     
@@ -39,7 +45,8 @@ class AdminHoursListVC: UIViewController {
         
         setupNavBar()
         
-        //        presenter.setup()
+        presenter.load()
+        
     }
     
     private func setupViews() {
@@ -50,14 +57,15 @@ class AdminHoursListVC: UIViewController {
         
         hoursTableView.delegate = self
         hoursTableView.dataSource = self
-        
         hoursTableView.tableFooterView = UIView(frame: .zero)
         
         self.view.addSubview(hoursTableView)
         hoursTableView.addSubview(emptyLabel)
+        
         emptyLabel.text = "No entries"
-        hoursTableView.translatesAutoresizingMaskIntoConstraints = false
+        
         emptyLabel.translatesAutoresizingMaskIntoConstraints = false
+        hoursTableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             hoursTableView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -72,6 +80,7 @@ class AdminHoursListVC: UIViewController {
     }
     
     private func setupNavBar() {
+        
         if day != nil {
             self.navigationItem.title = "\(day!.month) \(day!.day), \(day!.year)"
         }
@@ -83,22 +92,36 @@ class AdminHoursListVC: UIViewController {
     }
     
     @objc private func addNewEntry() {
+        
         presenter.presentDetailVC()
+        
     }
 }
 
 extension AdminHoursListVC: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return presenter.numberOfCells(in: section)
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "HoursCell", for: indexPath) as? HoursCell else { return UITableViewCell() }
+        
+        if let day = presenter.data(at: indexPath.row) {
+            emptyLabel.isHidden = true
+            cell.configure(with: day)
+        }
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
         return 50
+        
     }
     
 }
@@ -112,7 +135,7 @@ extension AdminHoursListVC: AdminHoursViewRoutable {
             let month = "\(day!.monthNumber)"
             detailVC.date = "\(day!.day)-\(month)-\(day!.year)"
         }
-        self.navigationController?.showDetailViewController(detailVC, sender: self)
+        self.present(detailVC, animated: true)
         
     }
     
@@ -123,6 +146,16 @@ extension AdminHoursListVC: AdminHoursViewUpdatable {
     func reload() {
         
         hoursTableView.reloadData()
+        
+    }
+    
+}
+
+extension AdminHoursListVC: AdminHoursViewPresendable {
+    
+    func presentDay() -> DayRowItem {
+        
+        return day!
         
     }
     

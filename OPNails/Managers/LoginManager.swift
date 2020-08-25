@@ -14,7 +14,9 @@ class LoginManager {
     var presenter: LoginPresentable
     
     init(presenter: LoginPresentable) {
+        
         self.presenter = presenter
+        
     }
     
     

@@ -9,12 +9,16 @@
 import Foundation
 
 public struct Today {
+    
     public static let todayDate = Date()
+    
 }
 
 public enum WeekStartDay {
+    
     case monday
     case sunday
+    
 }
 
 class DateManager {
@@ -126,15 +130,18 @@ class DateManager {
     }
     
     private func getSkipCount(_ weekDayNo: Int, startDay: WeekStartDay) -> Int {
+        
         switch startDay {
         case .monday:
             return getCountForMonday(weekDayNo)
         case .sunday:
             return getCountForSunday(weekDayNo)
         }
+        
     }
     
     func getCountForMonday(_ weekDayNo: Int) -> Int {
+        
         switch weekDayNo {
         case 1:
             return 6
@@ -153,8 +160,11 @@ class DateManager {
         default:
             return 0
         }
+        
     }
+    
     func getCountForSunday(_ weekDayNo: Int) -> Int {
+        
         switch weekDayNo {
         case 1:
             return 0
@@ -173,6 +183,7 @@ class DateManager {
         default:
             return 0
         }
+        
     }
     
     private func getNumberOfDaysInMonth(year: Int, month: Int) -> Int {
@@ -230,6 +241,7 @@ extension Date {
     }
     
     func getTodayValues() -> (year: Int, month: Int, name: String, day: Int) {
+        
         let calendar = Calendar.current
         let year = calendar.component(.year, from: self)
         let month = calendar.component(.month, from: self)
@@ -257,11 +269,13 @@ extension Date {
 extension Date {
     
     func timeString() -> String {
+        
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = Calendar.current.timeZone
         dateFormatter.locale = Calendar.current.locale
         dateFormatter.dateFormat = "HH:mm"
         return dateFormatter.string(from: self)
+        
     }
     
 }

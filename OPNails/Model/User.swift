@@ -17,9 +17,12 @@ struct OPUser {
     let name: String?
     
     init(user: User) {
+        
         self.uid = user.uid
         self.email = user.email!
         self.phoneNumber = user.phoneNumber
         self.name = user.displayName
+        
     }
+    
 }

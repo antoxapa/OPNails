@@ -9,11 +9,16 @@
 import UIKit
 
 protocol EntryViewRoutable {
+    
     func popToPrevVC()
+    
 }
 
 protocol EntryViewPresenting {
+    
     func currentDate() -> String?
+    func showAlert()
+    
 }
 
 typealias NewEntryViewable = EntryViewRoutable & EntryViewPresenting
@@ -29,6 +34,7 @@ class NewEntryVC: UIViewController {
             timePicker.datePickerMode = .time
         }
     }
+    
     @IBOutlet weak var okButton: UIButton! {
         didSet {
             okButton.layer.cornerRadius = 25
@@ -40,9 +46,11 @@ class NewEntryVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
+        presenter.load()
         
     }
+    
     @IBAction func timePickerChanged(_ sender: UIDatePicker) {
         
         pickerDate = timePicker.date
@@ -53,23 +61,35 @@ class NewEntryVC: UIViewController {
         
         let entryTime = pickerDate.timeString()
         presenter.addNewEntry(time: entryTime)
-        presenter.pop()
         
     }
 }
 
 extension NewEntryVC: EntryViewRoutable {
+    
     func popToPrevVC() {
-        self.dismiss(animated: true) {
-            
-        }
+        
+        self.dismiss(animated: true, completion: nil)
+        
     }
+    
 }
 
 extension NewEntryVC: EntryViewPresenting {
+    
     func currentDate() -> String? {
+        
         return date
+        
     }
     
+    func showAlert() {
+        
+        let ac = UIAlertController(title: "Current entry already exist", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        ac.addAction(action)
+        self.present(ac, animated: true)
+        
+    }
     
 }

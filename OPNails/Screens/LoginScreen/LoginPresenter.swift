@@ -20,7 +20,6 @@ protocol LoginPresenting {
     func showRegistrationErrorAC(withTitle title:String, message: String)
     func registrationDelegate(view: RegistrationViewable)
     
-    
 }
 
 protocol LoginRoutable {
@@ -42,8 +41,10 @@ class LoginPresenter: PresenterLifecycle, PresenterViewUpdating {
     private var entries = [Entry]()
     
     init(view: LoginViewable) {
+        
         self.view = view
         setup()
+        
     }
     
     func setup() {

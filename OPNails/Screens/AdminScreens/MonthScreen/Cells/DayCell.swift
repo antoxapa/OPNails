@@ -10,22 +10,27 @@ import UIKit
 
 class DayCell: UICollectionViewCell, ReusableView {
     
-    
-    
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet private weak var todayView: UIView!
     @IBOutlet private weak var borderView: UIView!
     @IBOutlet weak var eventView: UIView! {
+        
         didSet {
+            
             eventView.isHidden = true
             eventView.layer.cornerRadius = self.frame.height / 6
             eventView.layer.masksToBounds = true
         }
+        
     }
     
-    
     func configure(withItem item: DayRowItem) {
+        
         dayLabel.text = item.day
+        if item.isWorkday != nil && item.isWorkday != false {
+            eventView.isHidden = false
+        }
+        
     }
     
     func setupToday() {
@@ -41,6 +46,7 @@ class DayCell: UICollectionViewCell, ReusableView {
     
     func setupDefault() {
         
+        eventView.isHidden = true
         todayView.layer.cornerRadius = 0
         todayView.backgroundColor = .white
         self.borderView.backgroundColor = .white
@@ -66,7 +72,7 @@ class DayCell: UICollectionViewCell, ReusableView {
     }
     
     func setSelectedState() {
-
+        
         borderView.transform = .init(scaleX: 0.8, y: 0.8)
         self.contentView.backgroundColor = .orange
         

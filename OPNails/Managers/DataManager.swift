@@ -19,23 +19,24 @@ class DataManager {
     var presenter: PresenterViewUpdating
     
     init(presenter: PresenterViewUpdating) {
+        
         self.presenter = presenter
+        
     }
     
     func downloadItems() {
         
         ref = Database.database().reference(withPath: "entries")
-        
         ref.observe(.value) { [weak self](snapshot) in
             var _entries = [Entry]()
             for item in snapshot.children {
                 let entry = Entry(snapshot: item as! DataSnapshot)
                 _entries.append(entry)
             }
-            
             self?.entries = _entries
             self?.presenter.update()
         }
+        
     }
     
     func showEntries() -> [Entry] {
@@ -55,17 +56,7 @@ class DataManager {
         
         let title = date + " " + time
         ref = Database.database().reference(withPath: "entries").child(title)
-        ref.setValue(["time": time, "userId": ""])
-        
-    }
-    
-    func checkEntry(date: String, time: String)  {
-        
-        let title = date + " " + time
-//        for item in entries {
-//            print(item)
-//        }
-        
+        ref.setValue(["time": time, "date":date, "userId": ""])
         
     }
     

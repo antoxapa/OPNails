@@ -10,23 +10,30 @@ import Foundation
 import FirebaseDatabase
 
 struct Entry {
+    
     let time: String
+    let date: String
     var userId: String?
     let ref: DatabaseReference?
     var complited: Bool = false
     
-    init(time: String, userId: String) {
+    init(time: String, date: String, userId: String) {
+        
         self.time = time
+        self.date = date
         self.userId = userId
         self.ref = nil
+        
     }
     
     init(snapshot: DataSnapshot) {
+        
         let snapshotValue = snapshot.value as! [String:AnyObject]
         time = snapshotValue["time"] as! String
-//        time = snapshotValue["time"] as! String
+        date = snapshotValue["date"] as! String
         userId = snapshotValue["userId"] as? String
-//        complited = snapshotValue["complited"] as! Bool
+        //        complited = snapshotValue["complited"] as! Bool
         ref = snapshot.ref
+        
     }
 }

@@ -31,13 +31,13 @@ protocol MonthPresenterHeaderViewUpdating {
 typealias MonthPresenting = MonthPresenterCollectionViewPresenting & MonthPresenterHeaderViewUpdating & PresenterLifecycle & PresenterViewUpdating
 
 class MonthPresenter: PresenterLifecycle, PresenterViewUpdating {
-
+    
     private var view: MonthViewable
     private var header: HeaderMonthViewUpdatable?
     private var dateManager: DateManager
     lazy private var dataManager = DataManager(presenter: self)
     private var monthModels: [CalendarMonth]
-    private var entries = [Entry]()
+    private var entries: [Entry]?
     
     init(view: MonthViewable) {
         
@@ -52,7 +52,6 @@ class MonthPresenter: PresenterLifecycle, PresenterViewUpdating {
         monthModels = dateManager.showMonth()
         view.reload()
         
-        
     }
     
     func load() {
@@ -63,7 +62,7 @@ class MonthPresenter: PresenterLifecycle, PresenterViewUpdating {
     
     func update() {
         
-        self.entries = dataManager.showEntries()
+        entries = dataManager.showEntries()
         view.reload()
         
     }
@@ -73,12 +72,15 @@ class MonthPresenter: PresenterLifecycle, PresenterViewUpdating {
 extension MonthPresenter: MonthPresenterCollectionViewPresenting {
     
     func numberOfCells(in section: Int) -> Int {
+        
         guard let count = monthModels.first?.days.count else { return 0 }
         guard let skipCount = monthModels.first?.skipCount else { return 0 }
         return count + skipCount
+        
     }
     
     func data(at row: Int) -> DayRowItem? {
+        
         if row < 0 {
             return nil
         }
@@ -88,33 +90,50 @@ extension MonthPresenter: MonthPresenterCollectionViewPresenting {
             let monthNumber = monthDate.monthNumber
             let days = monthDate.days[row]
             let dayName = String(days.day)
+            var isWorkday = days.isWorkDay
             let user = days.isClient
-            let isWorkday = days.isWorkDay
+            
+            if entries != nil {
+                let date = "\(dayName)-\(monthNumber)-\(year)"
+                for entry in entries! {
+                    if entry.date == date {
+                        isWorkday = true
+                    }
+                }
+            }
+            
             return DayRowItem(year: year, month: monthName, day: dayName, monthNumber: monthNumber, client: user, isWorkday: isWorkday)
         }
         return nil
+        
     }
     
     func skipCount() -> Int {
+        
         if let monthDate = monthModels.first {
             let skipCount = monthDate.skipCount
             return skipCount
         }
         return 0
+        
     }
     
     func compare(item: DayRowItem) -> Bool {
+        
         guard let date = dateManager.getDateFrom(year: Int(item.year)!, month: item.monthNumber, day: Int(item.day)!) else {
             return false
         }
         return dateManager.compare(date: date)
+        
     }
     
     func compareMonthYear(item: DayRowItem) -> Bool {
+        
         guard let date = dateManager.getDateFrom(year: Int(item.year)!, month: item.monthNumber, day: Int(item.day)!) else {
             return false
         }
         return dateManager.compareMonthYear(date: date)
+        
     }
     
     func didSelectCell(at row: Int) {
@@ -122,14 +141,18 @@ extension MonthPresenter: MonthPresenterCollectionViewPresenting {
         guard let day = data(at: row) else { return }
         
         openDayTimesList(withItem: day)
+        
     }
+    
 }
 
 extension MonthPresenter {
     
     private func openDayTimesList(withItem item: DayRowItem) {
         view.routeWithItem(item: item)
+        
     }
+    
 }
 
 extension MonthPresenter: MonthPresenterHeaderViewUpdating {
@@ -162,10 +185,14 @@ extension MonthPresenter: MonthPresenterHeaderViewUpdating {
     }
     
     func selectDays(indexPath: [IndexPath]?) {
+        
         view.reload()
+        
     }
     
     func addNewEntries(forDays days: [IndexPath]) {
         
+        
     }
+    
 }

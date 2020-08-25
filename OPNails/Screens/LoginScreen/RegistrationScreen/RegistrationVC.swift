@@ -28,18 +28,25 @@ class RegistrationVC: UIViewController, UIGestureRecognizerDelegate {
     var presenter: LoginPresentable?
     
     @IBOutlet weak var registerButton: UIButton! {
+        
         didSet {
+            
             registerButton.layer.cornerRadius = registerButton.bounds.height / 2
             registerButton.layer.masksToBounds = true
+            
         }
+        
     }
     @IBOutlet weak var cancelButton: UIButton! {
+        
         didSet {
+            
             cancelButton.layer.cornerRadius = cancelButton.bounds.height / 2
             cancelButton.layer.masksToBounds = true
+            
         }
+        
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,26 +67,29 @@ class RegistrationVC: UIViewController, UIGestureRecognizerDelegate {
         
         emailTF.delegate = self
         passwordTF.delegate = self
-        
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         
     }
     
     @objc func keyboardWillChange(notification: Notification) {
+        
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y == 0 {
                 self.view.frame.origin.y -= keyboardSize.height
             }
+            
         }
         
     }
     
     @objc func keyboardWillHide(notification: Notification) {
+        
         if let keyboardSize = (notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue {
             if self.view.frame.origin.y != 0 {
                 self.view.frame.origin.y += keyboardSize.height
             }
         }
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -87,9 +97,8 @@ class RegistrationVC: UIViewController, UIGestureRecognizerDelegate {
         
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        
     }
-    
-    
     
     @IBAction func registerButtonPressed(_ sender: UIButton) {
         
@@ -121,6 +130,7 @@ extension RegistrationVC: RegistrationViewPresenting {
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         ac.addAction(okAction)
         present(ac, animated: true)
+        
     }
     
     func showLoadingAlert() {
@@ -130,13 +140,13 @@ extension RegistrationVC: RegistrationViewPresenting {
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.isUserInteractionEnabled = false
         activityIndicator.startAnimating()
-
+        
         alert.view.addSubview(activityIndicator)
         alert.view.heightAnchor.constraint(equalToConstant: 95).isActive = true
-
+        
         activityIndicator.centerXAnchor.constraint(equalTo: alert.view.centerXAnchor, constant: 0).isActive = true
         activityIndicator.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -20).isActive = true
-
+        
         present(alert, animated: true)
         
     }
@@ -150,11 +160,13 @@ extension RegistrationVC: RegistrationViewPresenting {
 }
 
 extension RegistrationVC: UITextFieldDelegate {
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if (textField == phoneNumberTF){
             
         }
         return true
     }
+    
 }
 

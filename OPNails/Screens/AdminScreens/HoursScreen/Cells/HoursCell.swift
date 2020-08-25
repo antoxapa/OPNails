@@ -9,7 +9,7 @@
 import UIKit
 
 class HoursCell: UITableViewCell {
-
+    
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var userLabel: UILabel!
     
@@ -18,11 +18,18 @@ class HoursCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
+    }
+    
+    func configure(with item: EntryRowItem) {
+        
+        timeLabel.text = item.time
+        userLabel.text = item.user
+        
     }
     
 }

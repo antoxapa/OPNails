@@ -19,7 +19,9 @@ protocol LoginViewRoutable {
 }
 
 protocol LoginViewPresentable {
+    
     func showAlertController(withTitle text: String, message: String)
+    
 }
 
 typealias LoginViewable = LoginViewRoutable & LoginViewPresentable
@@ -28,7 +30,6 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
     
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
-    
     @IBOutlet weak var loginButton: UIButton! {
         
         didSet {
@@ -37,6 +38,7 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
             loginButton.layer.masksToBounds = true
             
         }
+        
     }
     
     @IBOutlet weak var facebookButton: UIButton!  {
@@ -47,6 +49,7 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
             facebookButton.layer.masksToBounds = true
             
         }
+        
     }
     
     @IBOutlet weak var googleButton: UIButton!  {
@@ -62,7 +65,6 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
     
     lazy var presenter: LoginPresentable = LoginPresenter(view: self)
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -75,14 +77,16 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
         emailTF.resignFirstResponder()
         passwordTF.resignFirstResponder()
         self.view.endEditing(true)
+        
     }
     
     override var prefersStatusBarHidden: Bool {
         
-        return true
+        return true 
         
     }
     
@@ -96,7 +100,6 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
         
         emailTF.delegate = self
         passwordTF.delegate = self
-        
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
         
     }
@@ -104,10 +107,12 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
     @IBAction func loginButtonPressed(_ sender: UIButton) {
         
         guard let email = emailTF.text, let password = passwordTF.text, emailTF.text != "", passwordTF.text != "" else {
+            
             let title = "Ooops!"
             let message = "Please enter correct login or password"
             presenter.showErrorAC(withTitle: title, message: message)
             return
+            
         }
         
         presenter.signIn(email: email, password: password)
@@ -147,7 +152,8 @@ extension LoginVC: LoginViewRoutable {
         if admin {
             vc.adminUser = admin
         }
-        self.navigationController?.pushViewController(vc, animated: animated)
+//        self.navigationController?.pushViewController(vc, animated: animated)
+        self.navigationController?.setViewControllers([vc], animated: false)
         
     }
     
@@ -160,7 +166,6 @@ extension LoginVC: LoginViewRoutable {
         
         let registrationVC = RegistrationVC(nibName: "RegistrationVC", bundle: nil)
         presenter.registrationDelegate(view: registrationVC)
-        
         self.navigationController?.pushViewController(registrationVC, animated: true)
         registrationVC.presenter = presenter
         
@@ -171,10 +176,13 @@ extension LoginVC: LoginViewRoutable {
 extension LoginVC: LoginViewPresentable {
     
     func showAlertController(withTitle text: String, message: String) {
+        
         let ac = UIAlertController(title: text, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         ac.addAction(okAction)
         self.present(ac, animated: true)
+        
     }
+    
 }
 

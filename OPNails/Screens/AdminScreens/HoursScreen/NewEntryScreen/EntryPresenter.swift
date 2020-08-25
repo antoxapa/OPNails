@@ -9,30 +9,30 @@
 import Foundation
 
 protocol EntryRouting {
+    
     func pop()
+    
 }
 
 protocol EntryUpdating {
-    //updates firebase
+    
     func addNewEntry(time: String)
-
+    
 }
 
-typealias EntryPresenting = EntryRouting & EntryUpdating
+typealias EntryPresenting = EntryRouting & EntryUpdating & PresenterLifecycle
 
 class EntryPresenter: PresenterLifecycle, PresenterViewUpdating {
     
-    func update() {
-        
-    }
-    
-    
     private var view: NewEntryViewable
     lazy private var dataManager: DataManager = DataManager(presenter: self)
+    var entries = [Entry]()
     
     init(view: NewEntryViewable) {
+        
         self.view = view
         setup()
+        
     }
     
     func setup() {
@@ -43,14 +43,26 @@ class EntryPresenter: PresenterLifecycle, PresenterViewUpdating {
     
     func load() {
         
+        dataManager.downloadItems()
+        
+    }
+    
+    func update() {
+        
+        entries = dataManager.showEntries()
+        
     }
     
 }
 
 extension EntryPresenter: EntryRouting {
+    
     func pop() {
+        
         view.popToPrevVC()
+        
     }
+    
 }
 
 extension EntryPresenter: EntryUpdating {
@@ -58,13 +70,14 @@ extension EntryPresenter: EntryUpdating {
     func addNewEntry(time: String) {
         
         guard let date = view.currentDate() else { return }
+        for entry in entries {
+            if entry.date == date && entry.time == time {
+                view.showAlert()
+                return
+            }
+        }
         dataManager.addNewEntry(date: date , time: time)
-        
-    }
-    
-    func checkEntryAlreadyExist(time: String) {
-        
-        
+        pop()
         
     }
     

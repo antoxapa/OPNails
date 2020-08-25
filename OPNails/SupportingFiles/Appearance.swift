@@ -9,6 +9,7 @@
 import UIKit
 
 final class Appearance {
+    
     static func setup() {
         
         let navigationBarAppearence = UINavigationBar.appearance()
@@ -25,4 +26,5 @@ final class Appearance {
         navigationToolBarAppearence.tintColor = .black
         
     }
+    
 }
