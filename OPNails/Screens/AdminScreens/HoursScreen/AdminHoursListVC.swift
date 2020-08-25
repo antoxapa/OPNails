@@ -9,11 +9,15 @@
 import UIKit
 
 protocol AdminHoursViewUpdatable {
+    
     func reload()
+
 }
 
 protocol AdminHoursViewRoutable {
+    
     func showDetail()
+    
 }
 
 typealias AdminHoursViewable = AdminHoursViewUpdatable & AdminHoursViewRoutable
@@ -23,6 +27,8 @@ class AdminHoursListVC: UIViewController {
     lazy var presenter: HoursPresenting = HoursPresenter(view: self)
     
     private let hoursTableView = UITableView()
+    private var emptyLabel = UILabel()
+    
     var day: DayRowItem?
     var admin: Bool = false
     
@@ -38,7 +44,7 @@ class AdminHoursListVC: UIViewController {
     
     private func setupViews() {
         
-        let emptyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        emptyLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
         emptyLabel.alpha = 0.4
         hoursTableView.register(UINib(nibName: "HoursCell", bundle: nil), forCellReuseIdentifier: "HoursCell")
         

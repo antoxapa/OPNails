@@ -22,7 +22,9 @@ class LoginManager {
         
         Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
             if user != nil {
-                self?.presenter.routeToMainScreen(admin: true, animated: false)
+                
+                self?.presenter.load()
+                
             }
         }
     }
@@ -63,6 +65,7 @@ class LoginManager {
         
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] (user, error) in
             if error != nil {
+                self?.presenter.hideLoadingAC()
                 self?.presenter.showRegistrationErrorAC(withTitle: "Error", message: error!.localizedDescription)
             }
             if user != nil {

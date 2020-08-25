@@ -9,12 +9,16 @@
 import Foundation
 
 protocol MonthViewUpdatable {
+    
     func reload()
     func reloadItemAt(indexPath: [IndexPath]?)
+    
 }
 
 protocol MonthViewRoutable {
+    
     func routeWithItem(item: DayRowItem)
+    
 }
 
 typealias MonthViewable = MonthViewUpdatable & MonthViewRoutable

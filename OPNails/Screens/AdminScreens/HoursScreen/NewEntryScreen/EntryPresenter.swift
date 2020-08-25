@@ -22,7 +22,7 @@ typealias EntryPresenting = EntryRouting & EntryUpdating
 
 class EntryPresenter: PresenterLifecycle, PresenterViewUpdating {
     
-    func update(with entries: [Entry]) {
+    func update() {
         
     }
     
@@ -38,6 +38,10 @@ class EntryPresenter: PresenterLifecycle, PresenterViewUpdating {
     func setup() {
         
         dataManager.checkCurrentUser()
+        
+    }
+    
+    func load() {
         
     }
     

@@ -14,6 +14,7 @@ protocol LoginViewRoutable {
     func showRegistration()
     func showMainScreen(admin: Bool, animated: Bool)
     func showAdminScreen()
+    func showLoadScreen()
     
 }
 
@@ -132,6 +133,13 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
 }
 
 extension LoginVC: LoginViewRoutable {
+    
+    func showLoadScreen() {
+        
+        let loadingVC = LoadingVC()
+        self.navigationController?.pushViewController(loadingVC, animated: false)
+        
+    }
     
     func showMainScreen(admin: Bool, animated: Bool) {
         

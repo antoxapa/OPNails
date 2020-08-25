@@ -28,24 +28,44 @@ protocol MonthPresenterHeaderViewUpdating {
     
 }
 
-typealias MonthPresenting = MonthPresenterCollectionViewPresenting & MonthPresenterHeaderViewUpdating & PresenterLifecycle
+typealias MonthPresenting = MonthPresenterCollectionViewPresenting & MonthPresenterHeaderViewUpdating & PresenterLifecycle & PresenterViewUpdating
 
-class MonthPresenter: PresenterLifecycle {
-    
+class MonthPresenter: PresenterLifecycle, PresenterViewUpdating {
+
     private var view: MonthViewable
     private var header: HeaderMonthViewUpdatable?
     private var dateManager: DateManager
+    lazy private var dataManager = DataManager(presenter: self)
     private var monthModels: [CalendarMonth]
+    private var entries = [Entry]()
     
     init(view: MonthViewable) {
+        
         self.view = view
         dateManager = DateManager()
         monthModels = []
+        
     }
     
     func setup() {
+        
         monthModels = dateManager.showMonth()
         view.reload()
+        
+        
+    }
+    
+    func load() {
+        
+        dataManager.downloadItems()
+        
+    }
+    
+    func update() {
+        
+        self.entries = dataManager.showEntries()
+        view.reload()
+        
     }
     
 }

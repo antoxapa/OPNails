@@ -26,16 +26,22 @@ class DataManager {
         
         ref = Database.database().reference(withPath: "entries")
         
-        ref.observe(.value) { (snapshot) in
+        ref.observe(.value) { [weak self](snapshot) in
             var _entries = [Entry]()
             for item in snapshot.children {
                 let entry = Entry(snapshot: item as! DataSnapshot)
                 _entries.append(entry)
             }
             
-            self.entries = _entries
-            self.presenter.update(with: self.entries)
+            self?.entries = _entries
+            self?.presenter.update()
         }
+    }
+    
+    func showEntries() -> [Entry] {
+        
+        return entries
+        
     }
     
     func checkCurrentUser() {

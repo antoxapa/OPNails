@@ -9,14 +9,14 @@
 import UIKit
 
 protocol RegistrationViewPresenting {
+    
     func showAlertController(withTitle text: String, message: String)
+    func showLoadingAlert()
+    func hideLoadingAlert()
+    
 }
 
-protocol RegistrationViewRouting {
-    func showMainScreen()
-}
-
-typealias RegistrationViewable = RegistrationViewPresenting & RegistrationViewRouting
+typealias RegistrationViewable = RegistrationViewPresenting
 
 class RegistrationVC: UIViewController, UIGestureRecognizerDelegate {
     
@@ -101,6 +101,7 @@ class RegistrationVC: UIViewController, UIGestureRecognizerDelegate {
             return
         }
         
+        presenter?.showLoadingAC()
         presenter?.registerUser(email: email, password: password)
         
     }
@@ -119,17 +120,30 @@ extension RegistrationVC: RegistrationViewPresenting {
         let ac = UIAlertController(title: text, message: message, preferredStyle: .alert)
         let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
         ac.addAction(okAction)
-        self.present(ac, animated: true)
+        present(ac, animated: true)
     }
     
-}
-
-extension RegistrationVC: RegistrationViewRouting {
-    
-    func showMainScreen() {
+    func showLoadingAlert() {
         
-        let vc = MonthsVC()
-        self.navigationController?.pushViewController(vc, animated: true)
+        let alert = UIAlertController(title: "Loading ...", message: nil, preferredStyle: .alert)
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.isUserInteractionEnabled = false
+        activityIndicator.startAnimating()
+
+        alert.view.addSubview(activityIndicator)
+        alert.view.heightAnchor.constraint(equalToConstant: 95).isActive = true
+
+        activityIndicator.centerXAnchor.constraint(equalTo: alert.view.centerXAnchor, constant: 0).isActive = true
+        activityIndicator.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -20).isActive = true
+
+        present(alert, animated: true)
+        
+    }
+    
+    func hideLoadingAlert() {
+        
+        self.dismiss(animated: true, completion: nil)
         
     }
     

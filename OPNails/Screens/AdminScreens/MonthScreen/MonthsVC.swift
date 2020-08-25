@@ -34,6 +34,13 @@ class MonthsVC: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        presenter.load()
+        
+    }
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         monthsCollectionView.collectionViewLayout.invalidateLayout()
         monthsCollectionView.reloadData()
@@ -41,8 +48,6 @@ class MonthsVC: UIViewController {
     
     private func setupViews() {
         monthsCollectionView.register(UINib(nibName: "DayCell", bundle: nil), forCellWithReuseIdentifier: "DayCell")
-//        monthsCollectionView.register(DayCell.self, forCellWithReuseIdentifier: "DayCell")
-//        monthsCollectionView.register(EmptyCell.self, forCellWithReuseIdentifier: "EmptyCell")
         monthsCollectionView.register(UINib(nibName: "EmptyCell", bundle: nil), forCellWithReuseIdentifier: "EmptyCell")
         monthsCollectionView.register(UINib(nibName: "MonthNameHeaderView", bundle: nil), forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "MonthHeader")
         
@@ -162,6 +167,7 @@ extension MonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if !isSelectStateActive {
             presenter.didSelectCell(at: indexPath.row - presenter.skipCount())
+            collectionView.deselectItem(at: indexPath, animated: false)
         } else {
             if let cell = collectionView.cellForItem(at: indexPath) as? DayCell {
                 cell.isSelected ? cell.setSelectedState() : cell.setUnselectedState()
@@ -174,7 +180,7 @@ extension MonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        if collectionView.indexPathsForSelectedItems?.count == 0 {
+        if collectionView.indexPathsForSelectedItems?.count == 0 && isSelectStateActive {
             guard let items = self.toolbarItems else { return }
             items[2].isEnabled = false
         }
@@ -224,16 +230,20 @@ extension MonthsVC: UICollectionViewDelegateFlowLayout {
 extension MonthsVC: MonthViewUpdatable {
     
     func reload() {
+        
         monthsCollectionView.reloadData()
+        
     }
+    
     func reloadItemAt(indexPath: [IndexPath]?) {
+        
         guard let index = indexPath else { return }
         monthsCollectionView.reloadItems(at: index)
+        
     }
     
 }
 
-// Not shure this is right for MVP
 extension MonthsVC: MonthViewRoutable {
     
     func routeWithItem(item day: DayRowItem) {

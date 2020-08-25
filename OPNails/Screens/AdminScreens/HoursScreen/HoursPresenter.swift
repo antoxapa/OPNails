@@ -22,7 +22,7 @@ protocol HoursPresentereRouting {
 
 protocol PresenterViewUpdating {
     
-    func update(with entries: [Entry])
+    func update()
     
 }
 
@@ -47,12 +47,19 @@ class HoursPresenter: PresenterLifecycle, PresenterViewUpdating {
         
     }
     
-    func update(with entries: [Entry]) {
+    func load() {
         
-        self.entries = entries
+        
+    }
+    
+    func update() {
+        
+        entries = dataManager.showEntries()
         view.reload()
         
     }
+    
+    
     
 }
 
