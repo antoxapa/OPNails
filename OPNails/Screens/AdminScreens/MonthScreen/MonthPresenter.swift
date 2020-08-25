@@ -24,7 +24,8 @@ protocol MonthPresenterHeaderViewUpdating {
     func showNextMonth()
     func showPreviousMonth()
     func showCurrentMonth()
-    func selectDays(indexPath: [IndexPath]?)
+    func reloadView()
+    func addNewEntries(forDays days: [IndexPath])
     
 }
 
@@ -149,6 +150,7 @@ extension MonthPresenter: MonthPresenterCollectionViewPresenting {
 extension MonthPresenter {
     
     private func openDayTimesList(withItem item: DayRowItem) {
+        
         view.routeWithItem(item: item)
         
     }
@@ -184,14 +186,31 @@ extension MonthPresenter: MonthPresenterHeaderViewUpdating {
         
     }
     
-    func selectDays(indexPath: [IndexPath]?) {
+    func reloadView() {
         
         view.reload()
         
     }
     
-    func addNewEntries(forDays days: [IndexPath]) {
+    func addNewEntries(forDays indexPaths: [IndexPath]) {
         
+        var items = [DayRowItem]()
+        if let month = monthModels.first {
+            for index in indexPaths {
+                let year = String(month.year)
+                let monthName = month.monthName
+                let monthNumber = month.monthNumber
+                let newIndex = index.row - skipCount()
+                let days = month.days[newIndex]
+                let dayName = String(days.day)
+                let isWorkday = days.isWorkDay
+                let user = days.isClient
+                
+                let dayRowItem = DayRowItem(year: year, month: monthName, day: dayName, monthNumber: monthNumber, client: user, isWorkday: isWorkday)
+                items.append(dayRowItem)
+            }
+        }
+        view.routeWithItems(items: items)
         
     }
     

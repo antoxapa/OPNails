@@ -124,6 +124,7 @@
             <connections>
                 <outlet property="leftButton" destination="vmd-7b-T9m" id="kvc-Jt-g7m"/>
                 <outlet property="monthNameLabel" destination="iy7-Fq-7vo" id="lAp-C7-SrI"/>
+                <outlet property="rightButton" destination="c52-7j-HB7" id="5je-HH-ozx"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="115.84821428571428"/>
         </collectionReusableView>

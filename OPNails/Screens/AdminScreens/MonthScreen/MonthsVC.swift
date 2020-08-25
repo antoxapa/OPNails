@@ -100,6 +100,9 @@ class MonthsVC: UIViewController {
     
     @objc private func addNewEntry() {
         
+        guard let indexPath = monthsCollectionView.indexPathsForSelectedItems else { return }
+        presenter.addNewEntries(forDays: indexPath)
+        
     }
     
     @objc private func addEntries() {
@@ -116,7 +119,7 @@ class MonthsVC: UIViewController {
             self.setToolbarItems([today], animated: true)
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(self.addEntries))
         }
-        presenter.selectDays(indexPath: monthsCollectionView.indexPathsForSelectedItems)
+        presenter.reloadView()
         
     }
     
@@ -165,6 +168,12 @@ extension MonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         if let item = presenter.data(at: indexPath.row) {
             headerView.configure(withItem: item, presenter: presenter)
+            
+            if isSelectStateActive {
+                headerView.hideRightButton()
+            } else {
+                headerView.showRightButton()
+            }
             
             if presenter.compareMonthYear(item: item) {
                 headerView.hideLeftButton()
@@ -282,6 +291,15 @@ extension MonthsVC: MonthViewRoutable {
         dayVC.admin = adminUser
         
         self.navigationController?.pushViewController(dayVC, animated: true)
+    }
+    
+    func routeWithItems(items days: [DayRowItem]) {
+        
+        let entryVC = NewEntryVC(nibName: "NewEntryVC", bundle: nil)
+        entryVC.days = days
+        addEntries()
+        self.present(entryVC, animated: true)
+        
     }
     
 }

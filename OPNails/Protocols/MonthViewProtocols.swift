@@ -18,6 +18,7 @@ protocol MonthViewUpdatable {
 protocol MonthViewRoutable {
     
     func routeWithItem(item: DayRowItem)
+    func routeWithItems(items days: [DayRowItem])
     
 }
 

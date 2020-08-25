@@ -18,6 +18,7 @@ final class MonthNameHeaderView: UICollectionReusableView, ReusableView, HeaderM
     
     @IBOutlet weak var monthNameLabel: UILabel!
     @IBOutlet weak var leftButton: UIButton!
+    @IBOutlet weak var rightButton: UIButton!
     
     var presenter: MonthPresenting?
     
@@ -48,6 +49,18 @@ final class MonthNameHeaderView: UICollectionReusableView, ReusableView, HeaderM
         
         leftButton.isHidden = false
         monthNameLabel.textColor = .black
+        
+    }
+    
+    func hideRightButton() {
+        
+        rightButton.isHidden = true
+        
+    }
+    
+    func showRightButton() {
+        
+        rightButton.isHidden = false
         
     }
 }

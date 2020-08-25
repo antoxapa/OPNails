@@ -16,6 +16,7 @@ protocol EntryViewRoutable {
 
 protocol EntryViewPresenting {
     
+    func currentDays() -> [DayRowItem]
     func currentDate() -> String?
     func showAlert()
     
@@ -25,8 +26,10 @@ typealias NewEntryViewable = EntryViewRoutable & EntryViewPresenting
 
 class NewEntryVC: UIViewController {
     
-    var pickerDate = Date()
+    @IBOutlet weak var daysList: UILabel!
     var date: String?
+    var pickerDate = Date()
+    var days = [DayRowItem]()
     
     @IBOutlet weak var clientTF: UITextField!
     @IBOutlet weak var timePicker: UIDatePicker! {
@@ -47,6 +50,8 @@ class NewEntryVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        daysList.text = presenter.showdaysString(days: days)
         presenter.load()
         
     }
@@ -60,8 +65,11 @@ class NewEntryVC: UIViewController {
     @IBAction func okButtonPresssed(_ sender: UIButton) {
         
         let entryTime = pickerDate.timeString()
-        presenter.addNewEntry(time: entryTime)
-        
+        if days.count > 0 {
+            presenter.addEntries(time: entryTime)
+        } else {
+            presenter.addNewEntry(time: entryTime)
+        }
     }
 }
 
@@ -80,6 +88,12 @@ extension NewEntryVC: EntryViewPresenting {
     func currentDate() -> String? {
         
         return date
+        
+    }
+    
+    func currentDays() -> [DayRowItem] {
+        
+        return days
         
     }
     

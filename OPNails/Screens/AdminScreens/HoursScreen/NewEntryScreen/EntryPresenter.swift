@@ -17,6 +17,8 @@ protocol EntryRouting {
 protocol EntryUpdating {
     
     func addNewEntry(time: String)
+    func addEntries(time: String)
+    func showdaysString(days: [DayRowItem]) -> String
     
 }
 
@@ -79,6 +81,36 @@ extension EntryPresenter: EntryUpdating {
         dataManager.addNewEntry(date: date , time: time)
         pop()
         
+    }
+    
+    func addEntries(time: String) {
+        
+        let days = view.currentDays()
+        for day in days {
+            let date = "\(day.day)-\(day.monthNumber)-\(day.year)"
+            for entry in entries {
+                if entry.date == date && entry.time == time {
+                    view.showAlert()
+                    return
+                }
+                
+            }
+            
+            dataManager.addNewEntry(date: date, time: time)
+        }
+        pop()
+    }
+    
+    func showdaysString(days: [DayRowItem]) -> String {
+        var daysString = ""
+        var daysArray = [String]()
+        for day in days {
+            daysArray.append(day.day)
+        }
+        for item in daysArray.sorted() {
+            daysString += "\(item), "
+        }
+        return daysString
     }
     
 }
