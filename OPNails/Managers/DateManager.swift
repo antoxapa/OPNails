@@ -35,6 +35,7 @@ class DateManager {
     
     func showCurrentMonth() -> [CalendarMonth] {
         
+        currentMonth = Today.todayDate
         fillMonthModel(fromDate: Today.todayDate)
         
         return monthModel

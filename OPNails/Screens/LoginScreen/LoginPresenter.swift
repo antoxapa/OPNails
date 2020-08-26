@@ -62,7 +62,8 @@ class LoginPresenter: PresenterLifecycle, PresenterViewUpdating {
     
     func update() {
         
-        routeToMainScreen(admin: true, animated: false)
+        guard let admin = loginManager?.checkAdminUser() else { return }
+        routeToMainScreen(admin: admin, animated: false)
         
     }
     

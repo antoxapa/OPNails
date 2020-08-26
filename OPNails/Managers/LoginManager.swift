@@ -31,6 +31,13 @@ class LoginManager {
         }
     }
     
+    func checkAdminUser() -> Bool {
+        if Auth.auth().currentUser?.email == "antoxapa@gmail.com" {
+            return true
+        }
+        return false
+    }
+    
     func signIn(withEmail email: String, password: String) {
         
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] (user, error) in
@@ -39,11 +46,7 @@ class LoginManager {
                 self?.presenter.showErrorAC(withTitle: title, message: error!.localizedDescription)
             }
             if user != nil {
-                var admin: Bool = false
-                if email == "antoxapa@gmail.com" {
-                    admin = true
-                }
-                self?.presenter.routeToMainScreen(admin: admin, animated: true)
+                self?.presenter.load()
             } else {
                 let title = "Error"
                 let message = "No such user"
