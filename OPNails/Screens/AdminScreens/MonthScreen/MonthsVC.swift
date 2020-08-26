@@ -43,6 +43,13 @@ class MonthsVC: UIViewController {
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        presenter.cancel()
+        
+    }
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
         monthsCollectionView.collectionViewLayout.invalidateLayout()

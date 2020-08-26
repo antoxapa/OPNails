@@ -12,6 +12,7 @@ protocol AdminHoursViewUpdatable {
     
     func reload()
     
+    
 }
 
 protocol AdminHoursViewRoutable {
@@ -23,6 +24,7 @@ protocol AdminHoursViewRoutable {
 protocol AdminHoursViewPresendable {
     
     func presentDay() -> DayRowItem
+    func showSignInEntryUserAC(index: Int)
     
 }
 
@@ -46,6 +48,13 @@ class AdminHoursListVC: UIViewController {
         setupNavBar()
         
         presenter.load()
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        presenter.cancel()
         
     }
     
@@ -124,6 +133,12 @@ extension AdminHoursListVC: UITableViewDelegate, UITableViewDataSource {
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        presenter.didSelectCell(at: indexPath.row)
+        
+    }
+    
 }
 
 extension AdminHoursListVC: AdminHoursViewRoutable {
@@ -139,11 +154,22 @@ extension AdminHoursListVC: AdminHoursViewRoutable {
         
     }
     
+    func pop() {
+        
+        self.dismiss(animated: true, completion: nil)
+        
+    }
+    
 }
 
 extension AdminHoursListVC: AdminHoursViewUpdatable {
     
     func reload() {
+        
+        if let _ = self.navigationController?.presentedViewController {
+            self.dismiss(animated: true, completion: nil)
+        }
+        
         
         hoursTableView.reloadData()
         
@@ -156,6 +182,45 @@ extension AdminHoursListVC: AdminHoursViewPresendable {
     func presentDay() -> DayRowItem {
         
         return day!
+        
+    }
+    
+    func showSignInEntryUserAC(index: Int) {
+        
+        if let day = presenter.data(at: index) {
+        let title = "New entry"
+            let message = "Are you sure you want to sign up at \(day.time)?"
+            let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let actionTitle = "Yes"
+            let action = UIAlertAction(title: actionTitle, style: .default) { [weak self](action) in
+                
+                self?.showLoadingAC()
+                self?.presenter.setUserInEntry(index: index)
+                
+            }
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            ac.addAction(action)
+            ac.addAction(cancel)
+            self.present(ac, animated: true)
+        }
+        
+    }
+    
+    func showLoadingAC() {
+        
+        let alert = UIAlertController(title: "Wait...", message: nil, preferredStyle: .alert)
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.isUserInteractionEnabled = false
+        activityIndicator.startAnimating()
+
+        alert.view.addSubview(activityIndicator)
+        alert.view.heightAnchor.constraint(equalToConstant: 95).isActive = true
+
+        activityIndicator.centerXAnchor.constraint(equalTo: alert.view.centerXAnchor, constant: 0).isActive = true
+        activityIndicator.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -20).isActive = true
+
+        present(alert, animated: true)
         
     }
     

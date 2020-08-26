@@ -50,9 +50,15 @@ class NewEntryVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         daysList.text = presenter.showdaysString(days: days)
         presenter.load()
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        presenter.cancel()
         
     }
     

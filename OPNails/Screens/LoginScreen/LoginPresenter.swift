@@ -60,6 +60,12 @@ class LoginPresenter: PresenterLifecycle, PresenterViewUpdating {
         
     }
     
+    func cancel() {
+        
+        dataManager.removeObservers()
+        print("ue")
+    }
+    
     func update() {
         
         guard let admin = loginManager?.checkAdminUser() else { return }

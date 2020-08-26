@@ -61,6 +61,12 @@ class MonthPresenter: PresenterLifecycle, PresenterViewUpdating {
         
     }
     
+    func cancel() {
+        
+        dataManager.removeObservers()
+        
+    }
+    
     func update() {
         
         entries = dataManager.showEntries()

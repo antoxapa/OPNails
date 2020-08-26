@@ -12,6 +12,7 @@ protocol HoursPresenterTableViewPresenting {
     
     func numberOfCells(in section: Int) -> Int
     func data(at row: Int) -> EntryRowItem?
+    func didSelectCell(at row: Int) -> Void
     
 }
 
@@ -27,7 +28,13 @@ protocol PresenterViewUpdating {
     
 }
 
-typealias HoursPresenting = HoursPresenterTableViewPresenting & HoursPresentereRouting & PresenterLifecycle & PresenterViewUpdating
+protocol PresenterModelUpdating {
+    
+    func setUserInEntry(index: Int)
+    
+}
+
+typealias HoursPresenting = HoursPresenterTableViewPresenting & HoursPresentereRouting & PresenterLifecycle & PresenterViewUpdating & PresenterModelUpdating
 
 class HoursPresenter: PresenterLifecycle, PresenterViewUpdating {
     
@@ -62,6 +69,13 @@ class HoursPresenter: PresenterLifecycle, PresenterViewUpdating {
     func load() {
         
         dataManager.downloadItems()
+        dataManager.checkCurrentUser()
+        
+    }
+    
+    func cancel() {
+        
+        dataManager.removeObservers()
         
     }
     
@@ -88,6 +102,12 @@ extension HoursPresenter: HoursPresenterTableViewPresenting {
         return satisfEntries[row]
         
     }
+    
+    func didSelectCell(at row: Int) {
+        
+        view.showSignInEntryUserAC(index: row)
+        
+    }
 }
 
 extension HoursPresenter: HoursPresentereRouting {
@@ -97,4 +117,17 @@ extension HoursPresenter: HoursPresentereRouting {
         view.showDetail()
         
     }
+
+}
+
+extension HoursPresenter: PresenterModelUpdating {
+    
+    func setUserInEntry(index: Int) {
+
+        let entry = satisfEntries[index]
+        dataManager.updateEntryWithUser(entry: entry)
+        dataManager.downloadItems()
+        
+    }
+    
 }

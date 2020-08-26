@@ -23,7 +23,7 @@ struct EntryRowItem {
     
     let date: String
     let time: String
-    let user: String?
+    var user: String?
     let isWorkday: Bool?
     
 }

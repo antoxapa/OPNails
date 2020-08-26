@@ -76,6 +76,13 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
         
     }
     
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//
+//        presenter.cancel()
+//
+//    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         emailTF.resignFirstResponder()
@@ -152,8 +159,8 @@ extension LoginVC: LoginViewRoutable {
         if admin {
             vc.adminUser = admin
         }
-//        self.navigationController?.pushViewController(vc, animated: animated)
         self.navigationController?.setViewControllers([vc], animated: false)
+//        presenter.cancel()
         
     }
     

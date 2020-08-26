@@ -32,10 +32,12 @@ class LoginManager {
     }
     
     func checkAdminUser() -> Bool {
+        
         if Auth.auth().currentUser?.email == "antoxapa@gmail.com" {
             return true
         }
         return false
+        
     }
     
     func signIn(withEmail email: String, password: String) {

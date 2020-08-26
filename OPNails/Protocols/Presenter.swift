@@ -12,5 +12,6 @@ protocol PresenterLifecycle {
     
     func setup()
     func load()
+    func cancel()
     
 }
