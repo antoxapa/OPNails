@@ -12,7 +12,7 @@ protocol LoginPresenting {
     
     func signIn(email: String, password: String)
     func signOut()
-    func registerUser(email: String, password: String)
+    func registerUser(email: String, password: String, name: String, phoneNumber: String)
     func checkUserLogged()
     func showErrorAC(withTitle title:String, message: String)
     func showLoadingAC()
@@ -112,9 +112,9 @@ extension LoginPresenter: LoginPresenting {
         
     }
     
-    func registerUser(email: String, password: String) {
+    func registerUser(email: String, password: String, name: String, phoneNumber: String) {
         
-        loginManager?.registerUser(withEmail: email, password: password)
+        loginManager?.registerUser(withEmail: email, password: password, name: name, phoneNumber: phoneNumber)
         
     }
     

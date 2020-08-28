@@ -12,7 +12,6 @@ protocol AdminHoursViewUpdatable {
     
     func reload()
     
-    
 }
 
 protocol AdminHoursViewRoutable {
@@ -48,6 +47,8 @@ class AdminHoursListVC: UIViewController {
         setupNavBar()
         
         presenter.load()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateEditedEntry), name: .entriesEdited, object: nil)
         
     }
     
@@ -105,6 +106,12 @@ class AdminHoursListVC: UIViewController {
         presenter.presentDetailVC()
         
     }
+    
+    @objc private func updateEditedEntry() {
+        
+        presenter.load()
+        
+    }
 }
 
 extension AdminHoursListVC: UITableViewDelegate, UITableViewDataSource {
@@ -121,6 +128,7 @@ extension AdminHoursListVC: UITableViewDelegate, UITableViewDataSource {
         
         if let day = presenter.data(at: indexPath.row) {
             emptyLabel.isHidden = true
+            
             cell.configure(with: day)
         }
         
@@ -170,7 +178,6 @@ extension AdminHoursListVC: AdminHoursViewUpdatable {
             self.dismiss(animated: true, completion: nil)
         }
         
-        
         hoursTableView.reloadData()
         
     }
@@ -193,10 +200,8 @@ extension AdminHoursListVC: AdminHoursViewPresendable {
             let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let actionTitle = "Yes"
             let action = UIAlertAction(title: actionTitle, style: .default) { [weak self](action) in
-                
                 self?.showLoadingAC()
                 self?.presenter.setUserInEntry(index: index)
-                
             }
             let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             ac.addAction(action)
@@ -225,3 +230,5 @@ extension AdminHoursListVC: AdminHoursViewPresendable {
     }
     
 }
+
+

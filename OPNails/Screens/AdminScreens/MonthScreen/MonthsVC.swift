@@ -161,6 +161,18 @@ extension MonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
             } else {
                 cell.setupDefault()
             }
+            
+            if presenter.checkClientEntryDay(item: item) {
+                cell.setupGreenView()
+            } else {
+                if item.isWorkday != nil && item.isWorkday != false {
+                    cell.setupRedView()
+                } else {
+                    cell.setupEventViewHidden()
+                }
+                
+            }
+            
             cell.configure(withItem: item)
             
         }

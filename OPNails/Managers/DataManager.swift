@@ -13,9 +13,11 @@ import FirebaseDatabase
 class DataManager {
     
     var user: OPUser!
-    var entry: Entry!
+//    var entry: Entry!
     var ref: DatabaseReference!
+    var userRef: DatabaseReference!
     var entries = Array<Entry>()
+    var users = Array<OPUser>()
     var presenter: PresenterViewUpdating
     
     init(presenter: PresenterViewUpdating) {
@@ -35,14 +37,31 @@ class DataManager {
             }
             self?.entries = _entries
             self?.presenter.update()
+            self?.downloadUsers()
         }
+    }
+    
+    func downloadUsers() {
         
+        userRef = Database.database().reference(withPath: "users")
+        userRef.observe(.value) { [weak self] (snapshot) in
+            var _users = [OPUser]()
+            for item in snapshot.children {
+                let user = OPUser(snapshot: item as! DataSnapshot)
+                _users.append(user)
+            }
+            self?.users = _users
+            self?.presenter.update()
+        }
     }
     
     func removeObservers() {
         
         ref.removeAllObservers()
-        
+        if userRef != nil {
+            userRef.removeAllObservers()
+                   
+        }
     }
     
     func showEntries() -> [Entry] {
@@ -51,10 +70,35 @@ class DataManager {
         
     }
     
-    func checkCurrentUser() {
+    func showUsers() -> [OPUser] {
+
+        return users
+        
+    }
+    
+    func getCurrentUser() {
         
         guard let currentUser = Auth.auth().currentUser else { return }
         user = OPUser(user: currentUser)
+        
+    }
+    
+    func returnCurrentUser() -> OPUser? {
+        
+        guard let currentUser = Auth.auth().currentUser else { return nil }
+        user = OPUser(user: currentUser)
+        return user
+        
+    }
+    
+    func checkIsUserEntry(entry: Entry) -> OPUser? {
+        
+        for item in users {
+            if item.uid == entry.userId {
+                return item
+            }
+        }
+        return nil
         
     }
     
@@ -70,11 +114,11 @@ class DataManager {
         
         let entryString = "\(entry.date) \(entry.time)"
         var newEntry = entry
-        newEntry.user = user.uid
+        newEntry.user = user
         guard let key = ref.child(entryString).key else { return }
         let post = ["date": newEntry.date,
                     "time": newEntry.time,
-                    "userId": newEntry.user]
+                    "userId": newEntry.user?.uid]
         let childUpdates = ["\(key)": post]
         ref.updateChildValues(childUpdates)
         

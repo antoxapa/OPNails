@@ -72,16 +72,10 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
         
         setupNavBar()
         
-        presenter.checkUserLogged()
+//        presenter.checkUserLogged()
         
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//
-//        presenter.cancel()
-//
-//    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
@@ -160,7 +154,6 @@ extension LoginVC: LoginViewRoutable {
             vc.adminUser = admin
         }
         self.navigationController?.setViewControllers([vc], animated: false)
-//        presenter.cancel()
         
     }
     

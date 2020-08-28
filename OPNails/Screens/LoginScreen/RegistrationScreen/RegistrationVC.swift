@@ -111,7 +111,7 @@ class RegistrationVC: UIViewController, UIGestureRecognizerDelegate {
         }
         
         presenter?.showLoadingAC()
-        presenter?.registerUser(email: email, password: password)
+        presenter?.registerUser(email: email, password: password, name: name, phoneNumber: phoneNumber)
         
     }
     

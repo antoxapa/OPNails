@@ -14,22 +14,37 @@ class DayCell: UICollectionViewCell, ReusableView {
     @IBOutlet private weak var todayView: UIView!
     @IBOutlet private weak var borderView: UIView!
     @IBOutlet weak var eventView: UIView! {
-        
         didSet {
-            
             eventView.isHidden = true
             eventView.layer.cornerRadius = self.frame.height / 6
             eventView.layer.masksToBounds = true
         }
-        
     }
     
     func configure(withItem item: DayRowItem) {
         
         dayLabel.text = item.day
-        if item.isWorkday != nil && item.isWorkday != false {
-            eventView.isHidden = false
-        }
+        
+    }
+    
+    func setupRedView() {
+
+        eventView.isHidden = false
+        eventView.backgroundColor = .red
+        
+    }
+    
+    func setupGreenView() {
+        
+        eventView.isHidden = false
+        eventView.backgroundColor = .green
+        
+    }
+    
+    func setupEventViewHidden() {
+        
+        eventView.backgroundColor = .clear
+        eventView.isHidden = true
         
     }
     

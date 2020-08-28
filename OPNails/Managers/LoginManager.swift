@@ -8,10 +8,12 @@
 
 import Foundation
 import FirebaseAuth
+import FirebaseDatabase
 
 class LoginManager {
     
     var presenter: LoginPresentable
+    var ref: DatabaseReference!
     
     init(presenter: LoginPresentable) {
         
@@ -68,7 +70,7 @@ class LoginManager {
         
     }
     
-    func registerUser(withEmail email: String, password: String) {
+    func registerUser(withEmail email: String, password: String, name: String, phoneNumber: String) {
         
         Auth.auth().createUser(withEmail: email, password: password) { [weak self] (user, error) in
             if error != nil {
@@ -76,6 +78,9 @@ class LoginManager {
                 self?.presenter.showRegistrationErrorAC(withTitle: "Error", message: error!.localizedDescription)
             }
             if user != nil {
+                self?.ref = Database.database().reference(withPath: "users")
+                let userRef = self?.ref.child((user?.user.uid)!)
+                userRef?.setValue(["uid":user?.user.uid,"name":name, "email":email, "phoneNumber":phoneNumber])
                 self?.presenter.routeToMainScreenAfterRegistration()
             }
         }

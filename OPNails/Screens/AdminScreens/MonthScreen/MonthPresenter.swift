@@ -17,6 +17,8 @@ protocol MonthPresenterCollectionViewPresenting {
     func compareMonthYear(item: DayRowItem) -> Bool
     func skipCount() -> Int
     
+    func checkClientEntryDay(item: DayRowItem) -> Bool
+    
 }
 
 protocol MonthPresenterHeaderViewUpdating {
@@ -39,6 +41,7 @@ class MonthPresenter: PresenterLifecycle, PresenterViewUpdating {
     lazy private var dataManager = DataManager(presenter: self)
     private var monthModels: [CalendarMonth]
     private var entries: [Entry]?
+    private var users: [OPUser]?
     
     init(view: MonthViewable) {
         
@@ -70,6 +73,7 @@ class MonthPresenter: PresenterLifecycle, PresenterViewUpdating {
     func update() {
         
         entries = dataManager.showEntries()
+        users = dataManager.showUsers()
         view.reload()
         
     }
@@ -98,13 +102,20 @@ extension MonthPresenter: MonthPresenterCollectionViewPresenting {
             let days = monthDate.days[row]
             let dayName = String(days.day)
             var isWorkday = days.isWorkDay
-            let user = days.isClient
+            var user: OPUser? = nil
             
             if entries != nil {
                 let date = "\(dayName)-\(monthNumber)-\(year)"
                 for entry in entries! {
                     if entry.date == date {
                         isWorkday = true
+                        
+                        if let item = dataManager.checkIsUserEntry(entry: entry) {
+                            if entry.userId == dataManager.returnCurrentUser()?.uid {
+                                user = item
+                                isWorkday = false
+                            }
+                        }
                     }
                 }
             }
@@ -148,6 +159,15 @@ extension MonthPresenter: MonthPresenterCollectionViewPresenting {
         guard let day = data(at: row) else { return }
         
         openDayTimesList(withItem: day)
+        
+    }
+    
+    func checkClientEntryDay(item: DayRowItem) -> Bool {
+        
+        if item.client?.uid == dataManager.returnCurrentUser()?.uid {
+            return true
+        }
+        return false
         
     }
     
@@ -210,7 +230,7 @@ extension MonthPresenter: MonthPresenterHeaderViewUpdating {
                 let days = month.days[newIndex]
                 let dayName = String(days.day)
                 let isWorkday = days.isWorkDay
-                let user = days.isClient
+                let user: OPUser? = nil
                 
                 let dayRowItem = DayRowItem(year: year, month: monthName, day: dayName, monthNumber: monthNumber, client: user, isWorkday: isWorkday)
                 items.append(dayRowItem)

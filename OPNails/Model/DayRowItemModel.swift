@@ -14,7 +14,7 @@ struct DayRowItem {
     let month: String
     let day: String
     let monthNumber: Int
-    let client: String?
+    let client: OPUser?
     let isWorkday: Bool?
     
 }
@@ -23,7 +23,7 @@ struct EntryRowItem {
     
     let date: String
     let time: String
-    var user: String?
+    var user: OPUser?
     let isWorkday: Bool?
     
 }

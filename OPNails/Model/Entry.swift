@@ -32,7 +32,6 @@ struct Entry {
         time = snapshotValue["time"] as! String
         date = snapshotValue["date"] as! String
         userId = snapshotValue["userId"] as? String
-        //        complited = snapshotValue["complited"] as! Bool
         ref = snapshot.ref
         
     }

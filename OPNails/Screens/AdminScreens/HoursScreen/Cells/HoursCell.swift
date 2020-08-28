@@ -28,8 +28,8 @@ class HoursCell: UITableViewCell {
     func configure(with item: EntryRowItem) {
         
         timeLabel.text = item.time
-        if item.user != "" {
-            userLabel.text = item.user
+        if item.user?.name != "" && item.user != nil {
+            userLabel.text = item.user?.name
         } else {
              userLabel.text = "Time available"
         }

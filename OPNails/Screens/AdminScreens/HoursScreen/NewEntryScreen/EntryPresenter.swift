@@ -39,7 +39,7 @@ class EntryPresenter: PresenterLifecycle, PresenterViewUpdating {
     
     func setup() {
         
-        dataManager.checkCurrentUser()
+        dataManager.getCurrentUser()
         
     }
     

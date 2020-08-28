@@ -27,10 +27,6 @@ typealias NewEntryViewable = EntryViewRoutable & EntryViewPresenting
 class NewEntryVC: UIViewController {
     
     @IBOutlet weak var daysList: UILabel!
-    var date: String?
-    var pickerDate = Date()
-    var days = [DayRowItem]()
-    
     @IBOutlet weak var clientTF: UITextField!
     @IBOutlet weak var timePicker: UIDatePicker! {
         didSet {
@@ -45,6 +41,9 @@ class NewEntryVC: UIViewController {
         }
     }
     
+    var date: String?
+    var pickerDate = Date()
+    var days = [DayRowItem]()
     lazy var presenter: EntryPresenting = EntryPresenter(view: self)
     
     override func viewDidLoad() {
@@ -75,7 +74,9 @@ class NewEntryVC: UIViewController {
             presenter.addEntries(time: entryTime)
         } else {
             presenter.addNewEntry(time: entryTime)
+            NotificationCenter.default.post(name: .entriesEdited, object: nil)
         }
+        
     }
 }
 
@@ -111,5 +112,11 @@ extension NewEntryVC: EntryViewPresenting {
         self.present(ac, animated: true)
         
     }
+    
+}
+
+extension Notification.Name {
+    
+    static let entriesEdited = Notification.Name("entriesEdited")
     
 }
