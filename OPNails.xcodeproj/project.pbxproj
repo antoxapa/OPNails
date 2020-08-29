@@ -12,6 +12,11 @@
 		063501C124F3EC730044923A /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063501C024F3EC730044923A /* DataManager.swift */; };
 		063501C424F539C20044923A /* LoadingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063501C224F539C20044923A /* LoadingVC.swift */; };
 		063501C524F539C20044923A /* LoadingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 063501C324F539C20044923A /* LoadingVC.xib */; };
+		063501C924FA76FA0044923A /* UsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063501C724FA76FA0044923A /* UsersVC.swift */; };
+		063501CA24FA76FA0044923A /* UsersVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 063501C824FA76FA0044923A /* UsersVC.xib */; };
+		063501CD24FA7E280044923A /* UsersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063501CC24FA7E280044923A /* UsersPresenter.swift */; };
+		063501D424FAD4250044923A /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063501D224FAD4250044923A /* UserCell.swift */; };
+		063501D524FAD4250044923A /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 063501D324FAD4250044923A /* UserCell.xib */; };
 		0638E4AE24E9211A006A5956 /* MonthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0638E4AD24E9211A006A5956 /* MonthPresenter.swift */; };
 		0638E4B124E925CF006A5956 /* MonthsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0638E4AF24E925CF006A5956 /* MonthsVC.swift */; };
 		0638E4B524E927F0006A5956 /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0638E4B324E927F0006A5956 /* DayCell.swift */; };
@@ -34,7 +39,6 @@
 		069646AD24EBE07F008109E9 /* DayRowItemModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646AC24EBE07F008109E9 /* DayRowItemModel.swift */; };
 		069646B424EBE314008109E9 /* NewEntryVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646B224EBE313008109E9 /* NewEntryVC.swift */; };
 		069646B524EBE314008109E9 /* NewEntryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 069646B324EBE313008109E9 /* NewEntryVC.xib */; };
-		069646B924EBF18A008109E9 /* NewEntriesForDatesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646B724EBF18A008109E9 /* NewEntriesForDatesVC.swift */; };
 		069646BE24ED2876008109E9 /* EntryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646BD24ED2876008109E9 /* EntryPresenter.swift */; };
 		069646C324ED8999008109E9 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646C124ED8999008109E9 /* EmptyCell.swift */; };
 		06C23C1524F19829000FF475 /* MonthViewProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C23C1424F19829000FF475 /* MonthViewProtocols.swift */; };
@@ -67,6 +71,11 @@
 		063501C024F3EC730044923A /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		063501C224F539C20044923A /* LoadingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingVC.swift; sourceTree = "<group>"; };
 		063501C324F539C20044923A /* LoadingVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingVC.xib; sourceTree = "<group>"; };
+		063501C724FA76FA0044923A /* UsersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersVC.swift; sourceTree = "<group>"; };
+		063501C824FA76FA0044923A /* UsersVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UsersVC.xib; sourceTree = "<group>"; };
+		063501CC24FA7E280044923A /* UsersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersPresenter.swift; sourceTree = "<group>"; };
+		063501D224FAD4250044923A /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		063501D324FAD4250044923A /* UserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
 		0638E4AD24E9211A006A5956 /* MonthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthPresenter.swift; sourceTree = "<group>"; };
 		0638E4AF24E925CF006A5956 /* MonthsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthsVC.swift; sourceTree = "<group>"; };
 		0638E4B324E927F0006A5956 /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
@@ -94,7 +103,6 @@
 		069646AC24EBE07F008109E9 /* DayRowItemModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayRowItemModel.swift; sourceTree = "<group>"; };
 		069646B224EBE313008109E9 /* NewEntryVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEntryVC.swift; sourceTree = "<group>"; };
 		069646B324EBE313008109E9 /* NewEntryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewEntryVC.xib; sourceTree = "<group>"; };
-		069646B724EBF18A008109E9 /* NewEntriesForDatesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewEntriesForDatesVC.swift; sourceTree = "<group>"; };
 		069646BD24ED2876008109E9 /* EntryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryPresenter.swift; sourceTree = "<group>"; };
 		069646C124ED8999008109E9 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
 		06C23C1424F19829000FF475 /* MonthViewProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthViewProtocols.swift; sourceTree = "<group>"; };
@@ -141,6 +149,16 @@
 				063501C324F539C20044923A /* LoadingVC.xib */,
 			);
 			path = LoadingVC;
+			sourceTree = "<group>";
+		};
+		063501CB24FA77010044923A /* UsersSceen */ = {
+			isa = PBXGroup;
+			children = (
+				063501CC24FA7E280044923A /* UsersPresenter.swift */,
+				063501C724FA76FA0044923A /* UsersVC.swift */,
+				063501C824FA76FA0044923A /* UsersVC.xib */,
+			);
+			path = UsersSceen;
 			sourceTree = "<group>";
 		};
 		0675DB9424E91C6600F3D65E = {
@@ -274,7 +292,7 @@
 			children = (
 				069646A924EB315D008109E9 /* HoursPresenter.swift */,
 				069646A024EB0950008109E9 /* AdminHoursListVC.swift */,
-				069646B724EBF18A008109E9 /* NewEntriesForDatesVC.swift */,
+				063501CB24FA77010044923A /* UsersSceen */,
 				069646B624EBF0E7008109E9 /* NewEntryScreen */,
 				069646AB24EBDF7E008109E9 /* Cells */,
 			);
@@ -286,6 +304,8 @@
 			children = (
 				069646A524EB0B5C008109E9 /* HoursCell.swift */,
 				069646A624EB0B5C008109E9 /* HoursCell.xib */,
+				063501D224FAD4250044923A /* UserCell.swift */,
+				063501D324FAD4250044923A /* UserCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -441,10 +461,12 @@
 				06DF7A0324EFF90C001F7FF1 /* RegistrationVC.xib in Resources */,
 				063501C524F539C20044923A /* LoadingVC.xib in Resources */,
 				0675DBAD24E91C6700F3D65E /* LaunchScreen.storyboard in Resources */,
+				063501CA24FA76FA0044923A /* UsersVC.xib in Resources */,
 				0675DBAA24E91C6700F3D65E /* Assets.xcassets in Resources */,
 				06DF79FA24EE8F51001F7FF1 /* LoginVC.xib in Resources */,
 				069646B524EBE314008109E9 /* NewEntryVC.xib in Resources */,
 				0696469824E99B97008109E9 /* MonthNameHeaderView.xib in Resources */,
+				063501D524FAD4250044923A /* UserCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,8 +553,8 @@
 				063501BF24F3E8030044923A /* Entry.swift in Sources */,
 				06C23C1524F19829000FF475 /* MonthViewProtocols.swift in Sources */,
 				06C23C1D24F3E33E000FF475 /* User.swift in Sources */,
+				063501CD24FA7E280044923A /* UsersPresenter.swift in Sources */,
 				0696469224E97E8F008109E9 /* Presenter.swift in Sources */,
-				069646B924EBF18A008109E9 /* NewEntriesForDatesVC.swift in Sources */,
 				0696469424E998D2008109E9 /* ReusableView.swift in Sources */,
 				069646AA24EB315D008109E9 /* HoursPresenter.swift in Sources */,
 				0696468E24E95BD7008109E9 /* DateModel.swift in Sources */,
@@ -541,6 +563,7 @@
 				069646A224EB0950008109E9 /* AdminHoursListVC.swift in Sources */,
 				063501C424F539C20044923A /* LoadingVC.swift in Sources */,
 				06DF7A0224EFF90C001F7FF1 /* RegistrationVC.swift in Sources */,
+				063501C924FA76FA0044923A /* UsersVC.swift in Sources */,
 				06DF79FC24EE9AF8001F7FF1 /* LoginPresenter.swift in Sources */,
 				069646C324ED8999008109E9 /* EmptyCell.swift in Sources */,
 				0696468924E955BF008109E9 /* Appearance.swift in Sources */,
@@ -552,6 +575,7 @@
 				069646A724EB0B5C008109E9 /* HoursCell.swift in Sources */,
 				0638E4AE24E9211A006A5956 /* MonthPresenter.swift in Sources */,
 				0675DBA324E91C6600F3D65E /* SceneDelegate.swift in Sources */,
+				063501D424FAD4250044923A /* UserCell.swift in Sources */,
 				063501C124F3EC730044923A /* DataManager.swift in Sources */,
 				069646BE24ED2876008109E9 /* EntryPresenter.swift in Sources */,
 			);

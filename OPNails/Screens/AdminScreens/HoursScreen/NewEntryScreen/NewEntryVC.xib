@@ -9,7 +9,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewEntryVC" customModule="OPNails" customModuleProvider="target">
             <connections>
-                <outlet property="clientTF" destination="C2V-kF-A02" id="8My-iL-P6h"/>
                 <outlet property="daysList" destination="XO1-Xo-vYY" id="lST-w5-hKD"/>
                 <outlet property="okButton" destination="hjI-iF-sup" id="xXX-s6-0PY"/>
                 <outlet property="timePicker" destination="I57-HX-mri" id="oA4-ph-6Wz"/>
@@ -21,11 +20,6 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Client" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C2V-kF-A02">
-                    <rect key="frame" x="20" y="229" width="374" height="34"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                    <textInputTraits key="textInputTraits"/>
-                </textField>
                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="I57-HX-mri">
                     <rect key="frame" x="0.0" y="271" width="414" height="162"/>
                     <constraints>
@@ -76,22 +70,18 @@
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
-                <constraint firstItem="C2V-kF-A02" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="Chk-RM-hVJ"/>
                 <constraint firstItem="I57-HX-mri" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="F7s-8b-6QP"/>
                 <constraint firstItem="hjI-iF-sup" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="60" id="FD8-LB-fae"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="C2V-kF-A02" secondAttribute="trailing" constant="20" id="FJJ-u9-09M"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="XO1-Xo-vYY" secondAttribute="trailing" constant="20" id="KKx-NQ-oqu"/>
+                <constraint firstItem="I57-HX-mri" firstAttribute="top" secondItem="XO1-Xo-vYY" secondAttribute="bottom" constant="54" id="MaA-q6-D5d"/>
                 <constraint firstItem="hjI-iF-sup" firstAttribute="top" secondItem="I57-HX-mri" secondAttribute="bottom" constant="50" id="N85-Ha-dZy"/>
                 <constraint firstAttribute="trailing" secondItem="6f1-hf-xRB" secondAttribute="trailing" constant="20" id="OYb-uQ-Iy2"/>
                 <constraint firstItem="6f1-hf-xRB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="20" id="V4n-kn-2Q0"/>
-                <constraint firstItem="I57-HX-mri" firstAttribute="top" secondItem="C2V-kF-A02" secondAttribute="bottom" constant="8" id="WUK-HM-5Da"/>
                 <constraint firstItem="I57-HX-mri" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="XG2-oU-XcS"/>
                 <constraint firstItem="XO1-Xo-vYY" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="YR4-pm-lcL"/>
                 <constraint firstItem="XO1-Xo-vYY" firstAttribute="top" secondItem="6f1-hf-xRB" secondAttribute="bottom" constant="4" id="ajC-Qu-e10"/>
                 <constraint firstItem="hjI-iF-sup" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="bUD-wJ-Wmx"/>
                 <constraint firstItem="6f1-hf-xRB" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="boV-6v-cU9"/>
-                <constraint firstItem="C2V-kF-A02" firstAttribute="top" secondItem="XO1-Xo-vYY" secondAttribute="bottom" constant="12" id="epr-Yk-IHK"/>
-                <constraint firstItem="C2V-kF-A02" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="lKx-9C-FtB"/>
                 <constraint firstItem="6f1-hf-xRB" firstAttribute="top" secondItem="jaK-Q8-pwZ" secondAttribute="bottom" constant="2" id="mF7-pF-nOF"/>
                 <constraint firstItem="jaK-Q8-pwZ" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="sJN-vz-QiW"/>
                 <constraint firstItem="XO1-Xo-vYY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="uPj-nZ-nne"/>

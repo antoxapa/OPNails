@@ -10,7 +10,8 @@ import Foundation
 
 public struct Today {
     
-    public static let todayDate = Date()
+//    public static let todayDate = Date().convert(from: TimeZone(abbreviation: "UTC")!, to: TimeZone(abbreviation: "MSK")!)
+    public static let todayDate = Date().toLocalTime()
     
 }
 
@@ -63,13 +64,24 @@ class DateManager {
     
     func getDateFrom(year: Int, month: Int, day: Int) -> Date? {
         
-        let dateComponents = DateComponents(year: year, month: month, day: day)
+        let dateComponents = DateComponents(calendar: .current, timeZone: .current,  year: year, month: month, day: day, hour: 0, minute: 0, second: 0, nanosecond: 0)
         let calendar = Calendar.current
         if let date = calendar.date(from: dateComponents) {
             return date
         }
         return nil
         
+    }
+    
+    func compareDate(date1:Date, date2:Date) -> Bool {
+        let calendar = Calendar.current
+        let order = calendar.compare(date1, to: date2, toGranularity: .day)
+        switch order {
+        case .orderedAscending:
+            return false
+        default:
+            return true
+        }
     }
     
     func getValuesFromDate(date: Date) -> (year: Int, month: Int, name: String, day: Int) {
@@ -228,6 +240,26 @@ class DateManager {
 
 // MARK: - Date extension
 extension Date {
+    
+    func convert(from initTimeZone: TimeZone, to targetTimeZone: TimeZone) -> Date {
+        let delta = TimeInterval(initTimeZone.secondsFromGMT() - targetTimeZone.secondsFromGMT())
+        return addingTimeInterval(delta)
+    }
+
+        // Convert local time to UTC (or GMT)
+        func toGlobalTime() -> Date {
+            let timezone = TimeZone.current
+            let seconds = -TimeInterval(timezone.secondsFromGMT(for: self))
+            return Date(timeInterval: seconds, since: self)
+        }
+
+        // Convert UTC (or GMT) to local time
+        func toLocalTime() -> Date {
+            let timezone = TimeZone(abbreviation: "MSK")!
+            let seconds = TimeInterval(timezone.secondsFromGMT(for: self))
+            return Date(timeInterval: seconds, since: self)
+        }
+
     
     func getMonth() -> (year: Int, month: Int, name: String) {
         

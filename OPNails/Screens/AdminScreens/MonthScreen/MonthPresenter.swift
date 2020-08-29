@@ -16,7 +16,7 @@ protocol MonthPresenterCollectionViewPresenting {
     func compare(item: DayRowItem) -> Bool
     func compareMonthYear(item: DayRowItem) -> Bool
     func skipCount() -> Int
-    
+    func checkDayAvailable(item: DayRowItem) -> Bool
     func checkClientEntryDay(item: DayRowItem) -> Bool
     
 }
@@ -169,6 +169,14 @@ extension MonthPresenter: MonthPresenterCollectionViewPresenting {
         }
         return false
         
+    }
+    
+    func checkDayAvailable(item: DayRowItem) -> Bool {
+        if let date = dateManager.getDateFrom(year: Int(item.year)!, month: item.monthNumber, day: Int(item.day)!) {
+            let localDate = date.toLocalTime()
+            return dateManager.compareDate(date1: localDate, date2: Today.todayDate)
+        }
+        return false
     }
     
 }

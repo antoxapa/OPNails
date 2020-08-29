@@ -100,4 +100,18 @@ class DayCell: UICollectionViewCell, ReusableView {
         
     }
     
+    func setDisable() {
+        
+        dayLabel.textColor = .gray
+        eventView.isHidden = true
+        todayView.layer.cornerRadius = 0
+        todayView.backgroundColor = .white
+        borderView.layer.borderWidth = 0
+        borderView.layer.borderColor = UIColor.clear.cgColor
+        borderView.transform = .identity
+        self.contentView.backgroundColor = .clear
+        self.borderView.backgroundColor = .white
+        
+    }
+    
 }

@@ -13,7 +13,6 @@ import FirebaseDatabase
 class DataManager {
     
     var user: OPUser!
-//    var entry: Entry!
     var ref: DatabaseReference!
     var userRef: DatabaseReference!
     var entries = Array<Entry>()
@@ -39,6 +38,7 @@ class DataManager {
             self?.presenter.update()
             self?.downloadUsers()
         }
+        
     }
     
     func downloadUsers() {
@@ -53,15 +53,19 @@ class DataManager {
             self?.users = _users
             self?.presenter.update()
         }
+        
     }
     
     func removeObservers() {
         
-        ref.removeAllObservers()
+        if ref != nil {
+            ref.removeAllObservers()
+        }
         if userRef != nil {
             userRef.removeAllObservers()
-                   
+            
         }
+        
     }
     
     func showEntries() -> [Entry] {
@@ -71,7 +75,7 @@ class DataManager {
     }
     
     func showUsers() -> [OPUser] {
-
+        
         return users
         
     }
@@ -107,6 +111,42 @@ class DataManager {
         let title = date + " " + time
         ref = Database.database().reference(withPath: "entries").child(title)
         ref.setValue(["time": time, "date":date, "userId": ""])
+        
+    }
+    
+    func removeUserFromEntry(entry: EntryRowItem) {
+        
+        let entryString = "\(entry.date) \(entry.time)"
+        var newEntry = entry
+        newEntry.user = user
+        guard let key = ref.child(entryString).key else { return }
+        let post = ["date": newEntry.date,
+                    "time": newEntry.time,
+                    "userId": ""]
+        let childUpdates = ["\(key)": post]
+        ref.updateChildValues(childUpdates)
+        
+    }
+    
+    func removeEntry(entry: EntryRowItem) {
+        
+        let entryString = "\(entry.date) \(entry.time)"
+        ref = Database.database().reference(withPath: "entries").child(entryString)
+        ref.removeValue()
+        
+    }
+    
+    func addUserToEntry(entry: EntryRowItem, user: OPUser) {
+        
+        let entryString = "\(entry.date) \(entry.time)"
+        var newEntry = entry
+        newEntry.user = user
+        guard let key = ref.child(entryString).key else { return }
+        let post = ["date": newEntry.date,
+                    "time": newEntry.time,
+                    "userId": newEntry.user?.uid]
+        let childUpdates = ["\(key)": post]
+        ref.updateChildValues((childUpdates))
         
     }
     

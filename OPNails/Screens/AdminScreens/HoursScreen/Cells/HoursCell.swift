@@ -35,4 +35,21 @@ class HoursCell: UITableViewCell {
         }
     }
     
+    func selectedState() {
+       
+        timeLabel.textColor = .black
+        userLabel.font = userLabel.font.withSize(25)
+        userLabel.text = "Your time!"
+        userLabel.textColor = .systemGreen
+        
+    }
+    
+    func unselectedState() {
+        
+        timeLabel.textColor = .gray
+        userLabel.font = userLabel.font.withSize(17)
+        userLabel.textColor = .gray
+        
+    }
+    
 }

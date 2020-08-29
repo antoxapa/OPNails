@@ -150,26 +150,48 @@ extension MonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         if let item = presenter.data(at: indexPath.row - presenter.skipCount()) {
             
-            if isSelectStateActive {
-                cell.selectModeActivate()
-            } else {
-                cell.selectModeDeactivate()
-            }
-            
-            if presenter.compare(item: item) {
-                cell.setupToday()
-            } else {
-                cell.setupDefault()
-            }
-            
-            if presenter.checkClientEntryDay(item: item) {
-                cell.setupGreenView()
-            } else {
-                if item.isWorkday != nil && item.isWorkday != false {
-                    cell.setupRedView()
+            if presenter.checkDayAvailable(item: item) {
+                
+                if isSelectStateActive {
+                    
+                    cell.selectModeActivate()
+                    
                 } else {
-                    cell.setupEventViewHidden()
+                    
+                    cell.selectModeDeactivate()
+                    
                 }
+                
+                if presenter.compare(item: item) {
+                    
+                    cell.setupToday()
+                    
+                } else {
+                    
+                    cell.setupDefault()
+                    
+                }
+                
+                if presenter.checkClientEntryDay(item: item) {
+                    
+                    cell.setupGreenView()
+                    
+                } else {
+                    if item.isWorkday != nil && item.isWorkday != false {
+                        
+                        cell.setupRedView()
+                        
+                    } else {
+                        
+                        cell.setupEventViewHidden()
+                        
+                    }
+                    
+                }
+                
+            } else {
+                
+                cell.setDisable()
                 
             }
             
@@ -206,18 +228,24 @@ extension MonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if !isSelectStateActive {
-            presenter.didSelectCell(at: indexPath.row - presenter.skipCount())
-            collectionView.deselectItem(at: indexPath, animated: false)
-        } else {
-            if let cell = collectionView.cellForItem(at: indexPath) as? DayCell {
-                cell.isSelected ? cell.setSelectedState() : cell.setUnselectedState()
-                if collectionView.indexPathsForSelectedItems?.count != 0 {
-                    guard let items = self.toolbarItems else { return }
-                    items[2].isEnabled = true
+        if let item = presenter.data(at: indexPath.row - presenter.skipCount()) {
+            if presenter.checkDayAvailable(item: item) {
+                if !isSelectStateActive {
+                    presenter.didSelectCell(at: indexPath.row - presenter.skipCount())
+                    collectionView.deselectItem(at: indexPath, animated: false)
+                } else {
+                    if let cell = collectionView.cellForItem(at: indexPath) as? DayCell {
+                        cell.isSelected ? cell.setSelectedState() : cell.setUnselectedState()
+                        if collectionView.indexPathsForSelectedItems?.count != 0 {
+                            guard let items = self.toolbarItems else { return }
+                            items[2].isEnabled = true
+                        }
+                    }
                 }
             }
         }
+        
+        
         
     }
     

@@ -17,6 +17,7 @@ protocol AdminHoursViewUpdatable {
 protocol AdminHoursViewRoutable {
     
     func showDetail()
+    func showUsers(index: Int)
     
 }
 
@@ -24,6 +25,10 @@ protocol AdminHoursViewPresendable {
     
     func presentDay() -> DayRowItem
     func showSignInEntryUserAC(index: Int)
+    func showRemoveUserFromEntryAC(index: Int)
+    func showClientShouldRemoveEntryTime()
+    func showClientWillRemoveEntryTimeAC(index: Int)
+    func showLoadingAC()
     
 }
 
@@ -38,6 +43,7 @@ class AdminHoursListVC: UIViewController {
     
     var day: DayRowItem?
     var admin: Bool = false
+    var index: Int?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,6 +54,7 @@ class AdminHoursListVC: UIViewController {
         
         presenter.load()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(setUser), name: .userSelected, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateEditedEntry), name: .entriesEdited, object: nil)
         
     }
@@ -56,6 +63,8 @@ class AdminHoursListVC: UIViewController {
         super.viewWillDisappear(animated)
         
         presenter.cancel()
+        NotificationCenter.default.removeObserver(self, name: .entriesEdited, object: nil)
+        NotificationCenter.default.removeObserver(self, name: .userSelected, object: nil)
         
     }
     
@@ -112,6 +121,18 @@ class AdminHoursListVC: UIViewController {
         presenter.load()
         
     }
+    
+    @objc private func setUser(notification: NSNotification) {
+        
+        if let user = notification.userInfo?["user"] as? OPUser {
+            
+            if index != nil {
+                
+            presenter.setUserInEntry(index: index!, user: user)
+                
+            }
+        }
+    }
 }
 
 extension AdminHoursListVC: UITableViewDelegate, UITableViewDataSource {
@@ -130,6 +151,13 @@ extension AdminHoursListVC: UITableViewDelegate, UITableViewDataSource {
             emptyLabel.isHidden = true
             
             cell.configure(with: day)
+            
+            if presenter.checkCurrentUserRow(row: day) {
+                cell.selectedState()
+            } else {
+                cell.unselectedState()
+            }
+            
         }
         
         return cell
@@ -155,10 +183,26 @@ extension AdminHoursListVC: AdminHoursViewRoutable {
         
         let detailVC = NewEntryVC(nibName: "NewEntryVC", bundle: nil)
         if day != nil {
-            let month = "\(day!.monthNumber)"
-            detailVC.date = "\(day!.day)-\(month)-\(day!.year)"
+            detailVC.days = [day!]
         }
         self.present(detailVC, animated: true)
+        
+    }
+    
+    func showUsers(index: Int) {
+        
+        let usersVC = UsersVC(nibName: "UsersVC", bundle: nil)
+        self.index = index
+        
+// MARK: - Some questions here
+        // PAssing data with blocks
+//        usersVC.onDoneBlock = { [weak self] result in
+//
+//            self?.presenter.setUserInEntry(index: index, user: result)
+//
+//        }
+        
+        self.present(usersVC, animated: true)
         
     }
     
@@ -195,13 +239,32 @@ extension AdminHoursListVC: AdminHoursViewPresendable {
     func showSignInEntryUserAC(index: Int) {
         
         if let day = presenter.data(at: index) {
-        let title = "New entry"
+            let title = "New entry"
             let message = "Are you sure you want to sign up at \(day.time)?"
             let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
             let actionTitle = "Yes"
             let action = UIAlertAction(title: actionTitle, style: .default) { [weak self](action) in
                 self?.showLoadingAC()
-                self?.presenter.setUserInEntry(index: index)
+                self?.presenter.setCurrentUserInEntry(index: index)
+            }
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+            ac.addAction(action)
+            ac.addAction(cancel)
+            self.present(ac, animated: true)
+        }
+        
+    }
+    
+    func showRemoveUserFromEntryAC(index: Int) {
+        
+        if let day = presenter.data(at: index) {
+            let title = "Remove client"
+            let message = "Are you sure you want to remove \(day.user?.name ?? "client")) from entry?"
+            let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let actionTitle = "Yes"
+            let action = UIAlertAction(title: actionTitle, style: .default) { [weak self](action) in
+                self?.showLoadingAC()
+                self?.presenter.removeUserFromEntry(index: index)
             }
             let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             ac.addAction(action)
@@ -218,14 +281,43 @@ extension AdminHoursListVC: AdminHoursViewPresendable {
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.isUserInteractionEnabled = false
         activityIndicator.startAnimating()
-
+        
         alert.view.addSubview(activityIndicator)
         alert.view.heightAnchor.constraint(equalToConstant: 95).isActive = true
-
+        
         activityIndicator.centerXAnchor.constraint(equalTo: alert.view.centerXAnchor, constant: 0).isActive = true
         activityIndicator.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -20).isActive = true
-
+        
         present(alert, animated: true)
+        
+    }
+    
+    func showClientShouldRemoveEntryTime() {
+        
+            let title = "Oops.."
+            let message = "Cancel previous entry before set new entry!"
+            let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let actionTitle = "OK"
+            let action = UIAlertAction(title: actionTitle, style: .cancel)
+            ac.addAction(action)
+            self.present(ac, animated: true)
+        
+    }
+    
+    func showClientWillRemoveEntryTimeAC(index: Int) {
+        
+            let title = "New entry"
+            let message = "Are you sure you want to cancel entry?"
+            let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+            let actionTitle = "Yes"
+            let action = UIAlertAction(title: actionTitle, style: .default) { [weak self](action) in
+                self?.showLoadingAC()
+                self?.presenter.removeUserFromEntry(index: index)
+            }
+            let cancel = UIAlertAction(title: "No", style: .cancel, handler: nil)
+            ac.addAction(action)
+            ac.addAction(cancel)
+            self.present(ac, animated: true)
         
     }
     

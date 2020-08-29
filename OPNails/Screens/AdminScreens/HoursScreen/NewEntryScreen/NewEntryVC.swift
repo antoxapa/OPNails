@@ -27,7 +27,6 @@ typealias NewEntryViewable = EntryViewRoutable & EntryViewPresenting
 class NewEntryVC: UIViewController {
     
     @IBOutlet weak var daysList: UILabel!
-    @IBOutlet weak var clientTF: UITextField!
     @IBOutlet weak var timePicker: UIDatePicker! {
         didSet {
             timePicker.datePickerMode = .time

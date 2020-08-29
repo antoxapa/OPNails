@@ -13,6 +13,7 @@ protocol HoursPresenterTableViewPresenting {
     func numberOfCells(in section: Int) -> Int
     func data(at row: Int) -> EntryRowItem?
     func didSelectCell(at row: Int) -> Void
+    func checkCurrentUserRow(row: EntryRowItem) -> Bool
     
 }
 
@@ -30,7 +31,10 @@ protocol PresenterViewUpdating {
 
 protocol PresenterModelUpdating {
     
-    func setUserInEntry(index: Int)
+    func setCurrentUserInEntry(index: Int)
+    func setUserInEntry(index: Int, user: OPUser)
+    func removeUserFromEntry(index: Int)
+    func removeEntry(index: Int)
     
 }
 
@@ -126,24 +130,42 @@ extension HoursPresenter: HoursPresenterTableViewPresenting {
     func didSelectCell(at row: Int) {
         
         if dataManager.user.email == "antoxapa@gmail.com" {
-            print("admin")
-        } else {
-            for entry in satisfEntries {
-                if satisfEntries[row].user?.uid == dataManager.returnCurrentUser()?.uid {
-                    print("gotcha")
-                } else if entry.user?.uid == dataManager.returnCurrentUser()?.uid {
-                    print("deselect another entry")
-                    
-                } else {
-                    view.showSignInEntryUserAC(index: row)
-                }
-                //            if entries[row].userId != nil && entries[row].userId == dataManager.returnCurrentUser()?.uid {
-                //                print("no")
-                //            } else {
-                //
-                //            }
+            
+            if satisfEntries[row].user?.uid != nil {
+                
+                view.showRemoveUserFromEntryAC(index: row)
+                
+            } else {
+
+                view.showUsers(index: row)
+                
             }
+            
+        } else if satisfEntries[row].user?.uid == dataManager.returnCurrentUser()?.uid {
+            
+            view.showClientWillRemoveEntryTimeAC(index: row)
+            
+        } else if satisfEntries.contains(where: { (entry) -> Bool in
+            
+            entry.user?.uid == dataManager.returnCurrentUser()?.uid
+            
+        }) {
+            
+            view.showClientShouldRemoveEntryTime()
+            
+        } else {
+            
+            view.showSignInEntryUserAC(index: row)
+            
         }
+    }
+    
+    func checkCurrentUserRow(row: EntryRowItem) -> Bool {
+        
+        if row.user?.uid == dataManager.returnCurrentUser()?.uid {
+            return true
+        }
+        return false
         
     }
     
@@ -161,10 +183,34 @@ extension HoursPresenter: HoursPresentereRouting {
 
 extension HoursPresenter: PresenterModelUpdating {
     
-    func setUserInEntry(index: Int) {
+    func setCurrentUserInEntry(index: Int) {
         
         let entry = satisfEntries[index]
         dataManager.updateEntryWithUser(entry: entry)
+        dataManager.downloadItems()
+        
+    }
+    
+    func setUserInEntry(index: Int, user: OPUser) {
+        
+        let entry = satisfEntries[index]
+        dataManager.addUserToEntry(entry: entry, user: user)
+        dataManager.downloadItems()
+        
+    }
+    
+    func removeUserFromEntry(index: Int) {
+        
+        let entry = satisfEntries[index]
+        dataManager.removeUserFromEntry(entry: entry)
+        dataManager.downloadItems()
+        
+    }
+    
+    func removeEntry(index: Int) {
+        
+        let entry = satisfEntries[index]
+        dataManager.removeEntry(entry: entry)
         dataManager.downloadItems()
         
     }
