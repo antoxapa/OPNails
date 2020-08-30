@@ -164,4 +164,118 @@ class DataManager {
         
     }
     
+    func signOut() {
+        
+        do {
+            try Auth.auth().signOut()
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+    }
+    
+    func changePassword(password: String) {
+        
+        Auth.auth().currentUser?.updatePassword(to: password, completion: { (error) in
+            
+            print(error?.localizedDescription as Any)
+            
+        })
+        
+    }
+    
+    func changeEmail(email: String) {
+        
+        Auth.auth().currentUser?.updateEmail(to: email, completion: { [weak self] (error) in
+            
+            print(error?.localizedDescription as Any)
+            if error == nil {
+                if self?.users != nil {
+                    for userWithDate in self!.users {
+                        if userWithDate.uid == self?.returnCurrentUser()?.uid {
+                            if let uid = userWithDate.uid {
+                                guard let key = self?.userRef.child(uid).key else { return }
+                                let post = ["email": email,
+                                            "name": userWithDate.name,
+                                            "phoneNumber": userWithDate.phoneNumber,
+                                            "uid" : uid]
+                                
+                                let childUpdates = ["\(key)": post]
+                                self?.userRef.updateChildValues(childUpdates)
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        
+    }
+    
+    func changeUserName(name: String) {
+        
+        for userWithDate in users {
+            if userWithDate.uid == returnCurrentUser()?.uid {
+                if let uid = userWithDate.uid {
+                    guard let key = userRef.child(uid).key else { return }
+                    let post = ["email": userWithDate.email,
+                                "name": name,
+                                "phoneNumber": userWithDate.phoneNumber,
+                                "uid" : uid]
+                    
+                    let childUpdates = ["\(key)": post]
+                    userRef.updateChildValues(childUpdates)
+                }
+            }
+        }
+        
+        
+    }
+    
+    func changeUserPhoneNumber(number: String) {
+        
+        for userWithDate in users {
+            if userWithDate.uid == returnCurrentUser()?.uid {
+                if let uid = userWithDate.uid {
+                    guard let key = userRef.child(uid).key else { return }
+                    let post = ["email": userWithDate.email,
+                                "name": userWithDate.name,
+                                "phoneNumber": number,
+                                "uid" : uid]
+                    
+                    let childUpdates = ["\(key)": post]
+                    userRef.updateChildValues(childUpdates)
+                }
+            }
+        }
+        
+    }
+    
+    //    func changeProfileInfo(name: String?, phone: String?, email: String?, password: String?) {
+    //
+    //        if let uid = returnCurrentUser()?.uid {
+    //            guard let key = userRef.child(uid).key else { return }
+    //            let post = ["email": email,
+    //                        "name": name,
+    //                        "phoneNumber": phone,
+    //                        "uid" : uid]
+    //
+    //            let childUpdates = ["\(key)": post]
+    //            userRef.updateChildValues(childUpdates)
+    //
+    //            if let password = password {
+    //
+    //                Auth.auth().currentUser?.updatePassword(to: password, completion: { (error) in
+    //
+    //                    print(error?.localizedDescription as Any)
+    //
+    //                })
+    //            }
+    //
+    //
+    //        }
+    
+    //    }
+    
+    
+    
 }

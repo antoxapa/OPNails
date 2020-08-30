@@ -152,11 +152,7 @@ extension AdminHoursListVC: UITableViewDelegate, UITableViewDataSource {
             
             cell.configure(with: day)
             
-            if presenter.checkCurrentUserRow(row: day) {
-                cell.selectedState()
-            } else {
-                cell.unselectedState()
-            }
+            presenter.checkCurrentUserRow(row: day) ? cell.selectedState() : cell.unselectedState()
             
         }
         

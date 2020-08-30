@@ -17,6 +17,8 @@
 		063501CD24FA7E280044923A /* UsersPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063501CC24FA7E280044923A /* UsersPresenter.swift */; };
 		063501D424FAD4250044923A /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063501D224FAD4250044923A /* UserCell.swift */; };
 		063501D524FAD4250044923A /* UserCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 063501D324FAD4250044923A /* UserCell.xib */; };
+		063501D824FBC2190044923A /* UserAccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063501D624FBC2190044923A /* UserAccountVC.swift */; };
+		063501D924FBC2190044923A /* UserAccountVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 063501D724FBC2190044923A /* UserAccountVC.xib */; };
 		0638E4AE24E9211A006A5956 /* MonthPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0638E4AD24E9211A006A5956 /* MonthPresenter.swift */; };
 		0638E4B124E925CF006A5956 /* MonthsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0638E4AF24E925CF006A5956 /* MonthsVC.swift */; };
 		0638E4B524E927F0006A5956 /* DayCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0638E4B324E927F0006A5956 /* DayCell.swift */; };
@@ -41,6 +43,7 @@
 		069646B524EBE314008109E9 /* NewEntryVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 069646B324EBE313008109E9 /* NewEntryVC.xib */; };
 		069646BE24ED2876008109E9 /* EntryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646BD24ED2876008109E9 /* EntryPresenter.swift */; };
 		069646C324ED8999008109E9 /* EmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 069646C124ED8999008109E9 /* EmptyCell.swift */; };
+		06A26E4D24FBCD9F00E13F2C /* UserPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06A26E4C24FBCD9F00E13F2C /* UserPresenter.swift */; };
 		06C23C1524F19829000FF475 /* MonthViewProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C23C1424F19829000FF475 /* MonthViewProtocols.swift */; };
 		06C23C1A24F29921000FF475 /* DayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06C23C1824F29921000FF475 /* DayCell.xib */; };
 		06C23C1B24F29921000FF475 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06C23C1924F29921000FF475 /* EmptyCell.xib */; };
@@ -76,6 +79,8 @@
 		063501CC24FA7E280044923A /* UsersPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersPresenter.swift; sourceTree = "<group>"; };
 		063501D224FAD4250044923A /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		063501D324FAD4250044923A /* UserCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserCell.xib; sourceTree = "<group>"; };
+		063501D624FBC2190044923A /* UserAccountVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountVC.swift; sourceTree = "<group>"; };
+		063501D724FBC2190044923A /* UserAccountVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAccountVC.xib; sourceTree = "<group>"; };
 		0638E4AD24E9211A006A5956 /* MonthPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthPresenter.swift; sourceTree = "<group>"; };
 		0638E4AF24E925CF006A5956 /* MonthsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthsVC.swift; sourceTree = "<group>"; };
 		0638E4B324E927F0006A5956 /* DayCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayCell.swift; sourceTree = "<group>"; };
@@ -105,6 +110,7 @@
 		069646B324EBE313008109E9 /* NewEntryVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewEntryVC.xib; sourceTree = "<group>"; };
 		069646BD24ED2876008109E9 /* EntryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryPresenter.swift; sourceTree = "<group>"; };
 		069646C124ED8999008109E9 /* EmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyCell.swift; sourceTree = "<group>"; };
+		06A26E4C24FBCD9F00E13F2C /* UserPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPresenter.swift; sourceTree = "<group>"; };
 		06C23C1424F19829000FF475 /* MonthViewProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthViewProtocols.swift; sourceTree = "<group>"; };
 		06C23C1824F29921000FF475 /* DayCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DayCell.xib; sourceTree = "<group>"; };
 		06C23C1924F29921000FF475 /* EmptyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
@@ -216,6 +222,7 @@
 			children = (
 				0638E4AD24E9211A006A5956 /* MonthPresenter.swift */,
 				0638E4AF24E925CF006A5956 /* MonthsVC.swift */,
+				06A26E4E24FBCDB500E13F2C /* UserAccountScreen */,
 				0696468C24E95A92008109E9 /* Cells */,
 				0696469924E9A13C008109E9 /* Views */,
 			);
@@ -318,6 +325,16 @@
 				069646B324EBE313008109E9 /* NewEntryVC.xib */,
 			);
 			path = NewEntryScreen;
+			sourceTree = "<group>";
+		};
+		06A26E4E24FBCDB500E13F2C /* UserAccountScreen */ = {
+			isa = PBXGroup;
+			children = (
+				06A26E4C24FBCD9F00E13F2C /* UserPresenter.swift */,
+				063501D624FBC2190044923A /* UserAccountVC.swift */,
+				063501D724FBC2190044923A /* UserAccountVC.xib */,
+			);
+			path = UserAccountScreen;
 			sourceTree = "<group>";
 		};
 		06C23C0F24F194A2000FF475 /* Screens */ = {
@@ -457,6 +474,7 @@
 				0613D30024EE71A7002785AB /* GoogleService-Info.plist in Resources */,
 				06C23C1B24F29921000FF475 /* EmptyCell.xib in Resources */,
 				06C23C1A24F29921000FF475 /* DayCell.xib in Resources */,
+				063501D924FBC2190044923A /* UserAccountVC.xib in Resources */,
 				069646A824EB0B5C008109E9 /* HoursCell.xib in Resources */,
 				06DF7A0324EFF90C001F7FF1 /* RegistrationVC.xib in Resources */,
 				063501C524F539C20044923A /* LoadingVC.xib in Resources */,
@@ -553,6 +571,8 @@
 				063501BF24F3E8030044923A /* Entry.swift in Sources */,
 				06C23C1524F19829000FF475 /* MonthViewProtocols.swift in Sources */,
 				06C23C1D24F3E33E000FF475 /* User.swift in Sources */,
+				06A26E4D24FBCD9F00E13F2C /* UserPresenter.swift in Sources */,
+				063501D824FBC2190044923A /* UserAccountVC.swift in Sources */,
 				063501CD24FA7E280044923A /* UsersPresenter.swift in Sources */,
 				0696469224E97E8F008109E9 /* Presenter.swift in Sources */,
 				0696469424E998D2008109E9 /* ReusableView.swift in Sources */,

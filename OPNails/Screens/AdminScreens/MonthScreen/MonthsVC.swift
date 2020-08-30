@@ -28,10 +28,6 @@ class MonthsVC: UIViewController {
         
         setupViews()
         
-        setupNavBar()
-        
-        setupToolBar()
-        
         presenter.setup()
         
     }
@@ -39,16 +35,20 @@ class MonthsVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        setupNavBar()
+        
+        setupToolBar()
+        
         presenter.load()
         
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        
-        presenter.cancel()
-        
-    }
+//    override func viewWillDisappear(_ animated: Bool) {
+//        super.viewWillDisappear(animated)
+//        
+//        presenter.cancel()
+//        
+//    }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
@@ -81,13 +81,18 @@ class MonthsVC: UIViewController {
     
     private func setupNavBar() {
         
-        self.navigationItem.hidesBackButton = true
+//        self.navigationItem.hidesBackButton = true
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         
         if adminUser {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(self.addEntries))
         }
+        
+        let buttonIcon = UIImage(named: "account")
+        let leftBarButton = UIBarButtonItem(title: nil, style: .done, target: self, action: #selector(showUserAccount))
+        leftBarButton.image = buttonIcon
+        self.navigationItem.leftBarButtonItem = leftBarButton
         
     }
     
@@ -130,6 +135,13 @@ class MonthsVC: UIViewController {
         
     }
     
+    @objc private func showUserAccount() {
+        
+        let usersAccount = UserAccountVC(nibName: "UserAccountVC", bundle: nil)
+        navigationController?.pushViewController(usersAccount, animated: true)
+        
+    }
+    
 }
 
 extension MonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -152,31 +164,16 @@ extension MonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
             
             if presenter.checkDayAvailable(item: item) {
                 
-                if isSelectStateActive {
-                    
-                    cell.selectModeActivate()
-                    
-                } else {
-                    
-                    cell.selectModeDeactivate()
-                    
-                }
+                isSelectStateActive ? cell.selectModeActivate() : cell.selectModeDeactivate()
                 
-                if presenter.compare(item: item) {
-                    
-                    cell.setupToday()
-                    
-                } else {
-                    
-                    cell.setupDefault()
-                    
-                }
+                presenter.compare(item: item) ? cell.setupToday() : cell.setupDefault()
                 
                 if presenter.checkClientEntryDay(item: item) {
                     
                     cell.setupGreenView()
                     
                 } else {
+                    
                     if item.isWorkday != nil && item.isWorkday != false {
                         
                         cell.setupRedView()
@@ -208,19 +205,13 @@ extension MonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
         guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MonthHeader", for: indexPath) as? MonthNameHeaderView else { return UICollectionReusableView() }
         
         if let item = presenter.data(at: indexPath.row) {
+            
             headerView.configure(withItem: item, presenter: presenter)
             
-            if isSelectStateActive {
-                headerView.hideRightButton()
-            } else {
-                headerView.showRightButton()
-            }
+            isSelectStateActive ? headerView.hideRightButton() : headerView.showRightButton()
             
-            if presenter.compareMonthYear(item: item) {
-                headerView.hideLeftButton()
-            } else {
-                headerView.showLeftButton()
-            }
+            presenter.compareMonthYear(item: item) ? headerView.hideLeftButton() : headerView.showLeftButton()
+
         }
         
         return headerView
@@ -231,14 +222,18 @@ extension MonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
         if let item = presenter.data(at: indexPath.row - presenter.skipCount()) {
             if presenter.checkDayAvailable(item: item) {
                 if !isSelectStateActive {
+                    
                     presenter.didSelectCell(at: indexPath.row - presenter.skipCount())
                     collectionView.deselectItem(at: indexPath, animated: false)
+                    
                 } else {
+                    
                     if let cell = collectionView.cellForItem(at: indexPath) as? DayCell {
                         cell.isSelected ? cell.setSelectedState() : cell.setUnselectedState()
                         if collectionView.indexPathsForSelectedItems?.count != 0 {
                             guard let items = self.toolbarItems else { return }
                             items[2].isEnabled = true
+                            
                         }
                     }
                 }

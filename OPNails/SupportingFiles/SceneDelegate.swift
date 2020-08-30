@@ -24,6 +24,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
        
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
+        window?.backgroundColor = .white
         let mainVC = LoginVC()
         window?.rootViewController = UINavigationController(rootViewController: mainVC)
         
