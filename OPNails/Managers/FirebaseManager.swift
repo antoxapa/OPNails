@@ -10,7 +10,7 @@ import Foundation
 import FirebaseAuth
 import FirebaseDatabase
 
-class DataManager {
+class FirebaseManager {
     
     var user: OPUser!
     var ref: DatabaseReference!
@@ -22,6 +22,15 @@ class DataManager {
     init(presenter: PresenterViewUpdating) {
         
         self.presenter = presenter
+        
+    }
+    
+    func checkAdminUser() -> Bool {
+        
+        if Auth.auth().currentUser?.uid == "0vehyLhByMgBDSJ9LbP02Uhyv4o2" {
+            return true
+        }
+        return false
         
     }
     
@@ -106,6 +115,17 @@ class DataManager {
         
     }
     
+    func checkUsersUid() -> Bool {
+        
+        for user in users {
+            if user.uid == returnCurrentUser()?.uid {
+                return true
+            }
+        }
+        return false
+        
+    }
+    
     func addNewEntry(date: String, time: String) {
         
         let title = date + " " + time
@@ -167,115 +187,119 @@ class DataManager {
     func signOut() {
         
         do {
+            
             try Auth.auth().signOut()
+            
         } catch {
-            print(error.localizedDescription)
+            
+            presenter.showErrorAC(text: error.localizedDescription)
+            
         }
         
     }
     
-    func changePassword(password: String) {
+    func changePassword(newPassword: String, oldPassword: String) {
         
-        Auth.auth().currentUser?.updatePassword(to: password, completion: { (error) in
+        guard let currentEmail = returnCurrentUser()?.email else { return }
+        let credential = EmailAuthProvider.credential(withEmail: currentEmail, password: oldPassword)
+        
+        Auth.auth().currentUser?.reauthenticate(with: credential, completion: { [weak self] (result, error) in
             
-            print(error?.localizedDescription as Any)
+            if error != nil {
+                
+                guard let text = error?.localizedDescription else { return }
+                self?.presenter.showErrorAC(text: text)
+                
+                return
+                
+            }
             
+            Auth.auth().currentUser?.updatePassword(to: newPassword, completion: { (error) in
+                
+                if error != nil {
+                    
+                    guard let text = error?.localizedDescription else { return }
+                    self?.presenter.showErrorAC(text: text)
+                    
+                    return
+
+                }
+                
+                self?.presenter.update()
+            })
         })
         
     }
     
-    func changeEmail(email: String) {
+    func changeEmail(newEmail: String, password: String) {
         
-        Auth.auth().currentUser?.updateEmail(to: email, completion: { [weak self] (error) in
+        guard let currentEmail = returnCurrentUser()?.email else { return }
+        let credential = EmailAuthProvider.credential(withEmail: currentEmail, password: password)
+        
+        Auth.auth().currentUser?.reauthenticate(with: credential, completion: { [weak self] (result, error) in
             
-            print(error?.localizedDescription as Any)
-            if error == nil {
-                if self?.users != nil {
-                    for userWithDate in self!.users {
-                        if userWithDate.uid == self?.returnCurrentUser()?.uid {
-                            if let uid = userWithDate.uid {
-                                guard let key = self?.userRef.child(uid).key else { return }
-                                let post = ["email": email,
-                                            "name": userWithDate.name,
-                                            "phoneNumber": userWithDate.phoneNumber,
-                                            "uid" : uid]
-                                
-                                let childUpdates = ["\(key)": post]
-                                self?.userRef.updateChildValues(childUpdates)
-                            }
-                        }
-                    }
-                }
+            if error != nil {
+                
+                guard let text = error?.localizedDescription else { return }
+                self?.presenter.showErrorAC(text: text)
+                
+                return
+                
             }
+            
+            Auth.auth().currentUser?.updateEmail(to: newEmail, completion: { (error) in
+                
+                if error != nil {
+                    
+                    guard let text = error?.localizedDescription else { return }
+                    self?.presenter.showErrorAC(text: text)
+                    
+                    return
+
+                }
+                else {
+                    
+//                    if self?.checkUsersUid() ?? false {
+//
+//                                let uid = Auth.auth().currentUser!.uid
+//                                let thisUserRef = self?.userRef.child(uid)
+//                                let thisUserEmailRef = thisUserRef?.child("email")
+//                                thisUserEmailRef?.setValue(newEmail)
+//
+//                    }
+                    self?.presenter.update()
+                }
+            })
         })
-        
     }
     
     func changeUserName(name: String) {
         
-        for userWithDate in users {
-            if userWithDate.uid == returnCurrentUser()?.uid {
-                if let uid = userWithDate.uid {
-                    guard let key = userRef.child(uid).key else { return }
-                    let post = ["email": userWithDate.email,
-                                "name": name,
-                                "phoneNumber": userWithDate.phoneNumber,
-                                "uid" : uid]
-                    
-                    let childUpdates = ["\(key)": post]
-                    userRef.updateChildValues(childUpdates)
-                }
-            }
+        if checkUsersUid() {
+            
+            let uid = Auth.auth().currentUser!.uid
+            let thisUserRef = self.userRef.child(uid)
+            let thisUserEmailRef = thisUserRef.child("name")
+            thisUserEmailRef.setValue(name)
+            
         }
-        
+        presenter.update()
         
     }
     
     func changeUserPhoneNumber(number: String) {
         
-        for userWithDate in users {
-            if userWithDate.uid == returnCurrentUser()?.uid {
-                if let uid = userWithDate.uid {
-                    guard let key = userRef.child(uid).key else { return }
-                    let post = ["email": userWithDate.email,
-                                "name": userWithDate.name,
-                                "phoneNumber": number,
-                                "uid" : uid]
-                    
-                    let childUpdates = ["\(key)": post]
-                    userRef.updateChildValues(childUpdates)
-                }
-            }
+        if checkUsersUid() {
+            
+            let uid = Auth.auth().currentUser!.uid
+            let thisUserRef = self.userRef.child(uid)
+            let thisUserEmailRef = thisUserRef.child("phoneNumber")
+            thisUserEmailRef.setValue(number)
+            
         }
         
+        presenter.update()
+        
     }
-    
-    //    func changeProfileInfo(name: String?, phone: String?, email: String?, password: String?) {
-    //
-    //        if let uid = returnCurrentUser()?.uid {
-    //            guard let key = userRef.child(uid).key else { return }
-    //            let post = ["email": email,
-    //                        "name": name,
-    //                        "phoneNumber": phone,
-    //                        "uid" : uid]
-    //
-    //            let childUpdates = ["\(key)": post]
-    //            userRef.updateChildValues(childUpdates)
-    //
-    //            if let password = password {
-    //
-    //                Auth.auth().currentUser?.updatePassword(to: password, completion: { (error) in
-    //
-    //                    print(error?.localizedDescription as Any)
-    //
-    //                })
-    //            }
-    //
-    //
-    //        }
-    
-    //    }
-    
-    
     
 }

@@ -33,12 +33,12 @@ protocol MonthPresenterHeaderViewUpdating {
 
 typealias MonthPresenting = MonthPresenterCollectionViewPresenting & MonthPresenterHeaderViewUpdating & PresenterLifecycle & PresenterViewUpdating
 
-class MonthPresenter: PresenterLifecycle, PresenterViewUpdating {
+class MonthPresenter: PresenterLifecycle {
     
     private var view: MonthViewable
     private var header: HeaderMonthViewUpdatable?
     private var dateManager: DateManager
-    lazy private var dataManager = DataManager(presenter: self)
+    lazy private var fireManager = FirebaseManager(presenter: self)
     private var monthModels: [CalendarMonth]
     private var entries: [Entry]?
     private var users: [OPUser]?
@@ -60,21 +60,35 @@ class MonthPresenter: PresenterLifecycle, PresenterViewUpdating {
     
     func load() {
         
-        dataManager.downloadItems()
+        fireManager.downloadItems()
         
     }
     
     func cancel() {
         
-        dataManager.removeObservers()
+        fireManager.removeObservers()
         
     }
+
+}
+
+extension MonthPresenter: PresenterViewUpdating {
     
     func update() {
         
-        entries = dataManager.showEntries()
-        users = dataManager.showUsers()
+        entries = fireManager.showEntries()
+        users = fireManager.showUsers()
         view.reload()
+        
+    }
+    
+    func showErrorAC(text: String) {
+        
+        
+        
+    }
+    
+    func dismissAC() {
         
     }
     
@@ -110,8 +124,8 @@ extension MonthPresenter: MonthPresenterCollectionViewPresenting {
                     if entry.date == date {
                         isWorkday = true
                         
-                        if let item = dataManager.checkIsUserEntry(entry: entry) {
-                            if entry.userId == dataManager.returnCurrentUser()?.uid {
+                        if let item = fireManager.checkIsUserEntry(entry: entry) {
+                            if entry.userId == fireManager.returnCurrentUser()?.uid {
                                 user = item
                                 isWorkday = false
                             }
@@ -164,7 +178,7 @@ extension MonthPresenter: MonthPresenterCollectionViewPresenting {
     
     func checkClientEntryDay(item: DayRowItem) -> Bool {
         
-        if item.client?.uid == dataManager.returnCurrentUser()?.uid {
+        if item.client?.uid == fireManager.returnCurrentUser()?.uid {
             return true
         }
         return false

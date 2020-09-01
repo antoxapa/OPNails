@@ -32,12 +32,12 @@ protocol LoginRoutable {
 
 typealias LoginPresentable = PresenterLifecycle & LoginPresenting & LoginRoutable & PresenterViewUpdating
 
-class LoginPresenter: PresenterLifecycle, PresenterViewUpdating {
+class LoginPresenter: PresenterLifecycle {
     
     private var view: LoginViewable
     private var loginManager: LoginManager?
     private var registrationView: RegistrationViewable?
-    lazy private var dataManager = DataManager(presenter: self)
+    lazy private var fireManager = FirebaseManager(presenter: self)
     private var entries = [Entry]()
     
     init(view: LoginViewable) {
@@ -56,20 +56,35 @@ class LoginPresenter: PresenterLifecycle, PresenterViewUpdating {
     func load() {
         
         view.showLoadScreen()
-        dataManager.downloadItems()
+        fireManager.downloadItems()
         
     }
     
     func cancel() {
         
-        dataManager.removeObservers()
-        print("ue")
+        fireManager.removeObservers()
+        
     }
+    
+}
+
+extension LoginPresenter: PresenterViewUpdating {
     
     func update() {
         
         guard let admin = loginManager?.checkAdminUser() else { return }
         routeToMainScreen(admin: admin, animated: false)
+        
+    }
+    
+    func showErrorAC(text: String) {
+        
+        
+        
+    }
+    
+    func dismissAC() {
+        
         
     }
     
@@ -92,7 +107,7 @@ extension LoginPresenter: LoginRoutable {
     
     func routeToMainScreenAfterRegistration() {
         
-        dataManager.downloadItems()
+        fireManager.downloadItems()
         
     }
     

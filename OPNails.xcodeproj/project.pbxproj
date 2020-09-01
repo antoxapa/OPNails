@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		0613D30024EE71A7002785AB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0613D2FF24EE71A7002785AB /* GoogleService-Info.plist */; };
 		063501BF24F3E8030044923A /* Entry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063501BE24F3E8030044923A /* Entry.swift */; };
-		063501C124F3EC730044923A /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063501C024F3EC730044923A /* DataManager.swift */; };
+		063501C124F3EC730044923A /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063501C024F3EC730044923A /* FirebaseManager.swift */; };
 		063501C424F539C20044923A /* LoadingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063501C224F539C20044923A /* LoadingVC.swift */; };
 		063501C524F539C20044923A /* LoadingVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 063501C324F539C20044923A /* LoadingVC.xib */; };
 		063501C924FA76FA0044923A /* UsersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 063501C724FA76FA0044923A /* UsersVC.swift */; };
@@ -71,7 +71,7 @@
 /* Begin PBXFileReference section */
 		0613D2FF24EE71A7002785AB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		063501BE24F3E8030044923A /* Entry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Entry.swift; sourceTree = "<group>"; };
-		063501C024F3EC730044923A /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		063501C024F3EC730044923A /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		063501C224F539C20044923A /* LoadingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingVC.swift; sourceTree = "<group>"; };
 		063501C324F539C20044923A /* LoadingVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingVC.xib; sourceTree = "<group>"; };
 		063501C724FA76FA0044923A /* UsersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersVC.swift; sourceTree = "<group>"; };
@@ -279,7 +279,7 @@
 			children = (
 				0696468F24E95C04008109E9 /* DateManager.swift */,
 				06DF79FD24EEAEE6001F7FF1 /* LoginManager.swift */,
-				063501C024F3EC730044923A /* DataManager.swift */,
+				063501C024F3EC730044923A /* FirebaseManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -596,7 +596,7 @@
 				0638E4AE24E9211A006A5956 /* MonthPresenter.swift in Sources */,
 				0675DBA324E91C6600F3D65E /* SceneDelegate.swift in Sources */,
 				063501D424FAD4250044923A /* UserCell.swift in Sources */,
-				063501C124F3EC730044923A /* DataManager.swift in Sources */,
+				063501C124F3EC730044923A /* FirebaseManager.swift in Sources */,
 				069646BE24ED2876008109E9 /* EntryPresenter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

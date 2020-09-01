@@ -11,7 +11,7 @@ import UIKit
 protocol UserViewUpdatable {
     
     func update(user: OPUser)
-    func changedUserInfo() -> (name: String?, phone: String?, email: String?, password: String?)
+    func dissmisAC()
     
 }
 
@@ -22,9 +22,10 @@ protocol UserViewRoutable {
 }
 
 protocol UserViewPresendable {
-    
-    func setEditable(_ : Bool)
+
     func showEditAC(title: String, tag: Int)
+    func showLoadingAC()
+    func showErrorAC(text: String)
     
 }
 
@@ -37,8 +38,14 @@ class UserAccountVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var phoneNumberTF: UITextField!
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
-    @IBOutlet weak var editButton: UIButton!
-    @IBOutlet weak var logoutCancelButton: UIButton!
+    @IBOutlet weak var logoutButton: UIButton! {
+        didSet {
+            
+            logoutButton.layer.cornerRadius = 10
+            logoutButton.layer.masksToBounds = true
+            
+        }
+    }
     
     lazy var presenter: UserPresenting = UserPresenter(view: self)
     
@@ -65,18 +72,12 @@ class UserAccountVC: UIViewController, UITextFieldDelegate {
         passwordTF.delegate = self
         phoneNumberTF.delegate = self
         
-        
-        
-//        fullNameTF.isUserInteractionEnabled = false
         fullNameTF.textColor = .gray
         fullNameTF.tag = 0
-//        emailTF.isUserInteractionEnabled = false
         emailTF.textColor = .gray
         emailTF.tag = 2
-//        passwordTF.isUserInteractionEnabled = false
         passwordTF.textColor = .gray
         passwordTF.tag = 3
-//        phoneNumberTF.isUserInteractionEnabled = false
         phoneNumberTF.textColor = .gray
         phoneNumberTF.tag = 1
         
@@ -110,49 +111,8 @@ class UserAccountVC: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        
         return false
-    }
-    
-    func tfEnable() {
-        
-        logoutCancelButton.setTitle("Cancel", for: .normal)
-        editButton.setTitle("OK", for: .normal)
-        fullNameTF.isUserInteractionEnabled = true
-        fullNameTF.textColor = .black
-        emailTF.isUserInteractionEnabled = true
-        emailTF.textColor = .black
-        passwordTF.isUserInteractionEnabled = true
-        passwordTF.textColor = .black
-        phoneNumberTF.isUserInteractionEnabled = true
-        phoneNumberTF.textColor = .black
-        
-    }
-    
-    func tfDisable() {
-        
-        logoutCancelButton.setTitle("Logout", for: .normal)
-        editButton.setTitle("Edit", for: .normal)
-        fullNameTF.isUserInteractionEnabled = false
-        fullNameTF.textColor = .gray
-        emailTF.isUserInteractionEnabled = false
-        emailTF.textColor = .gray
-        passwordTF.isUserInteractionEnabled = false
-        passwordTF.textColor = .gray
-        phoneNumberTF.isUserInteractionEnabled = false
-        phoneNumberTF.textColor = .gray
-        
-    }
-    
-    
-    @IBAction func editButtonPressed(_ sender: UIButton) {
-        
-        if editButton.titleLabel?.text == "OK" {
-            
-//            presenter.changeProfileInfo()
-            
-        }
-        
-//        presenter.setEditable()
         
     }
     
@@ -168,6 +128,8 @@ extension UserAccountVC: UserViewUpdatable {
     
     func update(user: OPUser) {
         
+        dissmisAC()
+        
         fullNameTF.text = user.name
         phoneNumberTF.text = user.phoneNumber
         emailTF.text = user.email
@@ -175,20 +137,11 @@ extension UserAccountVC: UserViewUpdatable {
         
     }
     
-    func changedUserInfo() -> (name: String?, phone: String?, email: String?, password: String?) {
+    func dissmisAC() {
         
-        let name = fullNameTF.text
-        let phone = phoneNumberTF.text
-        let email = emailTF.text
-        let password = passwordTF.text
-        
-        if password != "" {
-            
-        return (name, phone, email, password)
-            
+        if let _ = self.navigationController?.presentedViewController {
+            self.dismiss(animated: true, completion: nil)
         }
-        
-        return (name,phone,email,nil)
         
     }
     
@@ -209,28 +162,57 @@ extension UserAccountVC: UserViewPresendable {
     
     func showEditAC(title: String, tag: Int) {
         
-        let ac = UIAlertController(title: title, message: nil, preferredStyle: .alert)
+        let ac = UIAlertController(title: "Change \(title)", message: nil, preferredStyle: .alert)
         let actionTitle = "OK"
-        ac.addTextField()
-        let action = UIAlertAction(title: actionTitle, style: .default) { [weak self](action) in
-//            self?.showLoadingAC()
-//            self?.presenter.removeUserFromEntry(index: index)
+        ac.addTextField { (textField) in
+            textField.placeholder = "New \(title)"
+        }
+        
+        ac.addTextField() { (textField) in
+            textField.placeholder = "Password"
+            textField.isSecureTextEntry = true
+        }
+        let action = UIAlertAction(title: actionTitle, style: .default) { [weak self] (action) in
+            
+            self?.showLoadingAC()
             guard let textField = ac.textFields?.first, textField.text != "" else { return }
-            self?.presenter.changeProfileInfo(tag: tag, newValue: textField.text!)
+            guard let secondTextField = ac.textFields?.last, textField.text != "" else { return }
+            self?.presenter.changeProfileInfo(tag: tag, newValue: textField.text!, password: secondTextField.text!)
+            
         }
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         ac.addAction(action)
         ac.addAction(cancel)
         self.present(ac, animated: true)
+
+    }
+    
+    func showLoadingAC() {
         
+        let alert = UIAlertController(title: "Wait...", message: nil, preferredStyle: .alert)
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.isUserInteractionEnabled = false
+        activityIndicator.startAnimating()
         
+        alert.view.addSubview(activityIndicator)
+        alert.view.heightAnchor.constraint(equalToConstant: 95).isActive = true
+        
+        activityIndicator.centerXAnchor.constraint(equalTo: alert.view.centerXAnchor, constant: 0).isActive = true
+        activityIndicator.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -20).isActive = true
+        
+        present(alert, animated: true)
         
     }
     
-    func setEditable(_ editable: Bool) {
+    func showErrorAC(text: String) {
         
-        editable ? self.tfEnable() : self.tfDisable()
-        
+        let title = "Error"
+        let ac = UIAlertController(title: title, message: text, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        ac.addAction(action)
+
+        present(ac, animated: true)
     }
     
 }

@@ -23,12 +23,6 @@ protocol HoursPresentereRouting {
     
 }
 
-protocol PresenterViewUpdating {
-    
-    func update()
-    
-}
-
 protocol PresenterModelUpdating {
     
     func setCurrentUserInEntry(index: Int)
@@ -40,9 +34,9 @@ protocol PresenterModelUpdating {
 
 typealias HoursPresenting = HoursPresenterTableViewPresenting & HoursPresentereRouting & PresenterLifecycle & PresenterViewUpdating & PresenterModelUpdating
 
-class HoursPresenter: PresenterLifecycle, PresenterViewUpdating {
+class HoursPresenter: PresenterLifecycle {
     
-    private lazy var dataManager = DataManager(presenter: self)
+    private lazy var fireManager = FirebaseManager(presenter: self)
     private var view: AdminHoursViewable
     var entries = [Entry]()
     var users = [OPUser]()
@@ -64,8 +58,8 @@ class HoursPresenter: PresenterLifecycle, PresenterViewUpdating {
         for entry in entries {
             if entry.date == date {
                 workday = true
-                if dataManager.returnCurrentUser()?.email == "antoxapa@gmail.com" {
-                    if let user = dataManager.checkIsUserEntry(entry: entry)  {
+                if fireManager.checkAdminUser() {
+                    if let user = fireManager.checkIsUserEntry(entry: entry)  {
                         let newEntry = EntryRowItem(date: date, time: entry.time, user: user, isWorkday: false)
                         satisfEntries.append(newEntry)
                     } else {
@@ -73,8 +67,8 @@ class HoursPresenter: PresenterLifecycle, PresenterViewUpdating {
                         satisfEntries.append(newEntry)
                     }
                 } else {
-                    if let user = dataManager.checkIsUserEntry(entry: entry) {
-                        if user.uid == dataManager.returnCurrentUser()?.uid {
+                    if let user = fireManager.checkIsUserEntry(entry: entry) {
+                        if user.uid == fireManager.returnCurrentUser()?.uid {
                             let newEntry = EntryRowItem(date: date, time: entry.time, user: user, isWorkday: false)
                             satisfEntries.append(newEntry)
                         }
@@ -90,24 +84,39 @@ class HoursPresenter: PresenterLifecycle, PresenterViewUpdating {
     
     func load() {
         
-        dataManager.downloadItems()
-        dataManager.downloadUsers()
-        dataManager.getCurrentUser()
+        fireManager.downloadItems()
+        fireManager.downloadUsers()
+        fireManager.getCurrentUser()
         
     }
     
     func cancel() {
         
-        dataManager.removeObservers()
+        fireManager.removeObservers()
         
     }
     
+
+    
+}
+
+extension HoursPresenter: PresenterViewUpdating {
+    
     func update() {
         
-        entries = dataManager.showEntries()
-        users = dataManager.showUsers()
+        entries = fireManager.showEntries()
+        users = fireManager.showUsers()
         setup()
         view.reload()
+        
+    }
+    
+    func showErrorAC(text: String) {
+        
+        
+    }
+    
+    func dismissAC() {
         
     }
     
@@ -129,7 +138,7 @@ extension HoursPresenter: HoursPresenterTableViewPresenting {
     
     func didSelectCell(at row: Int) {
         
-        if dataManager.user.email == "antoxapa@gmail.com" {
+        if fireManager.checkAdminUser() {
             
             if satisfEntries[row].user?.uid != nil {
                 
@@ -141,13 +150,13 @@ extension HoursPresenter: HoursPresenterTableViewPresenting {
                 
             }
             
-        } else if satisfEntries[row].user?.uid == dataManager.returnCurrentUser()?.uid {
+        } else if satisfEntries[row].user?.uid == fireManager.returnCurrentUser()?.uid {
             
             view.showClientWillRemoveEntryTimeAC(index: row)
             
         } else if satisfEntries.contains(where: { (entry) -> Bool in
             
-            entry.user?.uid == dataManager.returnCurrentUser()?.uid
+            entry.user?.uid == fireManager.returnCurrentUser()?.uid
             
         }) {
             
@@ -162,8 +171,10 @@ extension HoursPresenter: HoursPresenterTableViewPresenting {
     
     func checkCurrentUserRow(row: EntryRowItem) -> Bool {
         
-        if row.user?.uid == dataManager.returnCurrentUser()?.uid {
+        if row.user?.uid == fireManager.returnCurrentUser()?.uid {
+            
             return true
+            
         }
         return false
         
@@ -186,32 +197,32 @@ extension HoursPresenter: PresenterModelUpdating {
     func setCurrentUserInEntry(index: Int) {
         
         let entry = satisfEntries[index]
-        dataManager.updateEntryWithUser(entry: entry)
-        dataManager.downloadItems()
+        fireManager.updateEntryWithUser(entry: entry)
+        fireManager.downloadItems()
         
     }
     
     func setUserInEntry(index: Int, user: OPUser) {
         
         let entry = satisfEntries[index]
-        dataManager.addUserToEntry(entry: entry, user: user)
-        dataManager.downloadItems()
+        fireManager.addUserToEntry(entry: entry, user: user)
+        fireManager.downloadItems()
         
     }
     
     func removeUserFromEntry(index: Int) {
         
         let entry = satisfEntries[index]
-        dataManager.removeUserFromEntry(entry: entry)
-        dataManager.downloadItems()
+        fireManager.removeUserFromEntry(entry: entry)
+        fireManager.downloadItems()
         
     }
     
     func removeEntry(index: Int) {
         
         let entry = satisfEntries[index]
-        dataManager.removeEntry(entry: entry)
-        dataManager.downloadItems()
+        fireManager.removeEntry(entry: entry)
+        fireManager.downloadItems()
         
     }
     

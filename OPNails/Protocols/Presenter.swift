@@ -15,3 +15,11 @@ protocol PresenterLifecycle {
     func cancel()
     
 }
+
+protocol PresenterViewUpdating {
+    
+    func update()
+    func showErrorAC(text: String)
+    func dismissAC()
+    
+}

@@ -24,9 +24,9 @@ protocol UsersPresentereRouting {
 
 typealias UsersPresenting = UsersPresenterTableViewPresenting & UsersPresentereRouting  & PresenterLifecycle & PresenterViewUpdating
 
-class UsersPresenter: PresenterLifecycle, PresenterViewUpdating {
+class UsersPresenter: PresenterLifecycle {
     
-    private lazy var dataManager = DataManager(presenter: self)
+    private lazy var fireManager = FirebaseManager(presenter: self)
     private var view: UsersViewable
     private var users = [OPUser]()
     
@@ -43,23 +43,38 @@ class UsersPresenter: PresenterLifecycle, PresenterViewUpdating {
     
     func load() {
         
-        dataManager.downloadUsers()
+        fireManager.downloadUsers()
         
     }
     
     func cancel() {
         
-        dataManager.removeObservers()
+        fireManager.removeObservers()
         
     }
     
+
+    
+}
+
+extension UsersPresenter: PresenterViewUpdating {
+    
     func update() {
         
-        users = dataManager.showUsers()
+        users = fireManager.showUsers()
         users.removeAll { (user) -> Bool in
-            user.email == "antoxapa@gmail.com"
+            user.uid == "0vehyLhByMgBDSJ9LbP02Uhyv4o2" 
         }
         view.reload()
+        
+    }
+    
+    func showErrorAC(text: String) {
+        
+        
+    }
+    
+    func dismissAC() {
         
     }
     

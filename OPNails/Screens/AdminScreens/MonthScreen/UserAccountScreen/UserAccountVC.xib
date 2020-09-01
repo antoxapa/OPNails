@@ -9,10 +9,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="UserAccountVC" customModule="OPNails" customModuleProvider="target">
             <connections>
-                <outlet property="editButton" destination="F3N-6B-7uK" id="JlL-LU-eli"/>
                 <outlet property="emailTF" destination="JMf-fE-FfI" id="Oda-Gw-d4d"/>
                 <outlet property="fullNameTF" destination="Wc9-gd-VeB" id="a35-av-c26"/>
-                <outlet property="logoutCancelButton" destination="KdB-wX-yPh" id="KoZ-Mx-Ox0"/>
+                <outlet property="logoutButton" destination="KdB-wX-yPh" id="KoZ-Mx-Ox0"/>
                 <outlet property="passwordTF" destination="PjZ-ka-bNA" id="iKb-Xy-5GD"/>
                 <outlet property="phoneNumberTF" destination="4lv-9h-Jrz" id="89I-5x-K7d"/>
                 <outlet property="userLogo" destination="c6K-3O-KTK" id="M9N-h1-zdC"/>
@@ -25,7 +24,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="100" translatesAutoresizingMaskIntoConstraints="NO" id="VIe-e4-Hep">
-                    <rect key="frame" x="70" y="124" width="274" height="648"/>
+                    <rect key="frame" x="70" y="149.5" width="274" height="597"/>
                     <subviews>
                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="c6K-3O-KTK">
                             <rect key="frame" x="12" y="0.0" width="250" height="150"/>
@@ -92,25 +91,15 @@
                             </subviews>
                         </stackView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="Qb1-wa-fOh">
-                            <rect key="frame" x="0.0" y="561" width="274" height="87"/>
+                            <rect key="frame" x="0.0" y="561" width="274" height="36"/>
                             <subviews>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F3N-6B-7uK">
-                                    <rect key="frame" x="0.0" y="0.0" width="274" height="36"/>
-                                    <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="20"/>
-                                    <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <state key="normal" title="Edit">
-                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
-                                    <connections>
-                                        <action selector="editButtonPressed:" destination="-1" eventType="touchUpInside" id="w34-7m-TnO"/>
-                                    </connections>
-                                </button>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KdB-wX-yPh">
-                                    <rect key="frame" x="0.0" y="51" width="274" height="36"/>
+                                    <rect key="frame" x="40" y="0.0" width="194" height="36"/>
+                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="20"/>
                                     <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <state key="normal" title="Log out">
-                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
                                     <connections>
                                         <action selector="logoutCancelButtonPressed:" destination="-1" eventType="touchUpInside" id="TQf-vq-uU6"/>
@@ -118,10 +107,8 @@
                                 </button>
                             </subviews>
                             <constraints>
-                                <constraint firstAttribute="trailing" secondItem="F3N-6B-7uK" secondAttribute="trailing" id="CzF-vg-hM4"/>
-                                <constraint firstAttribute="trailing" secondItem="KdB-wX-yPh" secondAttribute="trailing" id="UE5-nB-idy"/>
-                                <constraint firstItem="F3N-6B-7uK" firstAttribute="leading" secondItem="Qb1-wa-fOh" secondAttribute="leading" id="eIY-b1-UcJ"/>
-                                <constraint firstItem="KdB-wX-yPh" firstAttribute="leading" secondItem="Qb1-wa-fOh" secondAttribute="leading" id="sbs-8W-4jk"/>
+                                <constraint firstAttribute="trailing" secondItem="KdB-wX-yPh" secondAttribute="trailing" constant="40" id="UE5-nB-idy"/>
+                                <constraint firstItem="KdB-wX-yPh" firstAttribute="leading" secondItem="Qb1-wa-fOh" secondAttribute="leading" constant="40" id="sbs-8W-4jk"/>
                             </constraints>
                         </stackView>
                     </subviews>

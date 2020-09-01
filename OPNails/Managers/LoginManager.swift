@@ -35,7 +35,7 @@ class LoginManager {
     
     func checkAdminUser() -> Bool {
         
-        if Auth.auth().currentUser?.email == "antoxapa@gmail.com" {
+        if Auth.auth().currentUser?.uid == "0vehyLhByMgBDSJ9LbP02Uhyv4o2" {
             return true
         }
         return false

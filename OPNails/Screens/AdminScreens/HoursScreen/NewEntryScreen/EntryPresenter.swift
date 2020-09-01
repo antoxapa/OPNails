@@ -24,10 +24,10 @@ protocol EntryUpdating {
 
 typealias EntryPresenting = EntryRouting & EntryUpdating & PresenterLifecycle
 
-class EntryPresenter: PresenterLifecycle, PresenterViewUpdating {
+class EntryPresenter: PresenterLifecycle {
     
     private var view: NewEntryViewable
-    lazy private var dataManager: DataManager = DataManager(presenter: self)
+    lazy private var fireManager: FirebaseManager = FirebaseManager(presenter: self)
     var entries = [Entry]()
     
     init(view: NewEntryViewable) {
@@ -39,25 +39,40 @@ class EntryPresenter: PresenterLifecycle, PresenterViewUpdating {
     
     func setup() {
         
-        dataManager.getCurrentUser()
+        fireManager.getCurrentUser()
         
     }
     
     func load() {
         
-        dataManager.downloadItems()
+        fireManager.downloadItems()
         
     }
     
     func cancel() {
         
-        dataManager.removeObservers()
+        fireManager.removeObservers()
         
     }
     
+
+    
+}
+
+extension EntryPresenter: PresenterViewUpdating {
+    
     func update() {
         
-        entries = dataManager.showEntries()
+        entries = fireManager.showEntries()
+        
+    }
+    
+    func showErrorAC(text: String) {
+        
+        
+    }
+    
+    func dismissAC() {
         
     }
     
@@ -84,7 +99,7 @@ extension EntryPresenter: EntryUpdating {
                 return
             }
         }
-        dataManager.addNewEntry(date: date , time: time)
+        fireManager.addNewEntry(date: date , time: time)
         pop()
         
     }
@@ -102,7 +117,7 @@ extension EntryPresenter: EntryUpdating {
                 
             }
             
-            dataManager.addNewEntry(date: date, time: time)
+            fireManager.addNewEntry(date: date, time: time)
         }
         pop()
     }
