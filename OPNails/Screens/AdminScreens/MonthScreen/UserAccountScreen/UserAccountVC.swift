@@ -10,7 +10,7 @@ import UIKit
 
 protocol UserViewUpdatable {
     
-    func update(user: OPUser)
+    func update(user: OPUser, email: String)
     func dissmisAC()
     
 }
@@ -53,6 +53,8 @@ class UserAccountVC: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         setupViews()
+        
+        presenter.setup()
         
         presenter.load()
         
@@ -126,13 +128,13 @@ class UserAccountVC: UIViewController, UITextFieldDelegate {
 
 extension UserAccountVC: UserViewUpdatable {
     
-    func update(user: OPUser) {
+    func update(user: OPUser, email: String) {
         
         dissmisAC()
         
         fullNameTF.text = user.name
         phoneNumberTF.text = user.phoneNumber
-        emailTF.text = user.email
+        emailTF.text = email
         passwordTF.text = ""
         
     }

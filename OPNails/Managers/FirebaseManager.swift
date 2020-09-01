@@ -104,6 +104,13 @@ class FirebaseManager {
         
     }
     
+    func returnFirUser() -> User? {
+        
+        guard let user = Auth.auth().currentUser else { return nil }
+        return user
+        
+    }
+    
     func checkIsUserEntry(entry: Entry) -> OPUser? {
         
         for item in users {
@@ -200,7 +207,8 @@ class FirebaseManager {
     
     func changePassword(newPassword: String, oldPassword: String) {
         
-        guard let currentEmail = returnCurrentUser()?.email else { return }
+//        guard let currentEmail = returnCurrentUser()?.email else { return }
+        guard let currentEmail = Auth.auth().currentUser?.email else { return }
         let credential = EmailAuthProvider.credential(withEmail: currentEmail, password: oldPassword)
         
         Auth.auth().currentUser?.reauthenticate(with: credential, completion: { [weak self] (result, error) in
@@ -233,7 +241,8 @@ class FirebaseManager {
     
     func changeEmail(newEmail: String, password: String) {
         
-        guard let currentEmail = returnCurrentUser()?.email else { return }
+//        guard let currentEmail = returnCurrentUser()?.email else { return }
+        guard let currentEmail = Auth.auth().currentUser?.email else { return }
         let credential = EmailAuthProvider.credential(withEmail: currentEmail, password: password)
         
         Auth.auth().currentUser?.reauthenticate(with: credential, completion: { [weak self] (result, error) in

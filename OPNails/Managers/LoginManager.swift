@@ -21,6 +21,23 @@ class LoginManager {
         
     }
     
+    func reloadCurrentUser() {
+        
+        Auth.auth().currentUser?.reload(completion: { [weak self] (error) in
+            if error != nil {
+                
+                self?.presenter.showErrorAC(text: error!.localizedDescription)
+                return
+            
+            } else {
+                
+                self?.checkUserLogged()
+                
+            }
+        })
+        
+    }
+    
     
     func checkUserLogged() {
         
@@ -80,7 +97,7 @@ class LoginManager {
             if user != nil {
                 self?.ref = Database.database().reference(withPath: "users")
                 let userRef = self?.ref.child((user?.user.uid)!)
-                userRef?.setValue(["uid":user?.user.uid,"name":name, "email":email, "phoneNumber":phoneNumber])
+                userRef?.setValue(["uid":user?.user.uid,"name":name, "phoneNumber":phoneNumber])
                 self?.presenter.routeToMainScreenAfterRegistration()
             }
         }

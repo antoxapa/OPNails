@@ -13,7 +13,6 @@ protocol LoginViewRoutable {
     
     func showRegistration()
     func showMainScreen(admin: Bool, animated: Bool)
-    func showAdminScreen()
     func showLoadScreen()
     
 }
@@ -154,11 +153,6 @@ extension LoginVC: LoginViewRoutable {
             vc.adminUser = admin
         }
         self.navigationController?.setViewControllers([vc], animated: false)
-        
-    }
-    
-    
-    func showAdminScreen() {
         
     }
     

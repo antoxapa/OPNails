@@ -79,7 +79,8 @@ extension LoginPresenter: PresenterViewUpdating {
     
     func showErrorAC(text: String) {
         
-        
+        let title = "Error"
+        view.showAlertController(withTitle: title, message: text)
         
     }
     
@@ -135,7 +136,7 @@ extension LoginPresenter: LoginPresenting {
     
     func checkUserLogged() {
         
-        loginManager?.checkUserLogged()
+        loginManager?.reloadCurrentUser()
         
     }
     

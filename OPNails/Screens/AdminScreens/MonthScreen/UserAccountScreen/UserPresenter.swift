@@ -68,7 +68,8 @@ extension UserPresenter: PresenterViewUpdating {
         }
         
         guard let user = user else { return }
-        view.update(user: user)
+        guard let email = fireManager.returnFirUser()?.email else { return }
+        view.update(user: user, email: email)
         
     }
     
