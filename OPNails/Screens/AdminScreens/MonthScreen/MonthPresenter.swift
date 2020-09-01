@@ -53,6 +53,7 @@ class MonthPresenter: PresenterLifecycle {
     
     func setup() {
         
+        self.fireManager.reloadCurrentUser()
         monthModels = dateManager.showMonth()
         view.reload()
         
@@ -84,7 +85,7 @@ extension MonthPresenter: PresenterViewUpdating {
     
     func showErrorAC(text: String) {
         
-        
+        view.showErrorAC(text: text)
         
     }
     

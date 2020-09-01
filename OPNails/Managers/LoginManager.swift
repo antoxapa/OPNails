@@ -21,23 +21,6 @@ class LoginManager {
         
     }
     
-    func reloadCurrentUser() {
-        
-        Auth.auth().currentUser?.reload(completion: { [weak self] (error) in
-            if error != nil {
-                
-                self?.presenter.showErrorAC(text: error!.localizedDescription)
-                return
-            
-            } else {
-                
-                self?.checkUserLogged()
-                
-            }
-        })
-        
-    }
-    
     
     func checkUserLogged() {
         

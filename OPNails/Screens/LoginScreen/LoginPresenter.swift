@@ -136,7 +136,7 @@ extension LoginPresenter: LoginPresenting {
     
     func checkUserLogged() {
         
-        loginManager?.reloadCurrentUser()
+        loginManager?.checkUserLogged()
         
     }
     

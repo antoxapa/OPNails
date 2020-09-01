@@ -39,6 +39,8 @@ class UserPresenter: PresenterLifecycle {
     
     func setup() {
         
+//        self.fireManager.reloadCurrentUser()
+        
         
     }
     

@@ -54,9 +54,14 @@ class UserAccountVC: UIViewController, UITextFieldDelegate {
         
         setupViews()
         
-        presenter.setup()
-        
         presenter.load()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super .viewWillAppear(animated)
+        
+        presenter.setup()
         
     }
     

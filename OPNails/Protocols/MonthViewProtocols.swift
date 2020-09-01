@@ -22,4 +22,10 @@ protocol MonthViewRoutable {
     
 }
 
-typealias MonthViewable = MonthViewUpdatable & MonthViewRoutable
+protocol MonthViewPresentable {
+    
+    func showErrorAC(text: String)
+    
+}
+
+typealias MonthViewable = MonthViewUpdatable & MonthViewRoutable & MonthViewPresentable

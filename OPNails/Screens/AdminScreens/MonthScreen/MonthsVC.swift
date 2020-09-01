@@ -28,12 +28,12 @@ class MonthsVC: UIViewController {
         
         setupViews()
         
-        presenter.setup()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        presenter.setup()
         
         setupNavBar()
         
@@ -45,9 +45,9 @@ class MonthsVC: UIViewController {
     
 //    override func viewWillDisappear(_ animated: Bool) {
 //        super.viewWillDisappear(animated)
-//        
+//
 //        presenter.cancel()
-//        
+//
 //    }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -342,6 +342,23 @@ extension MonthsVC: MonthViewRoutable {
         addEntries()
         self.present(entryVC, animated: true)
         
+    }
+    
+}
+
+extension MonthsVC: MonthViewPresentable {
+    
+    func showErrorAC(text: String) {
+        
+        let title = "Error"
+        let ac = UIAlertController(title: title, message: text, preferredStyle: .alert)
+        let action = UIAlertAction(title: "OK", style: .default) { [weak self] (alertAction) in
+            let loadingVC = LoginVC(nibName: "LoginVC", bundle: nil)
+            self?.navigationController?.setViewControllers([loadingVC], animated: false)
+        }
+        ac.addAction(action)
+
+        present(ac, animated: true)
     }
     
 }

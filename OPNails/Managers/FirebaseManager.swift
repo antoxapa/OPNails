@@ -25,6 +25,19 @@ class FirebaseManager {
         
     }
     
+    func reloadCurrentUser() {
+        
+        Auth.auth().currentUser?.reload(completion: { [weak self] (error) in
+            if error != nil {
+                
+                self?.presenter.showErrorAC(text: error!.localizedDescription)
+                return
+            
+            }
+        })
+        
+    }
+    
     func checkAdminUser() -> Bool {
         
         if Auth.auth().currentUser?.uid == "0vehyLhByMgBDSJ9LbP02Uhyv4o2" {
