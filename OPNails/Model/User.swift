@@ -10,17 +10,15 @@ import Foundation
 import FirebaseDatabase
 import FirebaseAuth
 
-struct OPUser {
+class OPUser {
     
     let uid: String?
-//    let email: String?
     let phoneNumber: String?
     let name: String?
     
     init(user: User) {
         
         self.uid = user.uid
-//        self.email = user.email
         self.phoneNumber = user.phoneNumber
         self.name = user.displayName
         
@@ -30,10 +28,18 @@ struct OPUser {
         
         let snapshotValue = snapshot.value as! [String:AnyObject]
         uid = snapshotValue["uid"] as? String
-//        email = snapshotValue["email"] as? String
         phoneNumber = snapshotValue["phoneNumber"] as? String
         name = snapshotValue["name"] as? String
         
     }
+    
+}
+
+enum ProfileInfoOption: Int {
+    
+    case username = 0
+    case phoneNumber
+    case email
+    case password
     
 }

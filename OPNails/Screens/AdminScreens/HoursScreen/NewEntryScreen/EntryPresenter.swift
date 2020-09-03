@@ -14,6 +14,12 @@ protocol EntryRouting {
     
 }
 
+protocol PresenterViewNotificationSending {
+    
+    func postNotification(info: [String:AnyObject]?)
+    
+}
+
 protocol EntryUpdating {
     
     func addNewEntry(time: String)
@@ -22,7 +28,7 @@ protocol EntryUpdating {
     
 }
 
-typealias EntryPresenting = EntryRouting & EntryUpdating & PresenterLifecycle
+typealias EntryPresenting = EntryRouting & EntryUpdating & PresenterLifecycle & PresenterViewNotificationSending
 
 class EntryPresenter: PresenterLifecycle {
     
@@ -39,7 +45,7 @@ class EntryPresenter: PresenterLifecycle {
     
     func setup() {
         
-        fireManager.getCurrentUser()
+        fireManager.updateCurrentUser()
         
     }
     
@@ -54,8 +60,6 @@ class EntryPresenter: PresenterLifecycle {
         fireManager.removeObservers()
         
     }
-    
-
     
 }
 
@@ -93,11 +97,10 @@ extension EntryPresenter: EntryUpdating {
     func addNewEntry(time: String) {
         
         guard let date = view.currentDate() else { return }
-        for entry in entries {
-            if entry.date == date && entry.time == time {
-                view.showAlert()
-                return
-            }
+        if entries.contains(where: { $0.date == date && $0.time == time }) {
+            let title = "Current entry already exist"
+            view.showErrorAC(title: title, message: nil)
+            return
         }
         fireManager.addNewEntry(date: date , time: time)
         pop()
@@ -109,29 +112,37 @@ extension EntryPresenter: EntryUpdating {
         let days = view.currentDays()
         for day in days {
             let date = "\(day.day)-\(day.monthNumber)-\(day.year)"
-            for entry in entries {
-                if entry.date == date && entry.time == time {
-                    view.showAlert()
-                    return
-                }
-                
+            if entries.contains(where: { $0.date == date && $0.time == time }) {
+                let title = "Current entry already exist"
+                view.showErrorAC(title: title, message: nil)
+                return
             }
-            
             fireManager.addNewEntry(date: date, time: time)
         }
         pop()
+        
     }
     
     func showdaysString(days: [DayRowItem]) -> String {
+        
         var daysString = ""
         var daysArray = [String]()
         for day in days {
             daysArray.append(day.day)
         }
-        for item in daysArray.sorted() {
-            daysString += "\(item), "
-        }
+        daysString = daysArray.sorted().joined(separator: ", ")
         return daysString
+        
+    }
+    
+}
+
+extension EntryPresenter: PresenterViewNotificationSending {
+    
+    func postNotification(info: [String : AnyObject]?) {
+        
+        NotificationCenter.default.post(name: .entriesEdited, object: nil)
+        
     }
     
 }

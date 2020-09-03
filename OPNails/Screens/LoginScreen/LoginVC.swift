@@ -8,8 +8,7 @@
 
 import UIKit
 
-
-protocol LoginViewRoutable {
+protocol LoginViewRoutable: AnyObject {
     
     func showRegistration()
     func showMainScreen(admin: Bool, animated: Bool)
@@ -17,7 +16,7 @@ protocol LoginViewRoutable {
     
 }
 
-protocol LoginViewPresentable {
+protocol LoginViewPresentable: AnyObject {
     
     func showAlertController(withTitle text: String, message: String)
     
@@ -30,36 +29,24 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var loginButton: UIButton! {
-        
         didSet {
-            
             loginButton.layer.cornerRadius = loginButton.bounds.height / 2
             loginButton.layer.masksToBounds = true
-            
         }
-        
     }
     
     @IBOutlet weak var facebookButton: UIButton!  {
-        
         didSet {
-            
             facebookButton.layer.cornerRadius = facebookButton.bounds.height / 2
             facebookButton.layer.masksToBounds = true
-            
         }
-        
     }
     
     @IBOutlet weak var googleButton: UIButton!  {
-        
         didSet {
-            
             googleButton.layer.cornerRadius = googleButton.bounds.height / 2
             googleButton.layer.masksToBounds = true
-            
         }
-        
     }
     
     lazy var presenter: LoginPresentable = LoginPresenter(view: self)
@@ -105,17 +92,8 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
     }
     
     @IBAction func loginButtonPressed(_ sender: UIButton) {
-        
-        guard let email = emailTF.text, let password = passwordTF.text, emailTF.text != "", passwordTF.text != "" else {
-            
-            let title = "Ooops!"
-            let message = "Please enter correct login or password"
-            presenter.showErrorAC(withTitle: title, message: message)
-            return
-            
-        }
-        
-        presenter.signIn(email: email, password: password)
+
+        presenter.signIn(email: emailTF.text, password: passwordTF.text)
         
     }
     
@@ -168,7 +146,7 @@ extension LoginVC: LoginViewRoutable {
 }
 
 extension LoginVC: LoginViewPresentable {
-    
+//    TODO: create AlertPresentring protocol and delete dublicated code
     func showAlertController(withTitle text: String, message: String) {
         
         let ac = UIAlertController(title: text, message: message, preferredStyle: .alert)

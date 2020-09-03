@@ -10,7 +10,6 @@ import Foundation
 
 public struct Today {
     
-//    public static let todayDate = Date().convert(from: TimeZone(abbreviation: "UTC")!, to: TimeZone(abbreviation: "MSK")!)
     public static let todayDate = Date().toLocalTime()
     
 }
@@ -25,11 +24,12 @@ public enum WeekStartDay {
 class DateManager {
     
     private var currentMonth: Date = Today.todayDate
-    
     private var monthModel: [CalendarMonth] = []
+    private var calendar: Calendar
     
     init() {
         
+        calendar = Calendar.current
         fillMonthModel(fromDate: Today.todayDate)
         
     }
@@ -38,8 +38,8 @@ class DateManager {
         
         currentMonth = Today.todayDate
         fillMonthModel(fromDate: Today.todayDate)
-        
         return monthModel
+        
     }
     
     func showMonth() -> [CalendarMonth] {
@@ -55,17 +55,16 @@ class DateManager {
         
     }
     
-    func showPreviosMonth() -> [CalendarMonth] {
+    func showPreviousMonth() -> [CalendarMonth] {
         
-        getPrevMonth()
+        getPreviousMonth()
         return monthModel
         
     }
     
-    func getDateFrom(year: Int, month: Int, day: Int) -> Date? {
+    func getDate(fromYear year: Int, month: Int, day: Int) -> Date? {
         
-        let dateComponents = DateComponents(calendar: .current, timeZone: .current,  year: year, month: month, day: day, hour: 0, minute: 0, second: 0, nanosecond: 0)
-        let calendar = Calendar.current
+        let dateComponents = DateComponents(calendar: calendar, timeZone: .current,  year: year, month: month, day: day, hour: 0, minute: 0, second: 0, nanosecond: 0)
         if let date = calendar.date(from: dateComponents) {
             return date
         }
@@ -73,8 +72,8 @@ class DateManager {
         
     }
     
-    func compareDate(date1:Date, date2:Date) -> Bool {
-        let calendar = Calendar.current
+    func compareDate(_ date1: Date, to date2: Date) -> Bool {
+        
         let order = calendar.compare(date1, to: date2, toGranularity: .day)
         switch order {
         case .orderedAscending:
@@ -82,38 +81,34 @@ class DateManager {
         default:
             return true
         }
-    }
-    
-    func getValuesFromDate(date: Date) -> (year: Int, month: Int, name: String, day: Int) {
-        
-        return date.getTodayValues()
         
     }
     
-    func compare(date: Date) -> Bool {
+    func getValues(from date: Date) -> (year: Int, month: Int, name: String, day: Int) {
         
-        if Today.todayDate.isSame(date) {
-            return true
-        }
+        return date.getDateInfo()
         
-        return false
+    }
+    
+    func isToday(date: Date) -> Bool {
+        
+        return Today.todayDate.isSame(date)
         
     }
     
     func compareMonthYear(date: Date) -> Bool {
         
-        let currentDate = Today.todayDate.getMonth()
+        let currentDate = Today.todayDate.getDateInfo()
         let currentYear = currentDate.year
         let currentMonth = currentDate.month
         
-        let dateInfo = date.getMonth()
+        let dateInfo = date.getDateInfo()
         let dateYear = dateInfo.year
         let dateMonth = dateInfo.month
         
         if (currentYear == dateYear) && (currentMonth == dateMonth) {
             return true
         }
-        
         return false
         
     }
@@ -121,7 +116,7 @@ class DateManager {
     private func fillMonthModel(fromDate date: Date) {
         
         monthModel = []
-        let currentMonth = date.getMonth()
+        let currentMonth = date.getDateInfo()
         let totalDaysInMonth = getNumberOfDaysInMonth(year: currentMonth.year, month: currentMonth.month)
         let days = createDaysArray(from: totalDaysInMonth, month: currentMonth.month, year: currentMonth.year)
         let weekDay = getMonthWeekDay(year: currentMonth.year, month: currentMonth.month)
@@ -133,7 +128,6 @@ class DateManager {
     private func getMonthWeekDay(year: Int, month: Int) -> Int {
         
         let dateComponents = DateComponents(year: year, month: month)
-        let calendar = Calendar.current
         if let date = calendar.date(from: dateComponents) {
             let day = calendar.component(.weekday, from: date)
             return day
@@ -153,46 +147,24 @@ class DateManager {
         
     }
     
-    func getCountForMonday(_ weekDayNo: Int) -> Int {
+    private func getCountForMonday(_ weekDayNo: Int) -> Int {
         
         switch weekDayNo {
         case 1:
             return 6
-        case 2:
-            return 0
-        case 3:
-            return 1
-        case 4:
-            return 2
-        case 5:
-            return 3
-        case 6:
-            return 4
-        case 7:
-            return 5
+        case 2...7:
+            return weekDayNo - 2
         default:
             return 0
         }
         
     }
     
-    func getCountForSunday(_ weekDayNo: Int) -> Int {
+    private func getCountForSunday(_ weekDayNo: Int) -> Int {
         
         switch weekDayNo {
-        case 1:
-            return 0
-        case 2:
-            return 1
-        case 3:
-            return 2
-        case 4:
-            return 3
-        case 5:
-            return 4
-        case 6:
-            return 5
-        case 7:
-            return 6
+        case 1...7:
+            return weekDayNo - 1
         default:
             return 0
         }
@@ -202,7 +174,6 @@ class DateManager {
     private func getNumberOfDaysInMonth(year: Int, month: Int) -> Int {
         
         let dateComponents = DateComponents(year: year, month: month)
-        let calendar = Calendar.current
         if let date = calendar.date(from: dateComponents), let numberOfDaysInMonth = calendar.range(of: .day, in: .month, for: date) {
             return numberOfDaysInMonth.count
         }
@@ -228,7 +199,7 @@ class DateManager {
         
     }
     
-    private func getPrevMonth() {
+    private func getPreviousMonth() {
         
         guard let prevMonth = Calendar.current.date(byAdding: .month, value: -1, to: currentMonth) else { return }
         currentMonth = prevMonth
@@ -236,80 +207,3 @@ class DateManager {
         
     }
 }
-
-
-// MARK: - Date extension
-extension Date {
-    
-    func convert(from initTimeZone: TimeZone, to targetTimeZone: TimeZone) -> Date {
-        let delta = TimeInterval(initTimeZone.secondsFromGMT() - targetTimeZone.secondsFromGMT())
-        return addingTimeInterval(delta)
-    }
-
-        // Convert local time to UTC (or GMT)
-        func toGlobalTime() -> Date {
-            let timezone = TimeZone.current
-            let seconds = -TimeInterval(timezone.secondsFromGMT(for: self))
-            return Date(timeInterval: seconds, since: self)
-        }
-
-        // Convert UTC (or GMT) to local time
-        func toLocalTime() -> Date {
-            let timezone = TimeZone(abbreviation: "MSK")!
-            let seconds = TimeInterval(timezone.secondsFromGMT(for: self))
-            return Date(timeInterval: seconds, since: self)
-        }
-
-    
-    func getMonth() -> (year: Int, month: Int, name: String) {
-        
-        let calendar = Calendar.current
-        let year = calendar.component(.year, from: self)
-        let month = calendar.component(.month, from: self)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "LLL"
-        let monthName = dateFormatter.string(from: self)
-        return (year, month, monthName)
-        
-    }
-    
-    func getTodayValues() -> (year: Int, month: Int, name: String, day: Int) {
-        
-        let calendar = Calendar.current
-        let year = calendar.component(.year, from: self)
-        let month = calendar.component(.month, from: self)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "LLL"
-        let monthName = dateFormatter.string(from: self)
-        let day = calendar.component(.day, from: self)
-        return (year, month, monthName, day)
-        
-    }
-    
-    func isSame(_ date: Date?) -> Bool {
-        
-        let formatter = DateFormatter()
-        formatter.dateFormat = "ddMMyyyy"
-        guard let date = date else { return false }
-        if formatter.string(from: self) == formatter.string(from: date) {
-            return true
-        }
-        return false
-        
-    }
-}
-
-extension Date {
-    
-    func timeString() -> String {
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = Calendar.current.timeZone
-        dateFormatter.locale = Calendar.current.locale
-        dateFormatter.dateFormat = "HH:mm"
-        return dateFormatter.string(from: self)
-        
-    }
-    
-}
-

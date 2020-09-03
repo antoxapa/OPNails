@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol RegistrationViewPresenting {
+protocol RegistrationViewPresenting: AnyObject {
     
     func showAlertController(withTitle text: String, message: String)
     func showLoadingAlert()
@@ -28,24 +28,17 @@ class RegistrationVC: UIViewController, UIGestureRecognizerDelegate {
     var presenter: LoginPresentable?
     
     @IBOutlet weak var registerButton: UIButton! {
-        
         didSet {
-            
             registerButton.layer.cornerRadius = registerButton.bounds.height / 2
             registerButton.layer.masksToBounds = true
-            
         }
-        
     }
+    
     @IBOutlet weak var cancelButton: UIButton! {
-        
         didSet {
-            
             cancelButton.layer.cornerRadius = cancelButton.bounds.height / 2
             cancelButton.layer.masksToBounds = true
-            
         }
-        
     }
     
     override func viewDidLoad() {
@@ -77,7 +70,6 @@ class RegistrationVC: UIViewController, UIGestureRecognizerDelegate {
             if self.view.frame.origin.y == 0 {
                 self.view.frame.origin.y -= keyboardSize.height
             }
-            
         }
         
     }
@@ -103,15 +95,7 @@ class RegistrationVC: UIViewController, UIGestureRecognizerDelegate {
     @IBAction func registerButtonPressed(_ sender: UIButton) {
         
         self.view.endEditing(true)
-        guard let email = emailTF.text, emailTF.text != "", let password = passwordTF.text, passwordTF.text != "", let name = nameSecondNameTF.text, nameSecondNameTF.text != "", let phoneNumber = phoneNumberTF.text, phoneNumberTF.text != "" else {
-            let title = "Ooops!"
-            let message = "Please enter correct login or password"
-            presenter?.showRegistrationErrorAC(withTitle: title, message: message)
-            return
-        }
-        
-        presenter?.showLoadingAC()
-        presenter?.registerUser(email: email, password: password, name: name, phoneNumber: phoneNumber)
+        presenter?.checkTextValidation(email: emailTF.text, password: passwordTF.text, name: nameSecondNameTF.text, phoneNumber: phoneNumberTF.text)
         
     }
     
@@ -146,20 +130,23 @@ extension RegistrationVC: RegistrationViewPresenting {
         
         activityIndicator.centerXAnchor.constraint(equalTo: alert.view.centerXAnchor, constant: 0).isActive = true
         activityIndicator.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -20).isActive = true
-        
         present(alert, animated: true)
         
     }
     
     func hideLoadingAlert() {
         
-        self.dismiss(animated: true, completion: nil)
+        if let _ = self.navigationController?.presentedViewController {
+            self.dismiss(animated: true, completion: nil)
+        }
         
     }
     
 }
 
 extension RegistrationVC: UITextFieldDelegate {
+    
+    //TODO: Add TF validation methods
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if (textField == phoneNumberTF){

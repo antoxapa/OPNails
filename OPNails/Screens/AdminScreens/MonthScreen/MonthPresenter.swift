@@ -70,7 +70,7 @@ class MonthPresenter: PresenterLifecycle {
         fireManager.removeObservers()
         
     }
-
+    
 }
 
 extension MonthPresenter: PresenterViewUpdating {
@@ -122,16 +122,12 @@ extension MonthPresenter: MonthPresenterCollectionViewPresenting {
             if entries != nil {
                 let date = "\(dayName)-\(monthNumber)-\(year)"
                 for entry in entries! {
-                    if entry.date == date {
-                        isWorkday = true
-                        
-                        if let item = fireManager.checkIsUserEntry(entry: entry) {
-                            if entry.userId == fireManager.returnCurrentUser()?.uid {
-                                user = item
-                                isWorkday = false
-                            }
-                        }
-                    }
+                    guard entry.date == date else { continue }
+                    isWorkday = true
+                    guard let item = fireManager.getEntryUser(entry: entry),
+                        entry.userId == fireManager.returnCurrentUser()?.uid else { continue }
+                    user = item
+                    isWorkday = false
                 }
             }
             
@@ -153,16 +149,16 @@ extension MonthPresenter: MonthPresenterCollectionViewPresenting {
     
     func compare(item: DayRowItem) -> Bool {
         
-        guard let date = dateManager.getDateFrom(year: Int(item.year)!, month: item.monthNumber, day: Int(item.day)!) else {
+        guard let date = dateManager.getDate(fromYear: Int(item.year)!, month: item.monthNumber, day: Int(item.day)!) else {
             return false
         }
-        return dateManager.compare(date: date)
+        return dateManager.isToday(date: date)
         
     }
     
     func compareMonthYear(item: DayRowItem) -> Bool {
         
-        guard let date = dateManager.getDateFrom(year: Int(item.year)!, month: item.monthNumber, day: Int(item.day)!) else {
+        guard let date = dateManager.getDate(fromYear: Int(item.year)!, month: item.monthNumber, day: Int(item.day)!) else {
             return false
         }
         return dateManager.compareMonthYear(date: date)
@@ -172,26 +168,24 @@ extension MonthPresenter: MonthPresenterCollectionViewPresenting {
     func didSelectCell(at row: Int) {
         
         guard let day = data(at: row) else { return }
-        
         openDayTimesList(withItem: day)
         
     }
     
     func checkClientEntryDay(item: DayRowItem) -> Bool {
         
-        if item.client?.uid == fireManager.returnCurrentUser()?.uid {
-            return true
-        }
-        return false
+        return item.client?.uid == fireManager.returnCurrentUser()?.uid
         
     }
     
     func checkDayAvailable(item: DayRowItem) -> Bool {
-        if let date = dateManager.getDateFrom(year: Int(item.year)!, month: item.monthNumber, day: Int(item.day)!) {
+        
+        if let date = dateManager.getDate(fromYear: Int(item.year)!, month: item.monthNumber, day: Int(item.day)!) {
             let localDate = date.toLocalTime()
-            return dateManager.compareDate(date1: localDate, date2: Today.todayDate)
+            return dateManager.compareDate(localDate, to: Today.todayDate)
         }
         return false
+        
     }
     
 }
@@ -217,7 +211,7 @@ extension MonthPresenter: MonthPresenterHeaderViewUpdating {
     
     func showPreviousMonth() {
         
-        monthModels = dateManager.showPreviosMonth()
+        monthModels = dateManager.showPreviousMonth()
         view.reload()
         
     }
@@ -225,7 +219,7 @@ extension MonthPresenter: MonthPresenterHeaderViewUpdating {
     func showCurrentMonth() {
         
         if monthModels.first == dateManager.showCurrentMonth().first {
-            let item = dateManager.getValuesFromDate(date: Today.todayDate)
+            let item = dateManager.getValues(from: Today.todayDate)
             let rowItem = DayRowItem(year: String(item.year), month: item.name, day: String(item.day), monthNumber: item.month, client: nil, isWorkday: nil)
             view.routeWithItem(item: rowItem)
         } else {

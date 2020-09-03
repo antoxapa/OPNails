@@ -43,13 +43,6 @@ class MonthsVC: UIViewController {
         
     }
     
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//
-//        presenter.cancel()
-//
-//    }
-    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
         monthsCollectionView.collectionViewLayout.invalidateLayout()
@@ -81,14 +74,10 @@ class MonthsVC: UIViewController {
     
     private func setupNavBar() {
         
-//        self.navigationItem.hidesBackButton = true
-        
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        
         if adminUser {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(self.addEntries))
         }
-        
         let buttonIcon = UIImage(named: "account")
         let leftBarButton = UIBarButtonItem(title: nil, style: .done, target: self, action: #selector(showUserAccount))
         leftBarButton.image = buttonIcon
@@ -147,6 +136,7 @@ class MonthsVC: UIViewController {
 extension MonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        
         return presenter.numberOfCells(in: section)
         
     }
@@ -163,39 +153,16 @@ extension MonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
         if let item = presenter.data(at: indexPath.row - presenter.skipCount()) {
             
             if presenter.checkDayAvailable(item: item) {
-                
                 isSelectStateActive ? cell.selectModeActivate() : cell.selectModeDeactivate()
                 
                 presenter.compare(item: item) ? cell.setupToday() : cell.setupDefault()
                 
-                if presenter.checkClientEntryDay(item: item) {
-                    
-                    cell.setupGreenView()
-                    
-                } else {
-                    
-                    if item.isWorkday != nil && item.isWorkday != false {
-                        
-                        cell.setupRedView()
-                        
-                    } else {
-                        
-                        cell.setupEventViewHidden()
-                        
-                    }
-                    
-                }
-                
+                presenter.checkClientEntryDay(item: item) ? cell.setupGreenView() : item.isWorkday == true ? cell.setupRedView() : cell.setupEventViewHidden()
             } else {
-                
                 cell.setDisable()
-                
             }
-            
             cell.configure(withItem: item)
-            
         }
-        
         return cell
         
     }
@@ -205,42 +172,36 @@ extension MonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
         guard let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "MonthHeader", for: indexPath) as? MonthNameHeaderView else { return UICollectionReusableView() }
         
         if let item = presenter.data(at: indexPath.row) {
-            
             headerView.configure(withItem: item, presenter: presenter)
             
             isSelectStateActive ? headerView.hideRightButton() : headerView.showRightButton()
             
             presenter.compareMonthYear(item: item) ? headerView.hideLeftButton() : headerView.showLeftButton()
-
         }
-        
         return headerView
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if let item = presenter.data(at: indexPath.row - presenter.skipCount()) {
-            if presenter.checkDayAvailable(item: item) {
-                if !isSelectStateActive {
-                    
-                    presenter.didSelectCell(at: indexPath.row - presenter.skipCount())
-                    collectionView.deselectItem(at: indexPath, animated: false)
-                    
-                } else {
-                    
-                    if let cell = collectionView.cellForItem(at: indexPath) as? DayCell {
-                        cell.isSelected ? cell.setSelectedState() : cell.setUnselectedState()
-                        if collectionView.indexPathsForSelectedItems?.count != 0 {
-                            guard let items = self.toolbarItems else { return }
-                            items[2].isEnabled = true
-                            
-                        }
-                    }
-                }
-            }
+        guard
+            let item = presenter.data(at: indexPath.row - presenter.skipCount()),
+            presenter.checkDayAvailable(item: item)
+            else { return }
+        
+        if !isSelectStateActive {
+            presenter.didSelectCell(at: indexPath.row - presenter.skipCount())
+            collectionView.deselectItem(at: indexPath, animated: false)
+        } else {
+            guard
+                let cell = collectionView.cellForItem(at: indexPath) as? DayCell,
+                collectionView.indexPathsForSelectedItems?.count != 0,
+                let items = self.toolbarItems
+                else { return }
+            
+            cell.isSelected ? cell.setSelectedState() : cell.setUnselectedState()
+            items[2].isEnabled = true
         }
-        
-        
         
     }
     
@@ -272,6 +233,7 @@ extension MonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
     }
+    
 }
 
 extension MonthsVC: UICollectionViewDelegateFlowLayout {
@@ -328,11 +290,12 @@ extension MonthsVC: MonthViewUpdatable {
 extension MonthsVC: MonthViewRoutable {
     
     func routeWithItem(item day: DayRowItem) {
+        
         let dayVC = AdminHoursListVC()
         dayVC.day = day
         dayVC.admin = adminUser
-        
         self.navigationController?.pushViewController(dayVC, animated: true)
+        
     }
     
     func routeWithItems(items days: [DayRowItem]) {
@@ -357,8 +320,8 @@ extension MonthsVC: MonthViewPresentable {
             self?.navigationController?.setViewControllers([loadingVC], animated: false)
         }
         ac.addAction(action)
-
         present(ac, animated: true)
+        
     }
     
 }

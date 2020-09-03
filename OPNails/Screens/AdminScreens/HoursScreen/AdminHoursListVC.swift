@@ -32,7 +32,14 @@ protocol AdminHoursViewPresendable {
     
 }
 
-typealias AdminHoursViewable = AdminHoursViewUpdatable & AdminHoursViewRoutable & AdminHoursViewPresendable
+@objc protocol AdminHoursViewObservable {
+    
+    func setUser(notification: NSNotification)
+    func updateEditedEntry()
+    
+}
+
+typealias AdminHoursViewable = AdminHoursViewUpdatable & AdminHoursViewRoutable & AdminHoursViewPresendable & AdminHoursViewObservable
 
 class AdminHoursListVC: UIViewController {
     
@@ -54,8 +61,7 @@ class AdminHoursListVC: UIViewController {
         
         presenter.load()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(setUser), name: .userSelected, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateEditedEntry), name: .entriesEdited, object: nil)
+        presenter.addNotificationObservers()
         
     }
     
@@ -63,8 +69,7 @@ class AdminHoursListVC: UIViewController {
         super.viewWillDisappear(animated)
         
         presenter.cancel()
-        NotificationCenter.default.removeObserver(self, name: .entriesEdited, object: nil)
-        NotificationCenter.default.removeObserver(self, name: .userSelected, object: nil)
+        presenter.removeNotificationObservers()
         
     }
     
@@ -116,23 +121,6 @@ class AdminHoursListVC: UIViewController {
         
     }
     
-    @objc private func updateEditedEntry() {
-        
-        presenter.load()
-        
-    }
-    
-    @objc private func setUser(notification: NSNotification) {
-        
-        if let user = notification.userInfo?["user"] as? OPUser {
-            
-            if index != nil {
-                
-            presenter.setUserInEntry(index: index!, user: user)
-                
-            }
-        }
-    }
 }
 
 extension AdminHoursListVC: UITableViewDelegate, UITableViewDataSource {
@@ -153,10 +141,9 @@ extension AdminHoursListVC: UITableViewDelegate, UITableViewDataSource {
             cell.configure(with: day)
             
             presenter.checkCurrentUserRow(row: day) ? cell.selectedState() : cell.unselectedState()
-            
         }
-        
         return cell
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -189,15 +176,6 @@ extension AdminHoursListVC: AdminHoursViewRoutable {
         
         let usersVC = UsersVC(nibName: "UsersVC", bundle: nil)
         self.index = index
-        
-// MARK: - Some questions here
-        // PAssing data with blocks
-//        usersVC.onDoneBlock = { [weak self] result in
-//
-//            self?.presenter.setUserInEntry(index: index, user: result)
-//
-//        }
-        
         self.present(usersVC, animated: true)
         
     }
@@ -290,30 +268,51 @@ extension AdminHoursListVC: AdminHoursViewPresendable {
     
     func showClientShouldRemoveEntryTime() {
         
-            let title = "Oops.."
-            let message = "Cancel previous entry before set new entry!"
-            let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            let actionTitle = "OK"
-            let action = UIAlertAction(title: actionTitle, style: .cancel)
-            ac.addAction(action)
-            self.present(ac, animated: true)
+        let title = "Oops.."
+        let message = "Cancel previous entry before set new entry!"
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let actionTitle = "OK"
+        let action = UIAlertAction(title: actionTitle, style: .cancel)
+        ac.addAction(action)
+        self.present(ac, animated: true)
         
     }
     
     func showClientWillRemoveEntryTimeAC(index: Int) {
         
-            let title = "New entry"
-            let message = "Are you sure you want to cancel entry?"
-            let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
-            let actionTitle = "Yes"
-            let action = UIAlertAction(title: actionTitle, style: .default) { [weak self](action) in
-                self?.showLoadingAC()
-                self?.presenter.removeUserFromEntry(index: index)
-            }
-            let cancel = UIAlertAction(title: "No", style: .cancel, handler: nil)
-            ac.addAction(action)
-            ac.addAction(cancel)
-            self.present(ac, animated: true)
+        let title = "New entry"
+        let message = "Are you sure you want to cancel entry?"
+        let ac = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let actionTitle = "Yes"
+        let action = UIAlertAction(title: actionTitle, style: .default) { [weak self](action) in
+            self?.showLoadingAC()
+            self?.presenter.removeUserFromEntry(index: index)
+        }
+        let cancel = UIAlertAction(title: "No", style: .cancel, handler: nil)
+        ac.addAction(action)
+        ac.addAction(cancel)
+        self.present(ac, animated: true)
+        
+    }
+    
+}
+
+extension AdminHoursListVC: AdminHoursViewObservable {
+    
+    @objc func updateEditedEntry() {
+        
+        presenter.load()
+        
+    }
+    
+    @objc func setUser(notification: NSNotification) {
+        
+        guard
+            let user = notification.userInfo?["user"] as? OPUser,
+            let currentIndex = index
+            else { return }
+        
+        presenter.setUserInEntry(index: currentIndex, user: user)
         
     }
     

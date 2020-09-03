@@ -16,6 +16,7 @@ class LoadingVC: UIViewController {
         super.viewDidLoad()
         
         activityIndicator.startAnimating()
+        
     }
     
 }

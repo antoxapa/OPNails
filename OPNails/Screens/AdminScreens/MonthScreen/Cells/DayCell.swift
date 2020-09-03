@@ -28,7 +28,7 @@ class DayCell: UICollectionViewCell, ReusableView {
     }
     
     func setupRedView() {
-
+        
         eventView.isHidden = false
         eventView.backgroundColor = .red
         

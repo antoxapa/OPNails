@@ -10,8 +10,7 @@ import Foundation
 
 protocol UserPresenterModelUpdating {
     
-    
-    func changeProfileInfo(tag: Int, newValue: String, password: String)
+    func changeProfileInfo(option: ProfileInfoOption, newValue: String, password: String)
     
 }
 
@@ -39,9 +38,6 @@ class UserPresenter: PresenterLifecycle {
     
     func setup() {
         
-//        self.fireManager.reloadCurrentUser()
-        
-        
     }
     
     func load() {
@@ -68,9 +64,8 @@ extension UserPresenter: PresenterViewUpdating {
                 break
             }
         }
-        
         guard let user = user else { return }
-        guard let email = fireManager.returnFirUser()?.email else { return }
+        guard let email = fireManager.returnFirebaseUser()?.email else { return }
         view.update(user: user, email: email)
         
     }
@@ -78,11 +73,8 @@ extension UserPresenter: PresenterViewUpdating {
     func showErrorAC(text: String) {
         
         dismissAC()
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            
             self.view.showErrorAC(text: text)
-            
         }
         
     }
@@ -97,19 +89,17 @@ extension UserPresenter: PresenterViewUpdating {
 
 extension UserPresenter: UserPresenterModelUpdating {
     
-    func changeProfileInfo(tag: Int, newValue: String, password: String) {
+    func changeProfileInfo(option: ProfileInfoOption, newValue: String, password: String) {
         
-        switch tag {
-        case 0:
-            fireManager.changeUserName(name: newValue)
-        case 1:
-            fireManager.changeUserPhoneNumber(number: newValue)
-        case 2:
+        switch option {
+        case .username:
+            fireManager.changeUserName(to: newValue)
+        case .phoneNumber:
+            fireManager.changeUserPhoneNumber(to: newValue)
+        case .email:
             fireManager.changeEmail(newEmail: newValue, password: password)
-        case 3:
+        case .password:
             fireManager.changePassword(newPassword: newValue, oldPassword: password)
-        default:
-            print("error")
         }
         
     }
@@ -120,22 +110,20 @@ extension UserPresenter : UserPresenterRouting {
     
     func showEditAC(tag: Int) {
         
-        switch tag {
-        case 0:
-            let title = "full name"
-            view.showEditAC(title: title, tag: tag)
-        case 1:
-            let title = "phone number"
-            view.showEditAC(title: title, tag: tag)
-        case 2:
-            let title = "email"
-            view.showEditAC(title: title, tag: tag)
-        case 3:
-            let title = "password"
-            view.showEditAC(title: title, tag: tag)
-        default:
-            print("No tag")
+        guard let option = ProfileInfoOption(rawValue: tag) else { return }
+        var title: String
+        switch option {
+        case .username:
+            title = "full name"
+        case .phoneNumber:
+            title = "phone number"
+        case .email:
+            title = "email"
+        case .password:
+            title = "password"
         }
+        view.showEditAC(title: title, option: option)
+        
     }
     
     func logout() {

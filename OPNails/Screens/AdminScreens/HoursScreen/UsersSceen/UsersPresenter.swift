@@ -22,7 +22,7 @@ protocol UsersPresentereRouting {
     
 }
 
-typealias UsersPresenting = UsersPresenterTableViewPresenting & UsersPresentereRouting  & PresenterLifecycle & PresenterViewUpdating
+typealias UsersPresenting = UsersPresenterTableViewPresenting & UsersPresentereRouting & PresenterLifecycle & PresenterViewUpdating & PresenterViewNotificationSending
 
 class UsersPresenter: PresenterLifecycle {
     
@@ -53,24 +53,18 @@ class UsersPresenter: PresenterLifecycle {
         
     }
     
-
-    
 }
 
 extension UsersPresenter: PresenterViewUpdating {
     
     func update() {
         
-        users = fireManager.showUsers()
-        users.removeAll { (user) -> Bool in
-            user.uid == "0vehyLhByMgBDSJ9LbP02Uhyv4o2" 
-        }
+        users = fireManager.showUsers().filter { $0.uid != Constants.API.USER_ID  }
         view.reload()
         
     }
     
     func showErrorAC(text: String) {
-        
         
     }
     
@@ -108,6 +102,17 @@ extension UsersPresenter: UsersPresentereRouting {
     func pop(user: OPUser) {
         
         view.pop(user: user)
+        
+    }
+    
+}
+
+extension UsersPresenter: PresenterViewNotificationSending {
+    
+    func postNotification(info: [String : AnyObject]?) {
+        
+        guard let info = info else { return }
+        NotificationCenter.default.post(name: .userSelected, object: nil, userInfo: info)
         
     }
     

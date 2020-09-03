@@ -22,8 +22,8 @@ protocol UserViewRoutable {
 }
 
 protocol UserViewPresendable {
-
-    func showEditAC(title: String, tag: Int)
+    
+    func showEditAC(title: String, option: ProfileInfoOption)
     func showLoadingAC()
     func showErrorAC(text: String)
     
@@ -40,10 +40,8 @@ class UserAccountVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var logoutButton: UIButton! {
         didSet {
-            
             logoutButton.layer.cornerRadius = 10
             logoutButton.layer.masksToBounds = true
-            
         }
     }
     
@@ -74,24 +72,13 @@ class UserAccountVC: UIViewController, UITextFieldDelegate {
     
     private func setupViews() {
         
-        fullNameTF.delegate = self
-        emailTF.delegate = self
-        passwordTF.delegate = self
-        phoneNumberTF.delegate = self
-        
-        fullNameTF.textColor = .gray
-        fullNameTF.tag = 0
-        emailTF.textColor = .gray
-        emailTF.tag = 2
-        passwordTF.textColor = .gray
-        passwordTF.tag = 3
-        phoneNumberTF.textColor = .gray
-        phoneNumberTF.tag = 1
-        
-        addButton(to: fullNameTF)
-        addButton(to: emailTF)
-        addButton(to: passwordTF)
-        addButton(to: phoneNumberTF)
+        let textFields = [fullNameTF, emailTF, passwordTF, phoneNumberTF].compactMap { $0 }
+        for (index, field) in textFields.enumerated() {
+            field.delegate = self
+            field.textColor = .gray
+            field.tag = index
+            addButton(to: fullNameTF)
+        }
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationController?.setToolbarHidden(true, animated: false)
@@ -112,7 +99,7 @@ class UserAccountVC: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func edit(_ sender: UITextField) {
-
+        
         presenter.showEditAC(tag: sender.tag)
         
     }
@@ -167,7 +154,7 @@ extension UserAccountVC: UserViewRoutable {
 
 extension UserAccountVC: UserViewPresendable {
     
-    func showEditAC(title: String, tag: Int) {
+    func showEditAC(title: String, option: ProfileInfoOption) {
         
         let ac = UIAlertController(title: "Change \(title)", message: nil, preferredStyle: .alert)
         let actionTitle = "OK"
@@ -184,14 +171,14 @@ extension UserAccountVC: UserViewPresendable {
             self?.showLoadingAC()
             guard let textField = ac.textFields?.first, textField.text != "" else { return }
             guard let secondTextField = ac.textFields?.last, textField.text != "" else { return }
-            self?.presenter.changeProfileInfo(tag: tag, newValue: textField.text!, password: secondTextField.text!)
+            self?.presenter.changeProfileInfo(option: option, newValue: textField.text!, password: secondTextField.text!)
             
         }
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         ac.addAction(action)
         ac.addAction(cancel)
         self.present(ac, animated: true)
-
+        
     }
     
     func showLoadingAC() {
@@ -207,7 +194,6 @@ extension UserAccountVC: UserViewPresendable {
         
         activityIndicator.centerXAnchor.constraint(equalTo: alert.view.centerXAnchor, constant: 0).isActive = true
         activityIndicator.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -20).isActive = true
-        
         present(alert, animated: true)
         
     }
@@ -218,8 +204,8 @@ extension UserAccountVC: UserViewPresendable {
         let ac = UIAlertController(title: title, message: text, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler: nil)
         ac.addAction(action)
-
         present(ac, animated: true)
+        
     }
     
 }

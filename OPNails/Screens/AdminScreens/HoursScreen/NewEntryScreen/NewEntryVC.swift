@@ -18,7 +18,7 @@ protocol EntryViewPresenting {
     
     func currentDays() -> [DayRowItem]
     func currentDate() -> String?
-    func showAlert()
+    func showErrorAC(title: String?, message: String?)
     
 }
 
@@ -73,10 +73,11 @@ class NewEntryVC: UIViewController {
             presenter.addEntries(time: entryTime)
         } else {
             presenter.addNewEntry(time: entryTime)
-            NotificationCenter.default.post(name: .entriesEdited, object: nil)
+            presenter.postNotification(info: nil)
         }
         
     }
+    
 }
 
 extension NewEntryVC: EntryViewRoutable {
@@ -103,9 +104,9 @@ extension NewEntryVC: EntryViewPresenting {
         
     }
     
-    func showAlert() {
+    func showErrorAC(title: String?, message: String?) {
         
-        let ac = UIAlertController(title: "Current entry already exist", message: "", preferredStyle: .alert)
+        let ac = UIAlertController(title: title, message: nil, preferredStyle: .alert)
         let action = UIAlertAction(title: "OK", style: .default, handler: nil)
         ac.addAction(action)
         self.present(ac, animated: true)
@@ -114,8 +115,4 @@ extension NewEntryVC: EntryViewPresenting {
     
 }
 
-extension Notification.Name {
-    
-    static let entriesEdited = Notification.Name("entriesEdited")
-    
-}
+

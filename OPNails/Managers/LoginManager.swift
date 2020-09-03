@@ -13,7 +13,7 @@ import FirebaseDatabase
 class LoginManager {
     
     var presenter: LoginPresentable
-    var ref: DatabaseReference!
+    var ref: DatabaseReference?
     
     init(presenter: LoginPresentable) {
         
@@ -21,24 +21,18 @@ class LoginManager {
         
     }
     
-    
     func checkUserLogged() {
         
-        Auth.auth().addStateDidChangeListener { [weak self] (auth, user) in
-            if user != nil {
-                
-                self?.presenter.load()
-                
-            }
+        Auth.auth().addStateDidChangeListener { [weak self] (_, user) in
+            guard let _ = user else { return }
+            self?.presenter.load()
         }
+        
     }
     
     func checkAdminUser() -> Bool {
         
-        if Auth.auth().currentUser?.uid == "0vehyLhByMgBDSJ9LbP02Uhyv4o2" {
-            return true
-        }
-        return false
+        return Auth.auth().currentUser?.uid == Constants.API.USER_ID
         
     }
     
@@ -46,16 +40,11 @@ class LoginManager {
         
         Auth.auth().signIn(withEmail: email, password: password) { [weak self] (user, error) in
             if error != nil {
-                let title = "Oops!"
+                let title = "Error!"
                 self?.presenter.showErrorAC(withTitle: title, message: error!.localizedDescription)
+                return
             }
-            if user != nil {
-                self?.presenter.load()
-            } else {
-                let title = "Error"
-                let message = "No such user"
-                self?.presenter.showErrorAC(withTitle: title, message: message)
-            }
+            self?.presenter.load()
         }
         
     }
@@ -65,7 +54,7 @@ class LoginManager {
         do {
             try Auth.auth().signOut()
         } catch {
-            print(error.localizedDescription)
+            //TODO: Add code here
         }
         
     }
@@ -79,11 +68,12 @@ class LoginManager {
             }
             if user != nil {
                 self?.ref = Database.database().reference(withPath: "users")
-                let userRef = self?.ref.child((user?.user.uid)!)
+                let userRef = self?.ref?.child((user?.user.uid)!)
                 userRef?.setValue(["uid":user?.user.uid,"name":name, "phoneNumber":phoneNumber])
                 self?.presenter.routeToMainScreenAfterRegistration()
             }
         }
+        
     }
     
 }

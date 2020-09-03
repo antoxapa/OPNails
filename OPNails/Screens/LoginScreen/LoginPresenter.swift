@@ -10,7 +10,7 @@ import Foundation
 
 protocol LoginPresenting {
     
-    func signIn(email: String, password: String)
+    func signIn(email: String?, password: String?)
     func signOut()
     func registerUser(email: String, password: String, name: String, phoneNumber: String)
     func checkUserLogged()
@@ -19,6 +19,7 @@ protocol LoginPresenting {
     func hideLoadingAC()
     func showRegistrationErrorAC(withTitle title:String, message: String)
     func registrationDelegate(view: RegistrationViewable)
+    func checkTextValidation(email: String?, password: String?, name: String?, phoneNumber: String?)
     
 }
 
@@ -34,9 +35,9 @@ typealias LoginPresentable = PresenterLifecycle & LoginPresenting & LoginRoutabl
 
 class LoginPresenter: PresenterLifecycle {
     
-    private var view: LoginViewable
+    private weak var view: LoginViewable?
     private var loginManager: LoginManager?
-    private var registrationView: RegistrationViewable?
+    private weak var registrationView: RegistrationViewable?
     lazy private var fireManager = FirebaseManager(presenter: self)
     private var entries = [Entry]()
     
@@ -55,7 +56,7 @@ class LoginPresenter: PresenterLifecycle {
     
     func load() {
         
-        view.showLoadScreen()
+        view?.showLoadScreen()
         fireManager.downloadItems()
         
     }
@@ -80,7 +81,7 @@ extension LoginPresenter: PresenterViewUpdating {
     func showErrorAC(text: String) {
         
         let title = "Error"
-        view.showAlertController(withTitle: title, message: text)
+        view?.showAlertController(withTitle: title, message: text)
         
     }
     
@@ -96,13 +97,13 @@ extension LoginPresenter: LoginRoutable {
     func routeToMainScreen(admin: Bool, animated: Bool) {
         
         hideLoadingAC()
-        view.showMainScreen(admin: admin, animated: animated)
+        view?.showMainScreen(admin: admin, animated: animated)
         
     }
     
     func routeToRegisterScreen() {
         
-        view.showRegistration()
+        view?.showRegistration()
         
     }
     
@@ -116,8 +117,17 @@ extension LoginPresenter: LoginRoutable {
 
 extension LoginPresenter: LoginPresenting {
     
-    func signIn(email: String, password: String) {
+    func signIn(email: String?, password: String?) {
         
+        guard
+            let email = email, email != "",
+            let password = password, password != ""
+            else {
+                let title = "Ooops!"
+                let message = "Please enter correct login or password"
+                showErrorAC(withTitle: title, message: message)
+                return
+        }
         loginManager?.signIn(withEmail: email, password: password)
         
     }
@@ -142,7 +152,7 @@ extension LoginPresenter: LoginPresenting {
     
     func showErrorAC(withTitle title:String, message: String) {
         
-        view.showAlertController(withTitle: title, message: message)
+        view?.showAlertController(withTitle: title, message: message)
         
     }
     
@@ -169,5 +179,20 @@ extension LoginPresenter: LoginPresenting {
         registrationView = view
         
     }
+    
+    func checkTextValidation(email: String?, password: String?, name: String?, phoneNumber: String?) {
+        
+        guard email != nil, email != "", password != nil, password != "", name != nil, name != "", phoneNumber != nil, phoneNumber != "" else {
+            
+            let title = "Ooops!"
+            let message = "Please enter correct login or password"
+            showRegistrationErrorAC(withTitle: title, message: message)
+            return
+        }
+        showLoadingAC()
+        registerUser(email: email!, password: password!, name: name!, phoneNumber: phoneNumber!)
+        
+    }
+    
 }
 

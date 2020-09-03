@@ -23,6 +23,13 @@ protocol HoursPresentereRouting {
     
 }
 
+protocol PresenterViewObserving {
+    
+    func addNotificationObservers()
+    func removeNotificationObservers()
+    
+}
+
 protocol PresenterModelUpdating {
     
     func setCurrentUserInEntry(index: Int)
@@ -32,7 +39,7 @@ protocol PresenterModelUpdating {
     
 }
 
-typealias HoursPresenting = HoursPresenterTableViewPresenting & HoursPresentereRouting & PresenterLifecycle & PresenterViewUpdating & PresenterModelUpdating
+typealias HoursPresenting = HoursPresenterTableViewPresenting & HoursPresentereRouting & PresenterLifecycle & PresenterViewUpdating & PresenterModelUpdating & PresenterViewObserving
 
 class HoursPresenter: PresenterLifecycle {
     
@@ -52,41 +59,26 @@ class HoursPresenter: PresenterLifecycle {
     func setup() {
         
         let day = view.presentDay()
-        var workday = day.isWorkday
         date = "\(day.day)-\(day.monthNumber)-\(day.year)"
         satisfEntries = [EntryRowItem]()
         for entry in entries {
-            if entry.date == date {
-                workday = true
-                if fireManager.checkAdminUser() {
-                    if let user = fireManager.checkIsUserEntry(entry: entry)  {
-                        let newEntry = EntryRowItem(date: date, time: entry.time, user: user, isWorkday: false)
-                        satisfEntries.append(newEntry)
-                    } else {
-                        let newEntry = EntryRowItem(date: date, time: entry.time, user: nil, isWorkday: workday)
-                        satisfEntries.append(newEntry)
-                    }
-                } else {
-                    if let user = fireManager.checkIsUserEntry(entry: entry) {
-                        if user.uid == fireManager.returnCurrentUser()?.uid {
-                            let newEntry = EntryRowItem(date: date, time: entry.time, user: user, isWorkday: false)
-                            satisfEntries.append(newEntry)
-                        }
-                    } else {
-                        let newEntry = EntryRowItem(date: date, time: entry.time, user: nil, isWorkday: workday)
-                        satisfEntries.append(newEntry)
-                    }
-                }
+            guard entry.date == date else { continue }
+            
+            var user = fireManager.getEntryUser(entry: entry)
+            if !fireManager.isCurrentUserAdmin(), user?.uid != fireManager.returnCurrentUser()?.uid {
+                user = nil
             }
+            let newEntry = EntryRowItem(date: date, time: entry.time, user: user, isWorkday: user != nil)
+            satisfEntries.append(newEntry)
         }
+        
     }
-    
     
     func load() {
         
         fireManager.downloadItems()
         fireManager.downloadUsers()
-        fireManager.getCurrentUser()
+        fireManager.updateCurrentUser()
         
     }
     
@@ -95,8 +87,6 @@ class HoursPresenter: PresenterLifecycle {
         fireManager.removeObservers()
         
     }
-    
-
     
 }
 
@@ -138,45 +128,26 @@ extension HoursPresenter: HoursPresenterTableViewPresenting {
     
     func didSelectCell(at row: Int) {
         
-        if fireManager.checkAdminUser() {
-            
-            if satisfEntries[row].user?.uid != nil {
-                
-                view.showRemoveUserFromEntryAC(index: row)
-                
-            } else {
-
-                view.showUsers(index: row)
-                
-            }
-            
+        if fireManager.isCurrentUserAdmin() {
+            satisfEntries[row].user?.uid != nil ? view.showRemoveUserFromEntryAC(index: row) : view.showUsers(index: row)
         } else if satisfEntries[row].user?.uid == fireManager.returnCurrentUser()?.uid {
             
             view.showClientWillRemoveEntryTimeAC(index: row)
             
-        } else if satisfEntries.contains(where: { (entry) -> Bool in
-            
-            entry.user?.uid == fireManager.returnCurrentUser()?.uid
-            
-        }) {
-            
-            view.showClientShouldRemoveEntryTime()
-            
         } else {
             
-            view.showSignInEntryUserAC(index: row)
+            satisfEntries.contains(where: { (entry) -> Bool in
+                entry.user?.uid == fireManager.returnCurrentUser()?.uid
+                
+            }) ? view.showClientShouldRemoveEntryTime() : view.showSignInEntryUserAC(index: row)
             
         }
+        
     }
     
     func checkCurrentUserRow(row: EntryRowItem) -> Bool {
         
-        if row.user?.uid == fireManager.returnCurrentUser()?.uid {
-            
-            return true
-            
-        }
-        return false
+        return row.user?.uid == fireManager.returnCurrentUser()?.uid
         
     }
     
@@ -205,7 +176,7 @@ extension HoursPresenter: PresenterModelUpdating {
     func setUserInEntry(index: Int, user: OPUser) {
         
         let entry = satisfEntries[index]
-        fireManager.addUserToEntry(entry: entry, user: user)
+        fireManager.add(user: user, to: entry)
         fireManager.downloadItems()
         
     }
@@ -213,7 +184,7 @@ extension HoursPresenter: PresenterModelUpdating {
     func removeUserFromEntry(index: Int) {
         
         let entry = satisfEntries[index]
-        fireManager.removeUserFromEntry(entry: entry)
+        fireManager.removeUser(fromEntry: entry)
         fireManager.downloadItems()
         
     }
@@ -221,8 +192,26 @@ extension HoursPresenter: PresenterModelUpdating {
     func removeEntry(index: Int) {
         
         let entry = satisfEntries[index]
-        fireManager.removeEntry(entry: entry)
+        fireManager.removeEntry(entry)
         fireManager.downloadItems()
+        
+    }
+    
+}
+
+extension HoursPresenter: PresenterViewObserving {
+    
+    func addNotificationObservers() {
+        
+        NotificationCenter.default.addObserver(view, selector: #selector(view.setUser(notification:)), name: .userSelected, object: nil)
+        NotificationCenter.default.addObserver(view, selector: #selector(view.updateEditedEntry), name: .entriesEdited, object: nil)
+        
+    }
+    
+    func removeNotificationObservers() {
+        
+        NotificationCenter.default.removeObserver(view, name: .entriesEdited, object: nil)
+        NotificationCenter.default.removeObserver(view, name: .userSelected, object: nil)
         
     }
     

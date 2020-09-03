@@ -29,21 +29,16 @@ class FirebaseManager {
         
         Auth.auth().currentUser?.reload(completion: { [weak self] (error) in
             if error != nil {
-                
                 self?.presenter.showErrorAC(text: error!.localizedDescription)
                 return
-            
             }
         })
         
     }
     
-    func checkAdminUser() -> Bool {
+    func isCurrentUserAdmin() -> Bool {
         
-        if Auth.auth().currentUser?.uid == "0vehyLhByMgBDSJ9LbP02Uhyv4o2" {
-            return true
-        }
-        return false
+        return Auth.auth().currentUser?.uid == Constants.API.USER_ID
         
     }
     
@@ -85,7 +80,6 @@ class FirebaseManager {
         }
         if userRef != nil {
             userRef.removeAllObservers()
-            
         }
         
     }
@@ -102,7 +96,7 @@ class FirebaseManager {
         
     }
     
-    func getCurrentUser() {
+    func updateCurrentUser() {
         
         guard let currentUser = Auth.auth().currentUser else { return }
         user = OPUser(user: currentUser)
@@ -117,14 +111,14 @@ class FirebaseManager {
         
     }
     
-    func returnFirUser() -> User? {
+    func returnFirebaseUser() -> User? {
         
         guard let user = Auth.auth().currentUser else { return nil }
         return user
         
     }
     
-    func checkIsUserEntry(entry: Entry) -> OPUser? {
+    func getEntryUser(entry: Entry) -> OPUser? {
         
         for item in users {
             if item.uid == entry.userId {
@@ -135,7 +129,7 @@ class FirebaseManager {
         
     }
     
-    func checkUsersUid() -> Bool {
+    func containsCurrentUser() -> Bool {
         
         for user in users {
             if user.uid == returnCurrentUser()?.uid {
@@ -154,7 +148,7 @@ class FirebaseManager {
         
     }
     
-    func removeUserFromEntry(entry: EntryRowItem) {
+    func removeUser(fromEntry entry: EntryRowItem) {
         
         let entryString = "\(entry.date) \(entry.time)"
         var newEntry = entry
@@ -168,7 +162,7 @@ class FirebaseManager {
         
     }
     
-    func removeEntry(entry: EntryRowItem) {
+    func removeEntry(_ entry: EntryRowItem) {
         
         let entryString = "\(entry.date) \(entry.time)"
         ref = Database.database().reference(withPath: "entries").child(entryString)
@@ -176,7 +170,7 @@ class FirebaseManager {
         
     }
     
-    func addUserToEntry(entry: EntryRowItem, user: OPUser) {
+    func add(user: OPUser, to entry: EntryRowItem) {
         
         let entryString = "\(entry.date) \(entry.time)"
         var newEntry = entry
@@ -207,119 +201,81 @@ class FirebaseManager {
     func signOut() {
         
         do {
-            
             try Auth.auth().signOut()
-            
         } catch {
-            
             presenter.showErrorAC(text: error.localizedDescription)
-            
         }
         
     }
     
     func changePassword(newPassword: String, oldPassword: String) {
         
-//        guard let currentEmail = returnCurrentUser()?.email else { return }
         guard let currentEmail = Auth.auth().currentUser?.email else { return }
         let credential = EmailAuthProvider.credential(withEmail: currentEmail, password: oldPassword)
         
         Auth.auth().currentUser?.reauthenticate(with: credential, completion: { [weak self] (result, error) in
-            
             if error != nil {
-                
                 guard let text = error?.localizedDescription else { return }
                 self?.presenter.showErrorAC(text: text)
-                
                 return
-                
             }
             
-            Auth.auth().currentUser?.updatePassword(to: newPassword, completion: { (error) in
-                
+            Auth.auth().currentUser?.updatePassword(to: newPassword) { (error) in
                 if error != nil {
-                    
                     guard let text = error?.localizedDescription else { return }
                     self?.presenter.showErrorAC(text: text)
-                    
                     return
-
                 }
-                
                 self?.presenter.update()
-            })
+            }
         })
         
     }
     
     func changeEmail(newEmail: String, password: String) {
         
-//        guard let currentEmail = returnCurrentUser()?.email else { return }
         guard let currentEmail = Auth.auth().currentUser?.email else { return }
         let credential = EmailAuthProvider.credential(withEmail: currentEmail, password: password)
         
         Auth.auth().currentUser?.reauthenticate(with: credential, completion: { [weak self] (result, error) in
-            
             if error != nil {
-                
                 guard let text = error?.localizedDescription else { return }
                 self?.presenter.showErrorAC(text: text)
-                
                 return
-                
             }
             
-            Auth.auth().currentUser?.updateEmail(to: newEmail, completion: { (error) in
-                
+            Auth.auth().currentUser?.updateEmail(to: newEmail) { (error) in
                 if error != nil {
-                    
                     guard let text = error?.localizedDescription else { return }
                     self?.presenter.showErrorAC(text: text)
-                    
                     return
-
                 }
-                else {
-                    
-//                    if self?.checkUsersUid() ?? false {
-//
-//                                let uid = Auth.auth().currentUser!.uid
-//                                let thisUserRef = self?.userRef.child(uid)
-//                                let thisUserEmailRef = thisUserRef?.child("email")
-//                                thisUserEmailRef?.setValue(newEmail)
-//
-//                    }
-                    self?.presenter.update()
-                }
-            })
+                self?.presenter.update()
+            }
         })
+        
     }
     
-    func changeUserName(name: String) {
+    func changeUserName(to name: String) {
         
-        if checkUsersUid() {
-            
+        if containsCurrentUser() {
             let uid = Auth.auth().currentUser!.uid
             let thisUserRef = self.userRef.child(uid)
             let thisUserEmailRef = thisUserRef.child("name")
             thisUserEmailRef.setValue(name)
-            
         }
         presenter.update()
         
     }
     
-    func changeUserPhoneNumber(number: String) {
+    func changeUserPhoneNumber(to number: String) {
         
-        if checkUsersUid() {
-            
+        if containsCurrentUser() {
             let uid = Auth.auth().currentUser!.uid
             let thisUserRef = self.userRef.child(uid)
             let thisUserEmailRef = thisUserRef.child("phoneNumber")
             thisUserEmailRef.setValue(number)
-            
         }
-        
         presenter.update()
         
     }

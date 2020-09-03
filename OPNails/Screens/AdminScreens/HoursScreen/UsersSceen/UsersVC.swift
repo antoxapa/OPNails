@@ -20,11 +20,6 @@ protocol UsersViewRoutable {
     
 }
 
-protocol UsersViewPresendable {
-    
-    
-}
-
 typealias UsersViewable = UsersViewUpdatable & UsersViewRoutable
 
 class UsersVC: UIViewController {
@@ -33,17 +28,12 @@ class UsersVC: UIViewController {
     @IBOutlet weak var usersTableView: UITableView!
     @IBOutlet weak var emptyLabel: UILabel! {
         didSet {
-            
             emptyLabel.alpha = 0.4
             emptyLabel.text = "No users"
-            
         }
     }
     
     lazy var presenter: UsersPresenter = UsersPresenter(view: self)
-    
-//    block here
-//    var onDoneBlock : ((OPUser) -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -62,13 +52,13 @@ class UsersVC: UIViewController {
         usersTableView.tableFooterView = UIView(frame: .zero)
         
     }
-
+    
 }
 
 extension UsersVC: UsersViewUpdatable {
     
     func reload() {
-         
+        
         usersTableView.reloadData()
         
     }
@@ -78,13 +68,10 @@ extension UsersVC: UsersViewUpdatable {
 extension UsersVC: UsersViewRoutable {
     
     func pop(user: OPUser) {
-
-//        block here
-//        onDoneBlock!(user)
         
-        NotificationCenter.default.post(name: .userSelected, object: nil, userInfo: ["user" : user])
+        presenter.postNotification(info: ["user": user])
         self.dismiss(animated: true, completion: nil)
-
+        
     }
     
 }
@@ -126,11 +113,3 @@ extension UsersVC: UITableViewDelegate, UITableViewDataSource {
     }
     
 }
-
-extension Notification.Name {
-    
-    static let userSelected = Notification.Name("userSelected")
-    
-}
-
-

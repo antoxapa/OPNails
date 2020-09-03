@@ -21,11 +21,13 @@ extension ReusableView where Self: UICollectionViewCell {
     static var nibName: String {
         
         return String(describing: Self.self)
+        
     }
     
     static var defaultReusableIdentifier: String {
         
         return String(describing: Self.self)
+        
     }
 }
 
@@ -34,11 +36,13 @@ extension ReusableView where Self: UICollectionReusableView {
     static var nibName: String {
         
         return String(describing: Self.self)
+        
     }
     
     static var defaultReusableIdentifier: String {
         
         return String(describing: Self.self)
+        
     }
     
 }
