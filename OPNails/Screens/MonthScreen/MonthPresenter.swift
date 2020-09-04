@@ -31,7 +31,13 @@ protocol MonthPresenterHeaderViewUpdating {
     
 }
 
-typealias MonthPresenting = MonthPresenterCollectionViewPresenting & MonthPresenterHeaderViewUpdating & PresenterLifecycle & PresenterViewUpdating
+protocol MonthPresenterRouting {
+    
+    func showPriceList()
+    
+}
+
+typealias MonthPresenting = MonthPresenterCollectionViewPresenting & MonthPresenterHeaderViewUpdating & PresenterLifecycle & PresenterViewUpdating & MonthPresenterRouting
 
 final class MonthPresenter: PresenterLifecycle {
     
@@ -263,4 +269,13 @@ extension MonthPresenter: MonthPresenterHeaderViewUpdating {
         
     }
     
+}
+
+extension MonthPresenter: MonthPresenterRouting {
+    
+    func showPriceList() {
+        
+        view.showPriceList()
+        
+    }
 }

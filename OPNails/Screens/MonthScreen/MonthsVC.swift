@@ -78,7 +78,6 @@ class MonthsVC: UIViewController {
         
     }
     
-    
     private func setupNavBar() {
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -94,8 +93,11 @@ class MonthsVC: UIViewController {
     
     private func setupToolBar() {
         
-        let today = UIBarButtonItem(title: "Today", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.showToday))
-        self.setToolbarItems([today], animated: true)
+        let today = UIBarButtonItem(title: "Today", style: .plain, target: self, action: #selector(self.showToday))
+        let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+        let instagram = UIBarButtonItem(image: UIImage(named: "insta"), style: .plain, target: self, action: #selector(self.showInstagramPage))
+        let pricelist = UIBarButtonItem(title: "Price list", style: .plain, target: self, action: #selector(showPrice))
+        self.setToolbarItems([today,spacer,pricelist,spacer,instagram], animated: true)
         self.navigationController?.setToolbarHidden(false, animated: false)
         
     }
@@ -113,6 +115,12 @@ class MonthsVC: UIViewController {
         
     }
     
+    @objc private func showPrice() {
+        
+        presenter.showPriceList()
+        
+    }
+    
     @objc private func addEntries() {
         
         isSelectStateActive = !isSelectStateActive
@@ -124,7 +132,10 @@ class MonthsVC: UIViewController {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.cancel, target: self, action: #selector(self.addEntries))
         } else {
             let today = UIBarButtonItem(title: "Today", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.showToday))
-            self.setToolbarItems([today], animated: true)
+            let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
+            let instagram = UIBarButtonItem(image: UIImage(named: "insta"), style: .plain, target: self, action: #selector(self.showInstagramPage))
+            let pricelist = UIBarButtonItem(title: "Price list", style: .plain, target: self, action: #selector(showPrice))
+            self.setToolbarItems([today,spacer,pricelist,spacer,instagram], animated: true)
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(self.addEntries))
         }
         presenter.reloadView()
@@ -135,6 +146,15 @@ class MonthsVC: UIViewController {
         
         let usersAccount = UserAccountVC(nibName: "UserAccountVC", bundle: nil)
         navigationController?.pushViewController(usersAccount, animated: true)
+        
+    }
+    
+    @objc private func showInstagramPage() {
+        
+        if let url = URL(string: "https://www.instagram.com/olganail_by/"),
+            UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url, options: [:])
+        }
         
     }
     
@@ -311,6 +331,13 @@ extension MonthsVC: MonthViewRoutable {
         entryVC.days = days
         addEntries()
         self.present(entryVC, animated: true)
+        
+    }
+    
+    func showPriceList() {
+        
+        let priceListVC = PricelistVC(nibName: "PricelistVC", bundle: nil)
+        self.navigationController?.pushViewController(priceListVC, animated: true)
         
     }
     

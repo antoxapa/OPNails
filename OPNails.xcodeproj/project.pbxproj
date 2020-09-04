@@ -47,6 +47,8 @@
 		06BD9D6324FFD08D0071355C /* DateExtensionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06BD9D6224FFD08D0071355C /* DateExtensionTests.swift */; };
 		06BD9D6624FFD10C0071355C /* Date+NewFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06BD9D6524FFD10C0071355C /* Date+NewFunctions.swift */; };
 		06BD9D68250128770071355C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06BD9D67250128770071355C /* Constants.swift */; };
+		06BD9D6B250294FC0071355C /* PricelistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06BD9D69250294FC0071355C /* PricelistVC.swift */; };
+		06BD9D6C250294FC0071355C /* PricelistVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06BD9D6A250294FC0071355C /* PricelistVC.xib */; };
 		06C23C1524F19829000FF475 /* MonthViewProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C23C1424F19829000FF475 /* MonthViewProtocols.swift */; };
 		06C23C1A24F29921000FF475 /* DayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06C23C1824F29921000FF475 /* DayCell.xib */; };
 		06C23C1B24F29921000FF475 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06C23C1924F29921000FF475 /* EmptyCell.xib */; };
@@ -116,6 +118,8 @@
 		06BD9D6224FFD08D0071355C /* DateExtensionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExtensionTests.swift; sourceTree = "<group>"; };
 		06BD9D6524FFD10C0071355C /* Date+NewFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+NewFunctions.swift"; sourceTree = "<group>"; };
 		06BD9D67250128770071355C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		06BD9D69250294FC0071355C /* PricelistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricelistVC.swift; sourceTree = "<group>"; };
+		06BD9D6A250294FC0071355C /* PricelistVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PricelistVC.xib; sourceTree = "<group>"; };
 		06C23C1424F19829000FF475 /* MonthViewProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthViewProtocols.swift; sourceTree = "<group>"; };
 		06C23C1824F29921000FF475 /* DayCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DayCell.xib; sourceTree = "<group>"; };
 		06C23C1924F29921000FF475 /* EmptyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
@@ -214,21 +218,13 @@
 			path = OPNailsTests;
 			sourceTree = "<group>";
 		};
-		0696468A24E95A77008109E9 /* AdminScreens */ = {
-			isa = PBXGroup;
-			children = (
-				0696468B24E95A85008109E9 /* MonthScreen */,
-				069646A424EB0959008109E9 /* HoursScreen */,
-			);
-			path = AdminScreens;
-			sourceTree = "<group>";
-		};
 		0696468B24E95A85008109E9 /* MonthScreen */ = {
 			isa = PBXGroup;
 			children = (
 				0638E4AD24E9211A006A5956 /* MonthPresenter.swift */,
 				0638E4AF24E925CF006A5956 /* MonthsVC.swift */,
 				06A26E4E24FBCDB500E13F2C /* UserAccountScreen */,
+				06BD9D6F2502A4790071355C /* PricelistScreen */,
 				0696468C24E95A92008109E9 /* Cells */,
 				0696469924E9A13C008109E9 /* Views */,
 			);
@@ -352,12 +348,22 @@
 			path = Protocols;
 			sourceTree = "<group>";
 		};
+		06BD9D6F2502A4790071355C /* PricelistScreen */ = {
+			isa = PBXGroup;
+			children = (
+				06BD9D69250294FC0071355C /* PricelistVC.swift */,
+				06BD9D6A250294FC0071355C /* PricelistVC.xib */,
+			);
+			path = PricelistScreen;
+			sourceTree = "<group>";
+		};
 		06C23C0F24F194A2000FF475 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				063501C624F547180044923A /* LoadingVC */,
 				06DF79FF24EFF89C001F7FF1 /* LoginScreen */,
-				0696468A24E95A77008109E9 /* AdminScreens */,
+				063501C624F547180044923A /* LoadingVC */,
+				0696468B24E95A85008109E9 /* MonthScreen */,
+				069646A424EB0959008109E9 /* HoursScreen */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -500,6 +506,7 @@
 				069646B524EBE314008109E9 /* NewEntryVC.xib in Resources */,
 				0696469824E99B97008109E9 /* MonthNameHeaderView.xib in Resources */,
 				063501D524FAD4250044923A /* UserCell.xib in Resources */,
+				06BD9D6C250294FC0071355C /* PricelistVC.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -605,6 +612,7 @@
 				0696468924E955BF008109E9 /* Appearance.swift in Sources */,
 				0675DBA124E91C6600F3D65E /* AppDelegate.swift in Sources */,
 				0638E4B124E925CF006A5956 /* MonthsVC.swift in Sources */,
+				06BD9D6B250294FC0071355C /* PricelistVC.swift in Sources */,
 				0696469024E95C04008109E9 /* DateManager.swift in Sources */,
 				06DF79F924EE8F51001F7FF1 /* LoginVC.swift in Sources */,
 				0696469724E99B97008109E9 /* MonthNameHeaderView.swift in Sources */,
@@ -652,6 +660,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -712,6 +721,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
