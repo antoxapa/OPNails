@@ -30,15 +30,16 @@ protocol EntryUpdating {
 
 typealias EntryPresenting = EntryRouting & EntryUpdating & PresenterLifecycle & PresenterViewNotificationSending
 
-class EntryPresenter: PresenterLifecycle {
+final class EntryPresenter: PresenterLifecycle {
     
     private var view: NewEntryViewable
-    lazy private var fireManager: FirebaseManager = FirebaseManager(presenter: self)
+    private var fireManager: FirebaseManaging
     var entries = [Entry]()
     
     init(view: NewEntryViewable) {
         
         self.view = view
+        fireManager = FirebaseManager()
         setup()
         
     }
@@ -51,7 +52,9 @@ class EntryPresenter: PresenterLifecycle {
     
     func load() {
         
-        fireManager.downloadItems()
+        fireManager.downloadItems {
+            self.update()
+        }
         
     }
     

@@ -33,31 +33,31 @@ protocol LoginRoutable {
 
 typealias LoginPresentable = PresenterLifecycle & LoginPresenting & LoginRoutable & PresenterViewUpdating
 
-class LoginPresenter: PresenterLifecycle {
+final class LoginPresenter: PresenterLifecycle {
     
     private weak var view: LoginViewable?
-    private var loginManager: LoginManager?
     private weak var registrationView: RegistrationViewable?
-    lazy private var fireManager = FirebaseManager(presenter: self)
+    private var fireManager: FirebaseManaging
     private var entries = [Entry]()
     
     init(view: LoginViewable) {
         
         self.view = view
+        fireManager = FirebaseManager()
         setup()
         
     }
     
     func setup() {
         
-        loginManager = LoginManager(presenter: self)
-        
     }
     
     func load() {
         
         view?.showLoadScreen()
-        fireManager.downloadItems()
+        fireManager.downloadItems {
+            self.update()
+        }
         
     }
     
@@ -73,7 +73,7 @@ extension LoginPresenter: PresenterViewUpdating {
     
     func update() {
         
-        guard let admin = loginManager?.checkAdminUser() else { return }
+        let admin = fireManager.isCurrentUserAdmin()
         routeToMainScreen(admin: admin, animated: false)
         
     }
@@ -109,7 +109,9 @@ extension LoginPresenter: LoginRoutable {
     
     func routeToMainScreenAfterRegistration() {
         
-        fireManager.downloadItems()
+        fireManager.downloadItems {
+            self.update()
+        }
         
     }
     
@@ -128,25 +130,48 @@ extension LoginPresenter: LoginPresenting {
                 showErrorAC(withTitle: title, message: message)
                 return
         }
-        loginManager?.signIn(withEmail: email, password: password)
+        
+        fireManager.signIn(withEmail: email, password: password, completion: {
+            
+            self.load()
+            
+        }, onError: { (error) in
+            
+            let title = "Error!"
+            self.showErrorAC(withTitle: title, message: error.localizedDescription)
+            
+        })
         
     }
     
     func signOut() {
         
-        loginManager?.signOut()
+        fireManager.signOut { (error) in
+            self.showErrorAC(text: error.localizedDescription)
+        }
         
     }
     
     func registerUser(email: String, password: String, name: String, phoneNumber: String) {
         
-        loginManager?.registerUser(withEmail: email, password: password, name: name, phoneNumber: phoneNumber)
+        fireManager.registerUser(withEmail: email, password: password, name: name, phoneNumber: phoneNumber, completion: {
+            
+            self.routeToMainScreenAfterRegistration()
+            
+        }, onError: { (error) in
+            
+            self.hideLoadingAC()
+            self.showRegistrationErrorAC(withTitle: "Error", message: error.localizedDescription)
+            
+        })
         
     }
     
     func checkUserLogged() {
         
-        loginManager?.checkUserLogged()
+        fireManager.checkUserLogged {
+            self.load()
+        }
         
     }
     

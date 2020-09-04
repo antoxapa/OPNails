@@ -24,15 +24,16 @@ protocol UsersPresentereRouting {
 
 typealias UsersPresenting = UsersPresenterTableViewPresenting & UsersPresentereRouting & PresenterLifecycle & PresenterViewUpdating & PresenterViewNotificationSending
 
-class UsersPresenter: PresenterLifecycle {
+final class UsersPresenter: PresenterLifecycle {
     
-    private lazy var fireManager = FirebaseManager(presenter: self)
+    private var fireManager: FirebaseManaging
     private var view: UsersViewable
     private var users = [OPUser]()
     
     init(view: UsersViewable) {
         
         self.view = view
+        fireManager = FirebaseManager()
         
     }
     
@@ -43,7 +44,9 @@ class UsersPresenter: PresenterLifecycle {
     
     func load() {
         
-        fireManager.downloadUsers()
+        fireManager.downloadUsers {
+            self.update()
+        }
         
     }
     

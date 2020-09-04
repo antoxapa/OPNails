@@ -43,6 +43,13 @@ class MonthsVC: UIViewController {
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        presenter.cancel()
+        
+    }
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         
         monthsCollectionView.collectionViewLayout.invalidateLayout()
@@ -154,12 +161,12 @@ extension MonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
             
             if presenter.checkDayAvailable(item: item) {
                 isSelectStateActive ? cell.selectModeActivate() : cell.selectModeDeactivate()
-                
                 presenter.compare(item: item) ? cell.setupToday() : cell.setupDefault()
-                
                 presenter.checkClientEntryDay(item: item) ? cell.setupGreenView() : item.isWorkday == true ? cell.setupRedView() : cell.setupEventViewHidden()
             } else {
+                
                 cell.setDisable()
+                
             }
             cell.configure(withItem: item)
         }

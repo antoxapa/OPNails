@@ -41,9 +41,9 @@ protocol PresenterModelUpdating {
 
 typealias HoursPresenting = HoursPresenterTableViewPresenting & HoursPresentereRouting & PresenterLifecycle & PresenterViewUpdating & PresenterModelUpdating & PresenterViewObserving
 
-class HoursPresenter: PresenterLifecycle {
+final class HoursPresenter: PresenterLifecycle {
     
-    private lazy var fireManager = FirebaseManager(presenter: self)
+    private var fireManager: FirebaseManaging
     private var view: AdminHoursViewable
     var entries = [Entry]()
     var users = [OPUser]()
@@ -52,6 +52,7 @@ class HoursPresenter: PresenterLifecycle {
     
     init(view: AdminHoursViewable) {
         
+        fireManager = FirebaseManager()
         self.view = view
         
     }
@@ -76,8 +77,12 @@ class HoursPresenter: PresenterLifecycle {
     
     func load() {
         
-        fireManager.downloadItems()
-        fireManager.downloadUsers()
+        fireManager.downloadItems {
+            self.update()
+        }
+        fireManager.downloadUsers {
+            self.update()
+        }
         fireManager.updateCurrentUser()
         
     }
@@ -169,7 +174,9 @@ extension HoursPresenter: PresenterModelUpdating {
         
         let entry = satisfEntries[index]
         fireManager.updateEntryWithUser(entry: entry)
-        fireManager.downloadItems()
+        fireManager.downloadItems {
+            self.update()
+        }
         
     }
     
@@ -177,7 +184,9 @@ extension HoursPresenter: PresenterModelUpdating {
         
         let entry = satisfEntries[index]
         fireManager.add(user: user, to: entry)
-        fireManager.downloadItems()
+        fireManager.downloadItems {
+            self.update()
+        }
         
     }
     
@@ -185,7 +194,9 @@ extension HoursPresenter: PresenterModelUpdating {
         
         let entry = satisfEntries[index]
         fireManager.removeUser(fromEntry: entry)
-        fireManager.downloadItems()
+        fireManager.downloadItems {
+            self.update()
+        }
         
     }
     
@@ -193,7 +204,9 @@ extension HoursPresenter: PresenterModelUpdating {
         
         let entry = satisfEntries[index]
         fireManager.removeEntry(entry)
-        fireManager.downloadItems()
+        fireManager.downloadItems {
+            self.update()
+        }
         
     }
     

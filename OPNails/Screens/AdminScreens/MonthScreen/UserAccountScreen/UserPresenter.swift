@@ -23,15 +23,16 @@ protocol UserPresenterRouting {
 
 typealias UserPresenting = PresenterLifecycle & PresenterViewUpdating & UserPresenterModelUpdating & UserPresenterRouting
 
-class UserPresenter: PresenterLifecycle {
+final class UserPresenter: PresenterLifecycle {
     
-    private lazy var fireManager = FirebaseManager(presenter: self)
+    private var fireManager: FirebaseManaging
     private var view: UserViewable
     private var user: OPUser?
     private var editable: Bool = false
     
     init(view: UserViewable) {
         
+        fireManager = FirebaseManager()
         self.view = view
         
     }
@@ -42,7 +43,9 @@ class UserPresenter: PresenterLifecycle {
     
     func load() {
         
-        fireManager.downloadUsers()
+        fireManager.downloadUsers {
+            self.update()
+        }
         
     }
     
@@ -58,7 +61,7 @@ extension UserPresenter: PresenterViewUpdating {
     
     func update() {
         
-        for user in fireManager.users {
+        for user in fireManager.showUsers(){
             if user.uid == fireManager.returnCurrentUser()?.uid {
                 self.user = user
                 break
@@ -93,13 +96,47 @@ extension UserPresenter: UserPresenterModelUpdating {
         
         switch option {
         case .username:
-            fireManager.changeUserName(to: newValue)
+            
+            fireManager.changeUserName(to: newValue) {
+                
+                self.update()
+                
+            }
+            
         case .phoneNumber:
-            fireManager.changeUserPhoneNumber(to: newValue)
+            
+            fireManager.changeUserPhoneNumber(to: newValue) {
+                
+                self.update()
+                
+            }
+            
         case .email:
-            fireManager.changeEmail(newEmail: newValue, password: password)
+            
+            fireManager.changeEmail(newEmail: newValue, password: password, completion: {
+                
+                self.update()
+                
+            }) { (error) in
+                
+                guard let text = error?.localizedDescription else { return }
+                self.showErrorAC(text: text)
+                
+            }
+            
         case .password:
-            fireManager.changePassword(newPassword: newValue, oldPassword: password)
+            
+            fireManager.changePassword(newPassword: newValue, oldPassword: password, completion: {
+                
+                self.update()
+                
+            }) { (error) in
+                
+                guard let text = error?.localizedDescription else { return }
+                self.showErrorAC(text: text)
+                
+            }
+            
         }
         
     }
@@ -128,7 +165,9 @@ extension UserPresenter : UserPresenterRouting {
     
     func logout() {
         
-        fireManager.signOut()
+        fireManager.signOut { (error) in
+            self.showErrorAC(text: error.localizedDescription)
+        }
         view.pop()
         
     }

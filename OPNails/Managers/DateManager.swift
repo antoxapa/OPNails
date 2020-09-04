@@ -8,20 +8,7 @@
 
 import Foundation
 
-public struct Today {
-    
-    public static let todayDate = Date().toLocalTime()
-    
-}
-
-public enum WeekStartDay {
-    
-    case monday
-    case sunday
-    
-}
-
-class DateManager {
+final class DateManager {
     
     private var currentMonth: Date = Today.todayDate
     private var monthModel: [CalendarMonth] = []

@@ -33,12 +33,12 @@ protocol MonthPresenterHeaderViewUpdating {
 
 typealias MonthPresenting = MonthPresenterCollectionViewPresenting & MonthPresenterHeaderViewUpdating & PresenterLifecycle & PresenterViewUpdating
 
-class MonthPresenter: PresenterLifecycle {
+final class MonthPresenter: PresenterLifecycle {
     
     private var view: MonthViewable
     private var header: HeaderMonthViewUpdatable?
     private var dateManager: DateManager
-    lazy private var fireManager = FirebaseManager(presenter: self)
+    private var fireManager: FirebaseManaging
     private var monthModels: [CalendarMonth]
     private var entries: [Entry]?
     private var users: [OPUser]?
@@ -46,6 +46,7 @@ class MonthPresenter: PresenterLifecycle {
     init(view: MonthViewable) {
         
         self.view = view
+        fireManager = FirebaseManager()
         dateManager = DateManager()
         monthModels = []
         
@@ -53,7 +54,10 @@ class MonthPresenter: PresenterLifecycle {
     
     func setup() {
         
-        self.fireManager.reloadCurrentUser()
+        self.fireManager.reloadCurrentUser { (error) in
+            self.showErrorAC(text: error.localizedDescription)
+        }
+        
         monthModels = dateManager.showMonth()
         view.reload()
         
@@ -61,7 +65,9 @@ class MonthPresenter: PresenterLifecycle {
     
     func load() {
         
-        fireManager.downloadItems()
+        fireManager.downloadItems {
+            self.update()
+        }
         
     }
     

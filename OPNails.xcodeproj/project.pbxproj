@@ -54,7 +54,6 @@
 		06DF79F924EE8F51001F7FF1 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DF79F724EE8F51001F7FF1 /* LoginVC.swift */; };
 		06DF79FA24EE8F51001F7FF1 /* LoginVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06DF79F824EE8F51001F7FF1 /* LoginVC.xib */; };
 		06DF79FC24EE9AF8001F7FF1 /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DF79FB24EE9AF8001F7FF1 /* LoginPresenter.swift */; };
-		06DF79FE24EEAEE6001F7FF1 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DF79FD24EEAEE6001F7FF1 /* LoginManager.swift */; };
 		06DF7A0224EFF90C001F7FF1 /* RegistrationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06DF7A0024EFF90C001F7FF1 /* RegistrationVC.swift */; };
 		06DF7A0324EFF90C001F7FF1 /* RegistrationVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06DF7A0124EFF90C001F7FF1 /* RegistrationVC.xib */; };
 		3587DB117182B06719BDBC94 /* Pods_OPNails.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1E3540BF450704A635BCE84B /* Pods_OPNails.framework */; };
@@ -124,7 +123,6 @@
 		06DF79F724EE8F51001F7FF1 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		06DF79F824EE8F51001F7FF1 /* LoginVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginVC.xib; sourceTree = "<group>"; };
 		06DF79FB24EE9AF8001F7FF1 /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
-		06DF79FD24EEAEE6001F7FF1 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		06DF7A0024EFF90C001F7FF1 /* RegistrationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationVC.swift; sourceTree = "<group>"; };
 		06DF7A0124EFF90C001F7FF1 /* RegistrationVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegistrationVC.xib; sourceTree = "<group>"; };
 		1E3540BF450704A635BCE84B /* Pods_OPNails.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OPNails.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -287,7 +285,6 @@
 			isa = PBXGroup;
 			children = (
 				0696468F24E95C04008109E9 /* DateManager.swift */,
-				06DF79FD24EEAEE6001F7FF1 /* LoginManager.swift */,
 				063501C024F3EC730044923A /* FirebaseManager.swift */,
 			);
 			path = Managers;
@@ -598,7 +595,6 @@
 				0696469424E998D2008109E9 /* ReusableView.swift in Sources */,
 				069646AA24EB315D008109E9 /* HoursPresenter.swift in Sources */,
 				0696468E24E95BD7008109E9 /* DateModel.swift in Sources */,
-				06DF79FE24EEAEE6001F7FF1 /* LoginManager.swift in Sources */,
 				0638E4B524E927F0006A5956 /* DayCell.swift in Sources */,
 				069646A224EB0950008109E9 /* AdminHoursListVC.swift in Sources */,
 				063501C424F539C20044923A /* LoadingVC.swift in Sources */,

@@ -72,12 +72,12 @@ class UserAccountVC: UIViewController, UITextFieldDelegate {
     
     private func setupViews() {
         
-        let textFields = [fullNameTF, emailTF, passwordTF, phoneNumberTF].compactMap { $0 }
+        let textFields = [fullNameTF, phoneNumberTF, emailTF, passwordTF].compactMap { $0 }
         for (index, field) in textFields.enumerated() {
             field.delegate = self
             field.textColor = .gray
             field.tag = index
-            addButton(to: fullNameTF)
+            addButton(to: field)
         }
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
@@ -158,25 +158,38 @@ extension UserAccountVC: UserViewPresendable {
         
         let ac = UIAlertController(title: "Change \(title)", message: nil, preferredStyle: .alert)
         let actionTitle = "OK"
+        
+        let action = UIAlertAction(title: actionTitle, style: .default) { [weak self] (action) in
+            
+            self?.showLoadingAC()
+            guard let textField = ac.textFields?.first else { return }
+            guard let secondTextField = ac.textFields?.last else { return }
+            self?.presenter.changeProfileInfo(option: option, newValue: textField.text!, password: secondTextField.text!)
+            
+        }
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        action.isEnabled = false
+        ac.addAction(action)
+        ac.addAction(cancel)
+        
         ac.addTextField { (textField) in
+            
             textField.placeholder = "New \(title)"
+            
+            NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: textField, queue: OperationQueue.main, using:
+                {_ in
+                    let textCount = textField.text?.trimmingCharacters(in: .whitespacesAndNewlines).count ?? 0
+                    let textIsNotEmpty = textCount > 0
+                    action.isEnabled = textIsNotEmpty
+            })
+            
         }
         
         ac.addTextField() { (textField) in
             textField.placeholder = "Password"
             textField.isSecureTextEntry = true
         }
-        let action = UIAlertAction(title: actionTitle, style: .default) { [weak self] (action) in
-            
-            self?.showLoadingAC()
-            guard let textField = ac.textFields?.first, textField.text != "" else { return }
-            guard let secondTextField = ac.textFields?.last, textField.text != "" else { return }
-            self?.presenter.changeProfileInfo(option: option, newValue: textField.text!, password: secondTextField.text!)
-            
-        }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        ac.addAction(action)
-        ac.addAction(cancel)
+    
         self.present(ac, animated: true)
         
     }

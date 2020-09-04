@@ -48,4 +48,17 @@ struct CalendarMonth: Equatable {
     
 }
 
+public struct Today {
+    
+    public static let todayDate = Date().toLocalTime()
+    
+}
+
+public enum WeekStartDay {
+    
+    case monday
+    case sunday
+    
+}
+
 
