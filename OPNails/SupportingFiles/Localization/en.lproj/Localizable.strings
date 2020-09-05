@@ -1,0 +1,58 @@
+/* 
+  Localizable.strings
+  OPNails
+
+  Created by Антон Потапчик on 9/4/20.
+  Copyright © 2020 TonyPo Production. All rights reserved.
+*/
+"button_ok" = "OK";
+"button_yes" = "Yes";
+
+"error_title" = "Error!";
+"alert_load" = "Loading";
+
+"user_name" = "Full name";
+"user_mail" = "Email";
+"user_phone" = "Phone number";
+"user_password" = "Password";
+
+"button_register" = "Register!";
+"button_cancel" = "Cancel";
+"button_login" = "Login";
+"dont_have_accaunt" = "Do not have account?";
+
+"today_title" = "Today";
+"price_title" = "Price list";
+"add_title" = "Add";
+"button_logout" = "Logout";
+
+"month_title" = "Month";
+"monday_title" = "M";
+"tuesday_title" = "T";
+"wednesday_title" = "W";
+"thursday_title" = "T";
+"friday_title" = "F";
+"saturday_title" = "S";
+"sunday_title" = "S";
+
+"empty_title" = "No entries";
+"empty_users" = "No users";
+
+"new_entry" = "New entry";
+
+"time_available" = "Time available";
+"time_yours" = "Your time!";
+
+"entry_already_exist" = "Current entry already exist";
+"sign_up_at" = "Are you sure you want to sign up at";
+"cancel_entry_before" = "Cancel previous entry before set new entry!";
+"cancel_entry" =  "Are you sure you want to cancel entry?";
+"remove_client" = "Remove client";
+"sure_remove_client" = "Are you sure you want to remove client from entry?";
+
+"change_title" = "Change";
+"new_title" = "New";
+
+"registration_title" = "Registration";
+"correct_title" = "Please enter correct login or password";
+"selected_days_title" = "Selected days:";

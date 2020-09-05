@@ -1,0 +1,60 @@
+/* 
+  Localizable.strings
+  OPNails
+
+  Created by Антон Потапчик on 9/4/20.
+  Copyright © 2020 TonyPo Production. All rights reserved.
+*/
+
+"button_ok" = "OK";
+"button_yes" = "Да";
+
+"error_title" = "Ошибка";
+"alert_load" = "Загрузка";
+
+"user_name" = "Имя Фамилия";
+"user_mail" = "Email";
+"user_phone" = "Номер телефона";
+"user_password" = "Пароль";
+
+"button_register" = "Зарегестрироваться!";
+"button_cancel" = "Отмена";
+"button_login" = "Войти";
+"dont_have_accaunt" = "Нет аккаунта?";
+
+"today_title" = "Сегодня";
+"price_title" = "Цены";
+"add_title" = "Добавить";
+"button_logout" = "Выйти";
+
+"month_title" = "Месяц";
+"monday_title" = "ПН";
+"tuesday_title" = "ВТ";
+"wednesday_title" = "СР";
+"thursday_title" = "ЧТ";
+"friday_title" = "ПТ";
+"saturday_title" = "СБ";
+"sunday_title" = "ВС";
+
+"empty_title" = "Нет записей";
+"empty_users" = "Нет пользователей";
+
+"new_entry" = "Новая запись";
+
+"time_available" = "Время свободно";
+"time_yours" = "Ваше время";
+
+"entry_already_exist" = "Запись на это время уже существует!";
+"sign_up_at" = "Вы уверены, что хотите записаться на";
+"cancel_entry_before" = "Отмените прошлую запись!";
+"cancel_entry" = "Отменить запись?";
+
+"remove_client" = "Освободить время";
+"sure_remove_client" = "Вы уверены, что хотите удалить клиента с этого времени?";
+
+"change_title" = "Изменить";
+"new_title" = "Обновить";
+"registration_title" = "Регистрация";
+
+"correct_title" = "Пожалуйста, введите корректный Email или пароль";
+"selected_days_title" = "Выбранные дни:";
