@@ -15,6 +15,7 @@
                 <outlet property="passwordTF" destination="ir5-kd-Ryj" id="MNV-6Y-7sA"/>
                 <outlet property="phoneNumberTF" destination="1ZO-y3-i7f" id="c5x-1T-GPD"/>
                 <outlet property="registerButton" destination="TU1-Gn-dlU" id="Onr-Ia-Yoh"/>
+                <outlet property="registrationTitle" destination="tgG-vw-wLR" id="fDF-I6-1SY"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -82,10 +83,10 @@
                                     </constraints>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="6Oq-Uw-7XD">
-                                    <rect key="frame" x="157" y="573" width="100" height="92"/>
+                                    <rect key="frame" x="107" y="573" width="200" height="92"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TU1-Gn-dlU">
-                                            <rect key="frame" x="0.0" y="0.0" width="100" height="36"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="36"/>
                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="20"/>
                                             <state key="normal" title="Register">
@@ -96,7 +97,7 @@
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3OM-A5-PrA">
-                                            <rect key="frame" x="0.0" y="56" width="100" height="36"/>
+                                            <rect key="frame" x="0.0" y="56" width="200" height="36"/>
                                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="20"/>
                                             <state key="normal" title="Cancel">
@@ -104,12 +105,11 @@
                                             </state>
                                             <connections>
                                                 <action selector="cancelButtonPressed:" destination="-1" eventType="touchUpInside" id="dOL-nU-n8n"/>
-                                                <action selector="registerButtonPressed:" destination="-1" eventType="touchUpInside" id="qL9-fb-5KN"/>
                                             </connections>
                                         </button>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="100" id="7ka-EQ-pm5"/>
+                                        <constraint firstAttribute="width" constant="200" id="7ka-EQ-pm5"/>
                                         <constraint firstAttribute="trailing" secondItem="3OM-A5-PrA" secondAttribute="trailing" id="GzT-Jg-NNg"/>
                                         <constraint firstItem="TU1-Gn-dlU" firstAttribute="leading" secondItem="6Oq-Uw-7XD" secondAttribute="leading" id="RUZ-l9-t5s"/>
                                         <constraint firstAttribute="trailing" secondItem="TU1-Gn-dlU" secondAttribute="trailing" id="m1x-zu-SAD"/>

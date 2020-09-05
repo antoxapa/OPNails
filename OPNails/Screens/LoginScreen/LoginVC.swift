@@ -26,6 +26,7 @@ typealias LoginViewable = LoginViewRoutable & LoginViewPresentable
 
 class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
     
+    @IBOutlet weak var dontHaveAccountLabel: UILabel!
     @IBOutlet weak var emailTF: UITextField!
     @IBOutlet weak var passwordTF: UITextField!
     @IBOutlet weak var loginButton: UIButton! {
@@ -48,6 +49,7 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
             googleButton.layer.masksToBounds = true
         }
     }
+    @IBOutlet weak var registerButton: UIButton!
     
     lazy var presenter: LoginPresentable = LoginPresenter(view: self)
     
@@ -59,6 +61,8 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
         setupNavBar()
         
         presenter.checkUserLogged()
+        
+        localizeViews()
         
     }
     
@@ -88,6 +92,15 @@ class LoginVC: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegat
         emailTF.delegate = self
         passwordTF.delegate = self
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
+        
+    }
+    
+    private func localizeViews() {
+        
+        passwordTF.placeholder = i18n.userPassword
+        loginButton.setTitle(i18n.buttonLogin, for: .normal)
+        registerButton.setTitle(i18n.buttonRegister, for: .normal)
+        dontHaveAccountLabel.text = i18n.dontHaveAccount
         
     }
     
@@ -150,7 +163,7 @@ extension LoginVC: LoginViewPresentable {
     func showAlertController(withTitle text: String, message: String) {
         
         let ac = UIAlertController(title: text, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let okAction = UIAlertAction(title: i18n.buttonOk, style: .default, handler: nil)
         ac.addAction(okAction)
         self.present(ac, animated: true)
         

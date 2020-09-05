@@ -9,11 +9,13 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="LoginVC" customModule="OPNails" customModuleProvider="target">
             <connections>
+                <outlet property="dontHaveAccountLabel" destination="2yV-a9-yRh" id="THk-bT-TeF"/>
                 <outlet property="emailTF" destination="RTv-2n-s2C" id="2RH-jt-f8O"/>
                 <outlet property="facebookButton" destination="EBZ-Gf-IYr" id="BvE-uZ-xWT"/>
                 <outlet property="googleButton" destination="Rp1-E7-hXn" id="5Su-NR-zLG"/>
                 <outlet property="loginButton" destination="eJ3-Up-WNM" id="1cI-up-iRN"/>
                 <outlet property="passwordTF" destination="u9R-MU-ibh" id="KMb-cb-fnA"/>
+                <outlet property="registerButton" destination="B4L-mD-ahO" id="Hl9-Bf-fOP"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -26,7 +28,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="hqt-dT-M6r">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="676"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="543"/>
                             <subviews>
                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="dxF-DH-aAa">
                                     <rect key="frame" x="57" y="0.0" width="300" height="250"/>
@@ -100,7 +102,7 @@
                                     </constraints>
                                 </stackView>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="yKe-QK-NRR">
-                                    <rect key="frame" x="57" y="513" width="300" height="163"/>
+                                    <rect key="frame" x="57" y="513" width="300" height="30"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="1pd-xj-sqL">
                                             <rect key="frame" x="64" y="0.0" width="172" height="30"/>
@@ -121,8 +123,8 @@
                                                 </button>
                                             </subviews>
                                         </stackView>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9L7-nP-oN8">
-                                            <rect key="frame" x="20" y="46.5" width="260" height="25"/>
+                                        <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9L7-nP-oN8">
+                                            <rect key="frame" x="20" y="0.0" width="260" height="25"/>
                                             <subviews>
                                                 <view alpha="0.29999999999999999" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ex3-ik-iCg">
                                                     <rect key="frame" x="1" y="12" width="113.5" height="1"/>
@@ -161,14 +163,14 @@
                                                 <constraint firstItem="fu2-iw-bes" firstAttribute="centerX" secondItem="9L7-nP-oN8" secondAttribute="centerX" id="ZRn-8K-Ijt"/>
                                             </constraints>
                                         </view>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login with" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VGe-Ll-zZP">
-                                            <rect key="frame" x="0.0" y="95" width="300" height="16"/>
+                                        <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login with" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VGe-Ll-zZP">
+                                            <rect key="frame" x="0.0" y="0.0" width="300" height="0.0"/>
                                             <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="13"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="nS4-Aw-wlN">
-                                            <rect key="frame" x="25" y="131" width="250" height="32"/>
+                                        <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="nS4-Aw-wlN">
+                                            <rect key="frame" x="25" y="20" width="250" height="32"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EBZ-Gf-IYr">
                                                     <rect key="frame" x="0.0" y="0.0" width="105" height="32"/>

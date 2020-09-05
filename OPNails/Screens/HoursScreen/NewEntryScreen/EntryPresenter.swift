@@ -32,7 +32,7 @@ typealias EntryPresenting = EntryRouting & EntryUpdating & PresenterLifecycle & 
 
 final class EntryPresenter: PresenterLifecycle {
     
-    private var view: NewEntryViewable
+    private weak var view: NewEntryViewable?
     private var fireManager: FirebaseManaging
     var entries = [Entry]()
     
@@ -89,7 +89,7 @@ extension EntryPresenter: EntryRouting {
     
     func pop() {
         
-        view.popToPrevVC()
+        view?.popToPrevVC()
         
     }
     
@@ -99,10 +99,10 @@ extension EntryPresenter: EntryUpdating {
     
     func addNewEntry(time: String) {
         
-        guard let date = view.currentDate() else { return }
+        guard let date = view?.currentDate() else { return }
         if entries.contains(where: { $0.date == date && $0.time == time }) {
-            let title = "Current entry already exist"
-            view.showErrorAC(title: title, message: nil)
+            let title = i18n.entryAlreadyExist
+            view?.showErrorAC(title: title, message: nil)
             return
         }
         fireManager.addNewEntry(date: date , time: time)
@@ -112,12 +112,12 @@ extension EntryPresenter: EntryUpdating {
     
     func addEntries(time: String) {
         
-        let days = view.currentDays()
+        guard let days = view?.currentDays() else { return }
         for day in days {
             let date = "\(day.day)-\(day.monthNumber)-\(day.year)"
             if entries.contains(where: { $0.date == date && $0.time == time }) {
-                let title = "Current entry already exist"
-                view.showErrorAC(title: title, message: nil)
+                let title = i18n.entryAlreadyExist
+                view?.showErrorAC(title: title, message: nil)
                 return
             }
             fireManager.addNewEntry(date: date, time: time)

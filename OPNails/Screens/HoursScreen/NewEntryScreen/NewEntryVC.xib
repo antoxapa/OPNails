@@ -11,6 +11,7 @@
             <connections>
                 <outlet property="daysList" destination="XO1-Xo-vYY" id="lST-w5-hKD"/>
                 <outlet property="okButton" destination="hjI-iF-sup" id="xXX-s6-0PY"/>
+                <outlet property="selectedDaysLabel" destination="jaK-Q8-pwZ" id="5sx-8s-S5S"/>
                 <outlet property="timePicker" destination="I57-HX-mri" id="oA4-ph-6Wz"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -61,7 +62,7 @@
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="50" id="phk-te-m5Z"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name="AppleSDGothicNeo-Regular" family="Apple SD Gothic Neo" pointSize="17"/>
+                                            <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="20"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>

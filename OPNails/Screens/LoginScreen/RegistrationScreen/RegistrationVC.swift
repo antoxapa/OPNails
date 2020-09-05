@@ -23,6 +23,7 @@ class RegistrationVC: UIViewController, UIGestureRecognizerDelegate {
     @IBOutlet weak var nameSecondNameTF: UITextField!
     @IBOutlet weak var phoneNumberTF: UITextField!
     @IBOutlet weak var emailTF: UITextField!
+    @IBOutlet weak var registrationTitle: UILabel!
     @IBOutlet weak var passwordTF: UITextField!
     
     var presenter: LoginPresentable?
@@ -46,6 +47,8 @@ class RegistrationVC: UIViewController, UIGestureRecognizerDelegate {
         
         setupViews()
         
+        localizeViews()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,6 +64,19 @@ class RegistrationVC: UIViewController, UIGestureRecognizerDelegate {
         emailTF.delegate = self
         passwordTF.delegate = self
         self.view.addGestureRecognizer(UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing(_:))))
+        
+    }
+    
+    private func localizeViews() {
+        
+        nameSecondNameTF.placeholder = i18n.userName
+        phoneNumberTF.placeholder = i18n.userPhone
+        emailTF.placeholder = i18n.userMail
+        passwordTF.placeholder = i18n.userPassword
+        
+        registrationTitle.text = i18n.registration_title
+        registerButton.setTitle(i18n.buttonRegister, for: .normal)
+        cancelButton.setTitle(i18n.buttonCancel, for: .normal)
         
     }
     
@@ -111,7 +127,7 @@ extension RegistrationVC: RegistrationViewPresenting {
     
     func showAlertController(withTitle text: String, message: String) {
         let ac = UIAlertController(title: text, message: message, preferredStyle: .alert)
-        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let okAction = UIAlertAction(title: i18n.buttonOk, style: .default, handler: nil)
         ac.addAction(okAction)
         present(ac, animated: true)
         
@@ -119,7 +135,7 @@ extension RegistrationVC: RegistrationViewPresenting {
     
     func showLoadingAlert() {
         
-        let alert = UIAlertController(title: "Loading ...", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: i18n.alertLoad, message: nil, preferredStyle: .alert)
         let activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.isUserInteractionEnabled = false

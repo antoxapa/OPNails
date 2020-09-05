@@ -49,6 +49,9 @@
 		06BD9D68250128770071355C /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06BD9D67250128770071355C /* Constants.swift */; };
 		06BD9D6B250294FC0071355C /* PricelistVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06BD9D69250294FC0071355C /* PricelistVC.swift */; };
 		06BD9D6C250294FC0071355C /* PricelistVC.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06BD9D6A250294FC0071355C /* PricelistVC.xib */; };
+		06BD9D732502A9D10071355C /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06BD9D722502A9D10071355C /* Localization.swift */; };
+		06BD9D752502AB370071355C /* LocalizationText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06BD9D742502AB370071355C /* LocalizationText.swift */; };
+		06BD9D792502D4470071355C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 06BD9D7B2502D4470071355C /* Localizable.strings */; };
 		06C23C1524F19829000FF475 /* MonthViewProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C23C1424F19829000FF475 /* MonthViewProtocols.swift */; };
 		06C23C1A24F29921000FF475 /* DayCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06C23C1824F29921000FF475 /* DayCell.xib */; };
 		06C23C1B24F29921000FF475 /* EmptyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 06C23C1924F29921000FF475 /* EmptyCell.xib */; };
@@ -120,6 +123,11 @@
 		06BD9D67250128770071355C /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		06BD9D69250294FC0071355C /* PricelistVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PricelistVC.swift; sourceTree = "<group>"; };
 		06BD9D6A250294FC0071355C /* PricelistVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PricelistVC.xib; sourceTree = "<group>"; };
+		06BD9D712502A6230071355C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		06BD9D722502A9D10071355C /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localization.swift; sourceTree = "<group>"; };
+		06BD9D742502AB370071355C /* LocalizationText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationText.swift; sourceTree = "<group>"; };
+		06BD9D7A2502D4470071355C /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		06BD9D7C2502D4490071355C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		06C23C1424F19829000FF475 /* MonthViewProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthViewProtocols.swift; sourceTree = "<group>"; };
 		06C23C1824F29921000FF475 /* DayCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DayCell.xib; sourceTree = "<group>"; };
 		06C23C1924F29921000FF475 /* EmptyCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EmptyCell.xib; sourceTree = "<group>"; };
@@ -265,6 +273,7 @@
 		0696469B24E9A1A8008109E9 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				06BD9D762502AB3C0071355C /* Localization */,
 				0675DBA024E91C6600F3D65E /* AppDelegate.swift */,
 				0675DBA224E91C6600F3D65E /* SceneDelegate.swift */,
 				06BD9D67250128770071355C /* Constants.swift */,
@@ -343,6 +352,7 @@
 			isa = PBXGroup;
 			children = (
 				06BD9D6524FFD10C0071355C /* Date+NewFunctions.swift */,
+				06BD9D722502A9D10071355C /* Localization.swift */,
 			);
 			name = Extensions;
 			path = Protocols;
@@ -355,6 +365,15 @@
 				06BD9D6A250294FC0071355C /* PricelistVC.xib */,
 			);
 			path = PricelistScreen;
+			sourceTree = "<group>";
+		};
+		06BD9D762502AB3C0071355C /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				06BD9D742502AB370071355C /* LocalizationText.swift */,
+				06BD9D7B2502D4470071355C /* Localizable.strings */,
+			);
+			path = Localization;
 			sourceTree = "<group>";
 		};
 		06C23C0F24F194A2000FF475 /* Screens */ = {
@@ -475,6 +494,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 0675DB9424E91C6600F3D65E;
 			productRefGroup = 0675DB9E24E91C6600F3D65E /* Products */;
@@ -505,6 +525,7 @@
 				06DF79FA24EE8F51001F7FF1 /* LoginVC.xib in Resources */,
 				069646B524EBE314008109E9 /* NewEntryVC.xib in Resources */,
 				0696469824E99B97008109E9 /* MonthNameHeaderView.xib in Resources */,
+				06BD9D792502D4470071355C /* Localizable.strings in Resources */,
 				063501D524FAD4250044923A /* UserCell.xib in Resources */,
 				06BD9D6C250294FC0071355C /* PricelistVC.xib in Resources */,
 			);
@@ -604,6 +625,7 @@
 				0696468E24E95BD7008109E9 /* DateModel.swift in Sources */,
 				0638E4B524E927F0006A5956 /* DayCell.swift in Sources */,
 				069646A224EB0950008109E9 /* AdminHoursListVC.swift in Sources */,
+				06BD9D732502A9D10071355C /* Localization.swift in Sources */,
 				063501C424F539C20044923A /* LoadingVC.swift in Sources */,
 				06DF7A0224EFF90C001F7FF1 /* RegistrationVC.swift in Sources */,
 				063501C924FA76FA0044923A /* UsersVC.swift in Sources */,
@@ -614,6 +636,7 @@
 				0638E4B124E925CF006A5956 /* MonthsVC.swift in Sources */,
 				06BD9D6B250294FC0071355C /* PricelistVC.swift in Sources */,
 				0696469024E95C04008109E9 /* DateManager.swift in Sources */,
+				06BD9D752502AB370071355C /* LocalizationText.swift in Sources */,
 				06DF79F924EE8F51001F7FF1 /* LoginVC.swift in Sources */,
 				0696469724E99B97008109E9 /* MonthNameHeaderView.swift in Sources */,
 				069646A724EB0B5C008109E9 /* HoursCell.swift in Sources */,
@@ -649,8 +672,18 @@
 			isa = PBXVariantGroup;
 			children = (
 				0675DBAC24E91C6700F3D65E /* Base */,
+				06BD9D712502A6230071355C /* ru */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		06BD9D7B2502D4470071355C /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				06BD9D7A2502D4470071355C /* ru */,
+				06BD9D7C2502D4490071355C /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

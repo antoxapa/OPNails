@@ -8,39 +8,54 @@
 
 import UIKit
 
-protocol UsersViewUpdatable {
+protocol UsersViewUpdatable: AnyObject {
     
     func reload()
     
 }
 
-protocol UsersViewRoutable {
+protocol UsersViewRoutable: AnyObject {
     
-    func pop(user: OPUser)
+    func pop()
     
 }
 
-typealias UsersViewable = UsersViewUpdatable & UsersViewRoutable
+protocol UsersViewPresentable: AnyObject {
+    
+    func returnEntry() -> EntryRowItem?
+    
+}
+
+typealias UsersViewable = UsersViewUpdatable & UsersViewRoutable & UsersViewPresentable
 
 class UsersVC: UIViewController {
     
-    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var usersTableView: UITableView!
     @IBOutlet weak var emptyLabel: UILabel! {
         didSet {
             emptyLabel.alpha = 0.4
-            emptyLabel.text = "No users"
+            emptyLabel.text = i18n.emptyUsers
         }
     }
     
     lazy var presenter: UsersPresenter = UsersPresenter(view: self)
+    var entry: EntryRowItem?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupViews()
         
+        presenter.setup()
+        
         presenter.load()
+        
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        presenter.cancel()
         
     }
     
@@ -67,10 +82,9 @@ extension UsersVC: UsersViewUpdatable {
 
 extension UsersVC: UsersViewRoutable {
     
-    func pop(user: OPUser) {
+    func pop() {
         
-        presenter.postNotification(info: ["user": user])
-        self.dismiss(animated: true, completion: nil)
+        self.navigationController?.popViewController(animated: true)
         
     }
     
@@ -109,6 +123,17 @@ extension UsersVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         presenter.didSelectCell(at: indexPath.row)
+        tableView.deselectRow(at: indexPath, animated: false)
+        
+    }
+    
+}
+
+extension UsersVC: UsersViewPresentable {
+    
+    func returnEntry() -> EntryRowItem? {
+        
+        return entry
         
     }
     

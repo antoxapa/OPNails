@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol EntryViewRoutable {
+protocol EntryViewRoutable: AnyObject {
     
     func popToPrevVC()
     
 }
 
-protocol EntryViewPresenting {
+protocol EntryViewPresenting: AnyObject {
     
     func currentDays() -> [DayRowItem]
     func currentDate() -> String?
@@ -26,6 +26,7 @@ typealias NewEntryViewable = EntryViewRoutable & EntryViewPresenting
 
 class NewEntryVC: UIViewController {
     
+    @IBOutlet weak var selectedDaysLabel: UILabel!
     @IBOutlet weak var daysList: UILabel!
     @IBOutlet weak var timePicker: UIDatePicker! {
         didSet {
@@ -51,12 +52,20 @@ class NewEntryVC: UIViewController {
         daysList.text = presenter.showdaysString(days: days)
         presenter.load()
         
+        localizeViews()
+        
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
         presenter.cancel()
+        
+    }
+    
+    private func localizeViews() {
+        
+        selectedDaysLabel.text = i18n.selectedDays_title
         
     }
     
@@ -107,7 +116,7 @@ extension NewEntryVC: EntryViewPresenting {
     func showErrorAC(title: String?, message: String?) {
         
         let ac = UIAlertController(title: title, message: nil, preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let action = UIAlertAction(title: i18n.buttonOk, style: .default, handler: nil)
         ac.addAction(action)
         self.present(ac, animated: true)
         

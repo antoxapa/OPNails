@@ -80,7 +80,7 @@ extension LoginPresenter: PresenterViewUpdating {
     
     func showErrorAC(text: String) {
         
-        let title = "Error"
+        let title = i18n.errorTitle
         view?.showAlertController(withTitle: title, message: text)
         
     }
@@ -125,8 +125,8 @@ extension LoginPresenter: LoginPresenting {
             let email = email, email != "",
             let password = password, password != ""
             else {
-                let title = "Ooops!"
-                let message = "Please enter correct login or password"
+                let title = i18n.errorTitle
+                let message = i18n.correct_title
                 showErrorAC(withTitle: title, message: message)
                 return
         }
@@ -137,7 +137,7 @@ extension LoginPresenter: LoginPresenting {
             
         }, onError: { (error) in
             
-            let title = "Error!"
+            let title = i18n.errorTitle
             self.showErrorAC(withTitle: title, message: error.localizedDescription)
             
         })
@@ -161,7 +161,7 @@ extension LoginPresenter: LoginPresenting {
         }, onError: { (error) in
             
             self.hideLoadingAC()
-            self.showRegistrationErrorAC(withTitle: "Error", message: error.localizedDescription)
+            self.showRegistrationErrorAC(withTitle: i18n.errorTitle, message: error.localizedDescription)
             
         })
         
@@ -207,12 +207,22 @@ extension LoginPresenter: LoginPresenting {
     
     func checkTextValidation(email: String?, password: String?, name: String?, phoneNumber: String?) {
         
-        guard email != nil, email != "", password != nil, password != "", name != nil, name != "", phoneNumber != nil, phoneNumber != "" else {
+        guard
+            email != nil,
+            email != "",
+            password != nil,
+            password != "",
+            name != nil,
+            name != "",
+            phoneNumber != nil,
+            phoneNumber != ""
+            else {
             
-            let title = "Ooops!"
-            let message = "Please enter correct login or password"
+            let title = i18n.errorTitle
+            let message = i18n.correct_title
             showRegistrationErrorAC(withTitle: title, message: message)
             return
+                
         }
         showLoadingAC()
         registerUser(email: email!, password: password!, name: name!, phoneNumber: phoneNumber!)

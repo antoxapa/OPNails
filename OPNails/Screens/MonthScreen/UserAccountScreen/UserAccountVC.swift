@@ -8,20 +8,20 @@
 
 import UIKit
 
-protocol UserViewUpdatable {
+protocol UserViewUpdatable: AnyObject {
     
     func update(user: OPUser, email: String)
     func dissmisAC()
     
 }
 
-protocol UserViewRoutable {
+protocol UserViewRoutable: AnyObject {
     
     func pop()
     
 }
 
-protocol UserViewPresendable {
+protocol UserViewPresendable: AnyObject {
     
     func showEditAC(title: String, option: ProfileInfoOption)
     func showLoadingAC()
@@ -54,6 +54,8 @@ class UserAccountVC: UIViewController, UITextFieldDelegate {
         
         presenter.load()
         
+        localizeViews()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,6 +84,16 @@ class UserAccountVC: UIViewController, UITextFieldDelegate {
         
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.navigationController?.setToolbarHidden(true, animated: false)
+        
+    }
+    
+    private func localizeViews() {
+        
+        fullNameTF.placeholder = i18n.userName
+        emailTF.placeholder = i18n.userMail
+        phoneNumberTF.placeholder = i18n.userPhone
+        passwordTF.placeholder = i18n.userPassword
+        logoutButton.setTitle(i18n.buttonLogout, for: .normal)
         
     }
     
@@ -156,10 +168,9 @@ extension UserAccountVC: UserViewPresendable {
     
     func showEditAC(title: String, option: ProfileInfoOption) {
         
-        let ac = UIAlertController(title: "Change \(title)", message: nil, preferredStyle: .alert)
-        let actionTitle = "OK"
+        let ac = UIAlertController(title: "\(i18n.change_title) \(title)", message: nil, preferredStyle: .alert)
         
-        let action = UIAlertAction(title: actionTitle, style: .default) { [weak self] (action) in
+        let action = UIAlertAction(title: i18n.buttonOk, style: .default) { [weak self] (action) in
             
             self?.showLoadingAC()
             guard let textField = ac.textFields?.first else { return }
@@ -167,14 +178,15 @@ extension UserAccountVC: UserViewPresendable {
             self?.presenter.changeProfileInfo(option: option, newValue: textField.text!, password: secondTextField.text!)
             
         }
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        
+        let cancel = UIAlertAction(title: i18n.buttonCancel, style: .cancel, handler: nil)
         action.isEnabled = false
         ac.addAction(action)
         ac.addAction(cancel)
         
         ac.addTextField { (textField) in
             
-            textField.placeholder = "New \(title)"
+            textField.placeholder = "\(i18n.new_title) \(title)"
             
             NotificationCenter.default.addObserver(forName: UITextField.textDidChangeNotification, object: textField, queue: OperationQueue.main, using:
                 {_ in
@@ -186,7 +198,7 @@ extension UserAccountVC: UserViewPresendable {
         }
         
         ac.addTextField() { (textField) in
-            textField.placeholder = "Password"
+            textField.placeholder = i18n.userPassword
             textField.isSecureTextEntry = true
         }
     
@@ -196,7 +208,7 @@ extension UserAccountVC: UserViewPresendable {
     
     func showLoadingAC() {
         
-        let alert = UIAlertController(title: "Wait...", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: i18n.alertLoad, message: nil, preferredStyle: .alert)
         let activityIndicator = UIActivityIndicatorView(style: .large)
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.isUserInteractionEnabled = false
@@ -213,9 +225,8 @@ extension UserAccountVC: UserViewPresendable {
     
     func showErrorAC(text: String) {
         
-        let title = "Error"
-        let ac = UIAlertController(title: title, message: text, preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .default, handler: nil)
+        let ac = UIAlertController(title: i18n.errorTitle, message: text, preferredStyle: .alert)
+        let action = UIAlertAction(title: i18n.buttonOk, style: .default, handler: nil)
         ac.addAction(action)
         present(ac, animated: true)
         

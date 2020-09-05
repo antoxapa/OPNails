@@ -9,14 +9,14 @@
 import Foundation
 import UIKit
 
-protocol MonthViewUpdatable {
+protocol MonthViewUpdatable: AnyObject {
     
     func reload()
     func reloadItemAt(indexPath: [IndexPath]?)
     
 }
 
-protocol MonthViewRoutable {
+protocol MonthViewRoutable: AnyObject {
     
     func routeWithItem(item: DayRowItem)
     func routeWithItems(items days: [DayRowItem])
@@ -24,7 +24,7 @@ protocol MonthViewRoutable {
     
 }
 
-protocol MonthViewPresentable {
+protocol MonthViewPresentable: AnyObject {
     
     func showErrorAC(text: String)
     

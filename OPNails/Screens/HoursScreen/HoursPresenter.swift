@@ -23,13 +23,6 @@ protocol HoursPresentereRouting {
     
 }
 
-protocol PresenterViewObserving {
-    
-    func addNotificationObservers()
-    func removeNotificationObservers()
-    
-}
-
 protocol PresenterModelUpdating {
     
     func setCurrentUserInEntry(index: Int)
@@ -39,12 +32,18 @@ protocol PresenterModelUpdating {
     
 }
 
-typealias HoursPresenting = HoursPresenterTableViewPresenting & HoursPresentereRouting & PresenterLifecycle & PresenterViewUpdating & PresenterModelUpdating & PresenterViewObserving
+protocol HoursPresenterAlertsPresenting {
+    
+    func showLoadingAC()
+    
+}
+
+typealias HoursPresenting = HoursPresenterTableViewPresenting & HoursPresentereRouting & PresenterLifecycle & PresenterViewUpdating & PresenterModelUpdating & HoursPresenterAlertsPresenting
 
 final class HoursPresenter: PresenterLifecycle {
     
     private var fireManager: FirebaseManaging
-    private var view: AdminHoursViewable
+    private weak var view: AdminHoursViewable?
     var entries = [Entry]()
     var users = [OPUser]()
     var satisfEntries = [EntryRowItem]()
@@ -59,7 +58,7 @@ final class HoursPresenter: PresenterLifecycle {
     
     func setup() {
         
-        let day = view.presentDay()
+        guard let day = view?.presentDay() else { return }
         date = "\(day.day)-\(day.monthNumber)-\(day.year)"
         satisfEntries = [EntryRowItem]()
         for entry in entries {
@@ -78,9 +77,6 @@ final class HoursPresenter: PresenterLifecycle {
     func load() {
         
         fireManager.downloadItems {
-            self.update()
-        }
-        fireManager.downloadUsers {
             self.update()
         }
         fireManager.updateCurrentUser()
@@ -102,7 +98,7 @@ extension HoursPresenter: PresenterViewUpdating {
         entries = fireManager.showEntries()
         users = fireManager.showUsers()
         setup()
-        view.reload()
+        view?.reload()
         
     }
     
@@ -112,6 +108,8 @@ extension HoursPresenter: PresenterViewUpdating {
     }
     
     func dismissAC() {
+        
+        view?.pop()
         
     }
     
@@ -134,17 +132,17 @@ extension HoursPresenter: HoursPresenterTableViewPresenting {
     func didSelectCell(at row: Int) {
         
         if fireManager.isCurrentUserAdmin() {
-            satisfEntries[row].user?.uid != nil ? view.showRemoveUserFromEntryAC(index: row) : view.showUsers(index: row)
+            satisfEntries[row].user?.uid != nil ? view?.showRemoveUserFromEntryAC(index: row) : view?.showUsers(index: row, entry: satisfEntries[row])
         } else if satisfEntries[row].user?.uid == fireManager.returnCurrentUser()?.uid {
             
-            view.showClientWillRemoveEntryTimeAC(index: row)
+            view?.showClientWillRemoveEntryTimeAC(index: row)
             
         } else {
             
             satisfEntries.contains(where: { (entry) -> Bool in
                 entry.user?.uid == fireManager.returnCurrentUser()?.uid
                 
-            }) ? view.showClientShouldRemoveEntryTime() : view.showSignInEntryUserAC(index: row)
+            }) ? view?.showClientShouldRemoveEntryTime() : view?.showSignInEntryUserAC(index: row)
             
         }
         
@@ -162,7 +160,7 @@ extension HoursPresenter: HoursPresentereRouting {
     
     func presentDetailVC() {
         
-        view.showDetail()
+        view?.showDetail()
         
     }
     
@@ -212,19 +210,11 @@ extension HoursPresenter: PresenterModelUpdating {
     
 }
 
-extension HoursPresenter: PresenterViewObserving {
+extension HoursPresenter: HoursPresenterAlertsPresenting {
     
-    func addNotificationObservers() {
+    func showLoadingAC() {
         
-        NotificationCenter.default.addObserver(view, selector: #selector(view.setUser(notification:)), name: .userSelected, object: nil)
-        NotificationCenter.default.addObserver(view, selector: #selector(view.updateEditedEntry), name: .entriesEdited, object: nil)
-        
-    }
-    
-    func removeNotificationObservers() {
-        
-        NotificationCenter.default.removeObserver(view, name: .entriesEdited, object: nil)
-        NotificationCenter.default.removeObserver(view, name: .userSelected, object: nil)
+        view?.showLoadingAC()
         
     }
     

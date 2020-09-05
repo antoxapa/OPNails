@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol HeaderMonthViewUpdatable {
+protocol HeaderMonthViewUpdatable: AnyObject {
     
     func configure(withItem item: DayRowItem, presenter: MonthPresenting)
     
@@ -20,7 +20,34 @@ final class MonthNameHeaderView: UICollectionReusableView, ReusableView, HeaderM
     @IBOutlet weak var leftButton: UIButton!
     @IBOutlet weak var rightButton: UIButton!
     
+    @IBOutlet weak var mondayLabel: UILabel!
+    @IBOutlet weak var tuesdayLabel: UILabel!
+    @IBOutlet weak var wednesdayLabel: UILabel!
+    @IBOutlet weak var thursdayLabel: UILabel!
+    @IBOutlet weak var fridayLabel: UILabel!
+    @IBOutlet weak var saturdayLabel: UILabel!
+    @IBOutlet weak var sundayLabel: UILabel!
+    
     var presenter: MonthPresenting?
+    
+    override func awakeFromNib() {
+        
+        super.awakeFromNib()
+        
+        localizeViews()
+    }
+    
+    private func localizeViews() {
+        
+        mondayLabel.text = i18n.mondayTitle
+        tuesdayLabel.text = i18n.tuesdayTitle
+        wednesdayLabel.text = i18n.wednesdayTitle
+        thursdayLabel.text = i18n.thursdayTitle
+        fridayLabel.text = i18n.fridayTitle
+        saturdayLabel.text = i18n.saturdayTitle
+        sundayLabel.text = i18n.sundayTitle
+        
+    }
     
     @IBAction func rightButtonPressed(_ sender: UIButton) {
         presenter?.showNextMonth()
@@ -33,7 +60,7 @@ final class MonthNameHeaderView: UICollectionReusableView, ReusableView, HeaderM
     
     func configure(withItem item: DayRowItem, presenter: MonthPresenting) {
         
-        monthNameLabel.text = "\(item.month), \(item.year)"
+        monthNameLabel.text = "\(item.month) \(item.year)"
         self.presenter = presenter
         
     }

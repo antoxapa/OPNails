@@ -38,9 +38,8 @@
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="August" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iy7-Fq-7vo">
-                    <rect key="frame" x="110" y="5" width="100" height="30"/>
+                    <rect key="frame" x="130" y="5" width="60" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="100" id="sdo-CU-2Vt"/>
                         <constraint firstAttribute="height" constant="30" id="z02-zi-pBt"/>
                     </constraints>
                     <fontDescription key="fontDescription" name="AppleSDGothicNeo-SemiBold" family="Apple SD Gothic Neo" pointSize="20"/>
@@ -122,9 +121,16 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
             <connections>
+                <outlet property="fridayLabel" destination="646-tP-kUb" id="TvZ-OZ-4EY"/>
                 <outlet property="leftButton" destination="vmd-7b-T9m" id="kvc-Jt-g7m"/>
+                <outlet property="mondayLabel" destination="QbV-M6-pnz" id="tLQ-jw-TWv"/>
                 <outlet property="monthNameLabel" destination="iy7-Fq-7vo" id="lAp-C7-SrI"/>
                 <outlet property="rightButton" destination="c52-7j-HB7" id="5je-HH-ozx"/>
+                <outlet property="saturdayLabel" destination="JdV-XC-sE1" id="9OG-q9-J6y"/>
+                <outlet property="sundayLabel" destination="xni-aF-vvI" id="FHU-a4-2Ba"/>
+                <outlet property="thursdayLabel" destination="Quy-EZ-sl3" id="hrB-of-bHo"/>
+                <outlet property="tuesdayLabel" destination="ozQ-Yt-cqf" id="0ai-xW-Tde"/>
+                <outlet property="wednesdayLabel" destination="gOn-St-uQA" id="F5L-ah-wvq"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="115.84821428571428"/>
         </collectionReusableView>

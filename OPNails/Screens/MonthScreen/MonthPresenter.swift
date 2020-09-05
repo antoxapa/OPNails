@@ -41,8 +41,8 @@ typealias MonthPresenting = MonthPresenterCollectionViewPresenting & MonthPresen
 
 final class MonthPresenter: PresenterLifecycle {
     
-    private var view: MonthViewable
-    private var header: HeaderMonthViewUpdatable?
+    private weak var view: MonthViewable?
+    private weak var header: HeaderMonthViewUpdatable?
     private var dateManager: DateManager
     private var fireManager: FirebaseManaging
     private var monthModels: [CalendarMonth]
@@ -65,7 +65,7 @@ final class MonthPresenter: PresenterLifecycle {
         }
         
         monthModels = dateManager.showMonth()
-        view.reload()
+        view?.reload()
         
     }
     
@@ -91,13 +91,13 @@ extension MonthPresenter: PresenterViewUpdating {
         
         entries = fireManager.showEntries()
         users = fireManager.showUsers()
-        view.reload()
+        view?.reload()
         
     }
     
     func showErrorAC(text: String) {
         
-        view.showErrorAC(text: text)
+        view?.showErrorAC(text: text)
         
     }
     
@@ -206,7 +206,7 @@ extension MonthPresenter {
     
     private func openDayTimesList(withItem item: DayRowItem) {
         
-        view.routeWithItem(item: item)
+        view?.routeWithItem(item: item)
         
     }
     
@@ -217,14 +217,14 @@ extension MonthPresenter: MonthPresenterHeaderViewUpdating {
     func showNextMonth() {
         
         monthModels = dateManager.showNextMonth()
-        view.reload()
+        view?.reload()
         
     }
     
     func showPreviousMonth() {
         
         monthModels = dateManager.showPreviousMonth()
-        view.reload()
+        view?.reload()
         
     }
     
@@ -233,17 +233,17 @@ extension MonthPresenter: MonthPresenterHeaderViewUpdating {
         if monthModels.first == dateManager.showCurrentMonth().first {
             let item = dateManager.getValues(from: Today.todayDate)
             let rowItem = DayRowItem(year: String(item.year), month: item.name, day: String(item.day), monthNumber: item.month, client: nil, isWorkday: nil)
-            view.routeWithItem(item: rowItem)
+            view?.routeWithItem(item: rowItem)
         } else {
             monthModels = dateManager.showCurrentMonth()
         }
-        view.reload()
+        view?.reload()
         
     }
     
     func reloadView() {
         
-        view.reload()
+        view?.reload()
         
     }
     
@@ -265,7 +265,7 @@ extension MonthPresenter: MonthPresenterHeaderViewUpdating {
                 items.append(dayRowItem)
             }
         }
-        view.routeWithItems(items: items)
+        view?.routeWithItems(items: items)
         
     }
     
@@ -275,7 +275,7 @@ extension MonthPresenter: MonthPresenterRouting {
     
     func showPriceList() {
         
-        view.showPriceList()
+        view?.showPriceList()
         
     }
 }

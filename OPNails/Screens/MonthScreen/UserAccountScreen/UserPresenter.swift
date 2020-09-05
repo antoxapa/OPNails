@@ -26,7 +26,7 @@ typealias UserPresenting = PresenterLifecycle & PresenterViewUpdating & UserPres
 final class UserPresenter: PresenterLifecycle {
     
     private var fireManager: FirebaseManaging
-    private var view: UserViewable
+    private weak var view: UserViewable?
     private var user: OPUser?
     private var editable: Bool = false
     
@@ -69,7 +69,7 @@ extension UserPresenter: PresenterViewUpdating {
         }
         guard let user = user else { return }
         guard let email = fireManager.returnFirebaseUser()?.email else { return }
-        view.update(user: user, email: email)
+        view?.update(user: user, email: email)
         
     }
     
@@ -77,14 +77,14 @@ extension UserPresenter: PresenterViewUpdating {
         
         dismissAC()
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            self.view.showErrorAC(text: text)
+            self.view?.showErrorAC(text: text)
         }
         
     }
     
     func dismissAC() {
         
-        view.dissmisAC()
+        view?.dissmisAC()
         
     }
     
@@ -151,15 +151,15 @@ extension UserPresenter : UserPresenterRouting {
         var title: String
         switch option {
         case .username:
-            title = "full name"
+            title = i18n.userName
         case .phoneNumber:
-            title = "phone number"
+            title = i18n.userPhone
         case .email:
-            title = "email"
+            title = i18n.userMail
         case .password:
-            title = "password"
+            title = i18n.userPassword
         }
-        view.showEditAC(title: title, option: option)
+        view?.showEditAC(title: title, option: option)
         
     }
     
@@ -168,7 +168,7 @@ extension UserPresenter : UserPresenterRouting {
         fireManager.signOut { (error) in
             self.showErrorAC(text: error.localizedDescription)
         }
-        view.pop()
+        view?.pop()
         
     }
     

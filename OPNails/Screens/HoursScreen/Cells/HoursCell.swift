@@ -20,7 +20,7 @@ class HoursCell: UITableViewCell {
             let name = item.user?.name,
             !name.isEmpty
             else {
-                userLabel.text = "Time available"
+                userLabel.text = i18n.timeAvailable
                 return
         }
         userLabel.text = item.user?.name
@@ -31,7 +31,7 @@ class HoursCell: UITableViewCell {
         
         timeLabel.textColor = .black
         userLabel.font = userLabel.font.withSize(25)
-        userLabel.text = "Your time!"
+        userLabel.text = i18n.timeYours
         userLabel.textColor = .systemGreen
         
     }

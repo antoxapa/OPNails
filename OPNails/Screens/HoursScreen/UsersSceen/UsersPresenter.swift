@@ -18,17 +18,18 @@ protocol UsersPresenterTableViewPresenting {
 
 protocol UsersPresentereRouting {
     
-    func pop(user: OPUser)
+    func pop()
     
 }
 
-typealias UsersPresenting = UsersPresenterTableViewPresenting & UsersPresentereRouting & PresenterLifecycle & PresenterViewUpdating & PresenterViewNotificationSending
+typealias UsersPresenting = UsersPresenterTableViewPresenting & UsersPresentereRouting & PresenterLifecycle & PresenterViewUpdating
 
 final class UsersPresenter: PresenterLifecycle {
     
     private var fireManager: FirebaseManaging
-    private var view: UsersViewable
+    private weak var view: UsersViewable?
     private var users = [OPUser]()
+    private var entry: EntryRowItem?
     
     init(view: UsersViewable) {
         
@@ -39,12 +40,13 @@ final class UsersPresenter: PresenterLifecycle {
     
     func setup() {
         
+        entry = view?.returnEntry()
         
     }
     
     func load() {
         
-        fireManager.downloadUsers {
+        fireManager.downloadItems {
             self.update()
         }
         
@@ -63,7 +65,7 @@ extension UsersPresenter: PresenterViewUpdating {
     func update() {
         
         users = fireManager.showUsers().filter { $0.uid != Constants.API.USER_ID  }
-        view.reload()
+        view?.reload()
         
     }
     
@@ -94,7 +96,10 @@ extension UsersPresenter: UsersPresenterTableViewPresenting {
     
     func didSelectCell(at row: Int) {
         
-        pop(user: users[row])
+        let user = users[row]
+        guard let entry = entry else { return }
+        fireManager.add(user: user, to: entry)
+        pop()
         
     }
     
@@ -102,20 +107,9 @@ extension UsersPresenter: UsersPresenterTableViewPresenting {
 
 extension UsersPresenter: UsersPresentereRouting {
     
-    func pop(user: OPUser) {
+    func pop() {
         
-        view.pop(user: user)
-        
-    }
-    
-}
-
-extension UsersPresenter: PresenterViewNotificationSending {
-    
-    func postNotification(info: [String : AnyObject]?) {
-        
-        guard let info = info else { return }
-        NotificationCenter.default.post(name: .userSelected, object: nil, userInfo: info)
+        view?.pop()
         
     }
     
