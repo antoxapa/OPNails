@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="NewEntryVC" customModule="OPNails" customModuleProvider="target">
             <connections>
+                <outlet property="cancelButton" destination="b8Q-8w-0x9" id="m9E-fz-p0r"/>
                 <outlet property="daysList" destination="XO1-Xo-vYY" id="lST-w5-hKD"/>
                 <outlet property="okButton" destination="hjI-iF-sup" id="xXX-s6-0PY"/>
                 <outlet property="selectedDaysLabel" destination="jaK-Q8-pwZ" id="5sx-8s-S5S"/>
@@ -25,7 +26,7 @@
                     <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                     <subviews>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" spacing="52" translatesAutoresizingMaskIntoConstraints="NO" id="iGu-Mm-a9P">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="426"/>
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="486"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Xzz-90-4wY">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="110"/>
@@ -78,8 +79,8 @@
                                         <action selector="timePickerChanged:" destination="-1" eventType="valueChanged" id="YhX-3U-mX0"/>
                                     </connections>
                                 </datePicker>
-                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="mSy-wt-UkM">
-                                    <rect key="frame" x="0.0" y="376" width="414" height="50"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="mSy-wt-UkM">
+                                    <rect key="frame" x="0.0" y="376" width="414" height="110"/>
                                     <subviews>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hjI-iF-sup">
                                             <rect key="frame" x="157" y="0.0" width="100" height="50"/>
@@ -94,6 +95,21 @@
                                             </state>
                                             <connections>
                                                 <action selector="okButtonPresssed:" destination="-1" eventType="touchUpInside" id="ZM6-gj-E5T"/>
+                                            </connections>
+                                        </button>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b8Q-8w-0x9">
+                                            <rect key="frame" x="157" y="60" width="100" height="50"/>
+                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="100" id="4vg-LA-4ef"/>
+                                                <constraint firstAttribute="height" constant="50" id="HXI-1X-Ap2"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="AppleSDGothicNeo-Bold" family="Apple SD Gothic Neo" pointSize="21"/>
+                                            <state key="normal" title="Cancel">
+                                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="cancelButtonPressed:" destination="-1" eventType="touchUpInside" id="lFj-5e-YW6"/>
                                             </connections>
                                         </button>
                                     </subviews>

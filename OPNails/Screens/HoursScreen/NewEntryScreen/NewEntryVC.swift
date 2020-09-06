@@ -40,6 +40,12 @@ class NewEntryVC: UIViewController {
             okButton.clipsToBounds = true
         }
     }
+    @IBOutlet weak var cancelButton: UIButton! {
+        didSet {
+            cancelButton.layer.cornerRadius = 25
+            cancelButton.clipsToBounds = true
+        }
+    }
     
     var date: String?
     var pickerDate = Date()
@@ -66,6 +72,8 @@ class NewEntryVC: UIViewController {
     private func localizeViews() {
         
         selectedDaysLabel.text = i18n.selectedDays_title
+        okButton.setTitle(i18n.buttonOk, for: .normal)
+        cancelButton.setTitle(i18n.buttonCancel, for: .normal)
         
     }
     
@@ -84,6 +92,12 @@ class NewEntryVC: UIViewController {
             presenter.addNewEntry(time: entryTime)
             presenter.postNotification(info: nil)
         }
+        
+    }
+    
+    @IBAction func cancelButtonPressed(_ sender: UIButton) {
+        
+        presenter.pop()
         
     }
     
