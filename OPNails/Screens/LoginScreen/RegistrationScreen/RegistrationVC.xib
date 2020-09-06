@@ -140,12 +140,6 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="134.78260869565219" y="152.67857142857142"/>
         </view>
-        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="40" id="9eZ-3V-jFB">
-            <rect key="frame" x="0.0" y="0.0" width="250" height="605"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <viewLayoutGuide key="safeArea" id="8ER-gm-dek"/>
-            <point key="canvasLocation" x="908" y="141"/>
-        </stackView>
     </objects>
     <resources>
         <image name="logo" width="1000" height="1000"/>

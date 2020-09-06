@@ -157,6 +157,7 @@ extension LoginPresenter: LoginPresenting {
         fireManager.registerUser(withEmail: email, password: password, name: name, phoneNumber: phoneNumber, completion: {
             
             self.routeToMainScreenAfterRegistration()
+            self.hideLoadingAC()
             
         }, onError: { (error) in
             

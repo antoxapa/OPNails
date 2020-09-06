@@ -93,12 +93,12 @@ class MonthsVC: UIViewController {
     
     private func setupToolBar() {
         
+        self.navigationController?.setToolbarHidden(false, animated: false)
         let today = UIBarButtonItem(title: i18n.todayTitle, style: .plain, target: self, action: #selector(self.showToday))
         let spacer = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil)
         let instagram = UIBarButtonItem(image: UIImage(named: "insta"), style: .plain, target: self, action: #selector(self.showInstagramPage))
         let pricelist = UIBarButtonItem(title: i18n.priceTitle, style: .plain, target: self, action: #selector(showPrice))
         self.setToolbarItems([today,spacer,pricelist,spacer,instagram], animated: true)
-        self.navigationController?.setToolbarHidden(false, animated: false)
         
     }
     
@@ -184,9 +184,7 @@ extension MonthsVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 presenter.compare(item: item) ? cell.setupToday() : cell.setupDefault()
                 presenter.checkClientEntryDay(item: item) ? cell.setupGreenView() : item.isWorkday == true ? cell.setupRedView() : cell.setupEventViewHidden()
             } else {
-                
                 cell.setDisable()
-                
             }
             cell.configure(withItem: item)
         }
